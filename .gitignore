@@ -1,6 +1,7 @@
 Thumbs.db
 .idea/
 themes/*
+!themes/skeleton/
 !themes/.gitkeep
 lib-cov/
 *.seed

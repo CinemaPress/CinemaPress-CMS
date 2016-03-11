@@ -10,6 +10,7 @@ var app          = express();
 var sitemap      = require(__dirname + '/routes/sitemap');
 var categories   = require(__dirname + '/routes/categories');
 var movie        = require(__dirname + '/routes/movie');
+var admin        = require(__dirname + '/routes/admin');
 var index        = require(__dirname + '/routes/index');
 
 var port = process.env.PORT || 3333;
@@ -31,6 +32,7 @@ app.use('/' + config.urls.type, categories);
 app.use('/' + config.urls.search, categories);
 app.use('/' + config.urls.movie, movie);
 app.use('/' + config.urls.sitemap, sitemap);
+app.use('/' + config.urls.admin, admin);
 app.use('/', index);
 
 app.use(function(req, res){

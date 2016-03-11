@@ -3,14 +3,17 @@ module.exports = {
     "email": "support@example.com",
     "disqus": "films-online",
     "theme": "skeleton",
-    "top": [299, 300, 301, 302, 303, 304,305,306],
+    "top": [299, 300, 301, 302, 303, 304, 305, 306],
     "abuse": [299, 300, 301],
     "social": {
         "vk": "http://vk.com/group",
         "facebook": "http://facebook.com/group",
         "twitter": "http://twitter.com/group"
     },
-    "cache": 60 * 60 * 24,
+    "cache": {
+        "time_storage": 60 * 60 * 24,
+        "full_storage": 0
+    },
     "counts": {
         "index": 20,
         "category": 30,
@@ -18,7 +21,14 @@ module.exports = {
         "related": 5,
         "sitemap": 10000
     },
-    "related": "countries,genres,directors,actors,year",
+    "relates": "countries,genres,directors,actors,year",
+    "related": {
+        "year": "Фильмы [year] года",
+        "genre": "Фильмы в жанре - [genre]",
+        "country": "Фильмы из страны - [country]",
+        "actor": "Лучшие фильмы актера - [actor]",
+        "director": "Лучшие фильмы режиссера - [director]"
+    },
     "titles": {
         "index": "Фильмы онлайн",
         "year" : "Фильмы [year] года [sort] [page]",
@@ -31,7 +41,7 @@ module.exports = {
         "actors": "Самые популярные актеры",
         "director": "Фильмы которые срежессировал [director] [sort] [page]",
         "directors": "Самые популярные режиссеры",
-        "type": "[type] онлайн",
+        "type": "[type] онлайн [sort] [page]",
         "search": "Поиск фильма [search] [sort] [page]",
         "num": "на странице [num]",
         "movie": {
@@ -40,13 +50,6 @@ module.exports = {
             "download": "[title_ru] скачать",
             "trailer": "[title_ru] трейлер",
             "picture": "[title_ru] кадры"
-        },
-        "related": {
-            "year": "Фильмы [year] года",
-            "genre": "Фильмы в жанре - [genre]",
-            "country": "Фильмы из страны - [country]",
-            "actor": "Лучшие фильмы актера - [actor]",
-            "director": "Лучшие фильмы режиссера - [director]"
         },
         "sort": {
             "kinopoisk-rating-up": "отсортировано по рейтингу КиноПоиска",
@@ -134,6 +137,7 @@ module.exports = {
         "director": "director",
         "type": "type",
         "search" : "search",
-        "sitemap" : "sitemap"
+        "sitemap" : "sitemap",
+        "admin": "admin-secret-key"
     }
 };

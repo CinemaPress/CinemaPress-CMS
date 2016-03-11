@@ -6,12 +6,16 @@ var mergeData    = require('../modules/mergeData');
 var config       = require('../config/config');
 var express      = require('express');
 var async        = require('async');
+var Memcached    = require('memcached');
+var md5          = require('md5');
 var router       = express.Router();
+var memcached    = new Memcached('localhost:11211');
 
 router.get('/:movie/:type?', function(req, res) {
 
-    var time = decodeURIComponent(req.originalUrl);
-    console.time(time);
+    var url = decodeURIComponent(req.originalUrl);
+    var urlHash = md5(url);
+    console.time(url);
 
     req.params.movie = '/' + req.params.movie || '';
     req.params.type  = req.params.type || 'single';
@@ -27,133 +31,162 @@ router.get('/:movie/:type?', function(req, res) {
 
     var related = {};
 
-    async.series({
-            "movie": function (callback) {
-                getData.movie(id, function (movie) {
-                    related = movie;
-                    callback(null, movie);
-                });
-            },
-            "top": function (callback) {
-                getData.top(function (movies) {
-                    callback(null, movies);
-                });
-            },
-            "movies": function(callback) {
-                async.series({
-                        "countries": function(callback) {
-                            if (related.countries && config.related.indexOf('countries')+1) {
-                                getData.related('country', related.countries, 'kinopoisk-vote-up', function (movies) {
-                                    callback(null, movies);
-                                });
-                            }
-                            else {
-                                callback(null, []);
-                            }
-                        },
-                        "genres": function(callback) {
-                            if (related.genres && config.related.indexOf('genres')+1) {
-                                getData.related('genre', related.genres, 'kinopoisk-vote-up', function(movies) {
-                                    callback(null, movies);
-                                });
-                            }
-                            else {
-                                callback(null, []);
-                            }
-                        },
-                        "directors": function(callback) {
-                            if (related.directors && config.related.indexOf('directors')+1) {
-                                getData.related('director', related.directors, 'kinopoisk-vote-up', function(movies) {
-                                    callback(null, movies);
-                                });
-                            }
-                            else {
-                                callback(null, []);
-                            }
-                        },
-                        "actors": function(callback) {
-                            if (related.actors && config.related.indexOf('actors')+1) {
-                                getData.related('actor', related.actors, 'kinopoisk-vote-up', function(movies) {
-                                    callback(null, movies);
-                                });
-                            }
-                            else {
-                                callback(null, []);
-                            }
-                        },
-                        "country": function(callback) {
-                            if (related.country && config.related.indexOf('country')+1) {
-                                getData.related('country', related.country, 'kinopoisk-vote-up', function (movies) {
-                                    callback(null, movies);
-                                });
-                            }
-                            else {
-                                callback(null, []);
-                            }
-                        },
-                        "genre": function(callback) {
-                            if (related.genre && config.related.indexOf('genre')+1) {
-                                getData.related('genre', related.genre, 'kinopoisk-vote-up', function(movies) {
-                                    callback(null, movies);
-                                });
-                            }
-                            else {
-                                callback(null, []);
-                            }
-                        },
-                        "director": function(callback) {
-                            if (related.director && config.related.indexOf('directors')+1) {
-                                getData.related('director', related.director, 'kinopoisk-vote-up', function(movies) {
-                                    callback(null, movies);
-                                });
-                            }
-                            else {
-                                callback(null, []);
-                            }
-                        },
-                        "actor": function(callback) {
-                            if (related.actor && config.related.indexOf('actors')+1) {
-                                getData.related('actor', related.actor, 'kinopoisk-vote-up', function(movies) {
-                                    callback(null, movies);
-                                });
-                            }
-                            else {
-                                callback(null, []);
-                            }
-                        },
-                        "year": function(callback) {
-                            if (related.year && config.related.indexOf('year')+1) {
-                                getData.related('year', related.year, 'kinopoisk-vote-up', function(movies) {
-                                    callback(null, movies);
-                                });
-                            }
-                            else {
-                                callback(null, []);
-                            }
-                        }
+    memcached.get(urlHash, function (err, render) {
+
+        if (err) throw err;
+
+        if (render) {
+
+            renderData(res, type, render, url);
+
+        }
+        else {
+
+            async.series({
+                    "movie": function (callback) {
+                        getData.movie(id, function (movie) {
+                            related = movie;
+                            callback(null, movie);
+                        });
+                    },
+                    "top": function (callback) {
+                        getData.top(function (movies) {
+                            callback(null, movies);
+                        });
+                    },
+                    "movies": function(callback) {
+                        async.series({
+                                "countries": function(callback) {
+                                    if (related.countries && config.relates.indexOf('countries')+1) {
+                                        getData.related('country', related.countries, 'kinopoisk-vote-up', function (movies) {
+                                            callback(null, movies);
+                                        });
+                                    }
+                                    else {
+                                        callback(null, []);
+                                    }
+                                },
+                                "genres": function(callback) {
+                                    if (related.genres && config.relates.indexOf('genres')+1) {
+                                        getData.related('genre', related.genres, 'kinopoisk-vote-up', function(movies) {
+                                            callback(null, movies);
+                                        });
+                                    }
+                                    else {
+                                        callback(null, []);
+                                    }
+                                },
+                                "directors": function(callback) {
+                                    if (related.directors && config.relates.indexOf('directors')+1) {
+                                        getData.related('director', related.directors, 'kinopoisk-vote-up', function(movies) {
+                                            callback(null, movies);
+                                        });
+                                    }
+                                    else {
+                                        callback(null, []);
+                                    }
+                                },
+                                "actors": function(callback) {
+                                    if (related.actors && config.relates.indexOf('actors')+1) {
+                                        getData.related('actor', related.actors, 'kinopoisk-vote-up', function(movies) {
+                                            callback(null, movies);
+                                        });
+                                    }
+                                    else {
+                                        callback(null, []);
+                                    }
+                                },
+                                "country": function(callback) {
+                                    if (related.country && config.relates.indexOf('country')+1) {
+                                        getData.related('country', related.country, 'kinopoisk-vote-up', function (movies) {
+                                            callback(null, movies);
+                                        });
+                                    }
+                                    else {
+                                        callback(null, []);
+                                    }
+                                },
+                                "genre": function(callback) {
+                                    if (related.genre && config.relates.indexOf('genre')+1) {
+                                        getData.related('genre', related.genre, 'kinopoisk-vote-up', function(movies) {
+                                            callback(null, movies);
+                                        });
+                                    }
+                                    else {
+                                        callback(null, []);
+                                    }
+                                },
+                                "director": function(callback) {
+                                    if (related.director && config.relates.indexOf('directors')+1) {
+                                        getData.related('director', related.director, 'kinopoisk-vote-up', function(movies) {
+                                            callback(null, movies);
+                                        });
+                                    }
+                                    else {
+                                        callback(null, []);
+                                    }
+                                },
+                                "actor": function(callback) {
+                                    if (related.actor && config.relates.indexOf('actors')+1) {
+                                        getData.related('actor', related.actor, 'kinopoisk-vote-up', function(movies) {
+                                            callback(null, movies);
+                                        });
+                                    }
+                                    else {
+                                        callback(null, []);
+                                    }
+                                },
+                                "year": function(callback) {
+                                    if (related.year && config.relates.indexOf('year')+1) {
+                                        getData.related('year', related.year, 'kinopoisk-vote-up', function(movies) {
+                                            callback(null, movies);
+                                        });
+                                    }
+                                    else {
+                                        callback(null, []);
+                                    }
+                                }
+                            },
+                            function(err, result) {
+
+                                if (err) console.error(err.message);
+
+                                callback(null, result);
+
+                            });
+                    }
                 },
                 function(err, result) {
 
                     if (err) console.error(err.message);
 
-                    callback(null, result);
+                    var required = requiredData.movie(type, result.movie, result.movies);
+                    var render = mergeData(result, required);
+
+                    renderData(res, type, render, url);
+
+                    if (render && config.cache.full_storage) {
+                        memcached.set(
+                            urlHash,
+                            render,
+                            config.cache.time_storage,
+                            function (err) {
+                                if (err) {
+                                    console.log(err);
+                                }
+                            }
+                        );
+                    }
 
                 });
-            }
-        },
-        function(err, result) {
 
-            if (err) console.error(err.message);
+        }
 
-            var required = requiredData.movie(type, result.movie, result.movies);
-            var render = mergeData(result, required);
+    });
 
-            renderData(res, type, render, time);
-
-        });
 });
 
-function renderData(res, type, render, time) {
+function renderData(res, type, render, url) {
 
     if (config.theme == 'skeleton') {
         res.json(render);
@@ -162,7 +195,7 @@ function renderData(res, type, render, time) {
         res.render(type, render);
     }
 
-    console.timeEnd(time);
+    console.timeEnd(url);
 
 }
 

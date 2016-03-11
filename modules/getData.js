@@ -44,16 +44,18 @@ function getCategories(category, callback) {
 
                     callback(categories);
 
-                    memcached.set(
-                        queryHash,
-                        categories,
-                        config.cache,
-                        function (err) {
-                            if (err) {
-                                console.log(err);
+                    if (categories) {
+                        memcached.set(
+                            queryHash,
+                            categories,
+                            config.cache.time_storage,
+                            function (err) {
+                                if (err) {
+                                    console.log(err);
+                                }
                             }
-                        }
-                    );
+                        );
+                    }
 
                 });
             });
@@ -100,16 +102,18 @@ function getMovies(query, sort, page, type, callback) {
 
                     callback(movies);
 
-                    memcached.set(
-                        queryHash,
-                        movies,
-                        config.cache,
-                        function (err) {
-                            if (err) {
-                                console.log(err);
+                    if (movies) {
+                        memcached.set(
+                            queryHash,
+                            movies,
+                            config.cache.time_storage,
+                            function (err) {
+                                if (err) {
+                                    console.log(err);
+                                }
                             }
-                        }
-                    );
+                        );
+                    }
 
                 });
             });
@@ -146,18 +150,23 @@ function getMovie(id, callback) {
 
                     callback(movie);
 
-                    memcached.set(
-                        queryHash,
-                        movie,
-                        config.cache,
-                        function (err) {
-                            if (err) {
-                                console.log(err);
+                    if (movie) {
+                        memcached.set(
+                            queryHash,
+                            movie,
+                            config.cache.time_storage,
+                            function (err) {
+                                if (err) {
+                                    console.log(err);
+                                }
                             }
-                        }
-                    );
+                        );
+                    }
+
                 });
+
             });
+
         }
 
     });
@@ -177,7 +186,7 @@ function getRelatedMovies(attribute, categories, sort, callback) {
 
         getMovies(query, sort, 1, 'related', function(movies) {
 
-            if (movies.length) {
+            if (movies && movies.length) {
                 m.push(requiredData.related(query, movies));
             }
 
@@ -203,7 +212,9 @@ function getTopMovies(callback) {
 
         getMovie(id, function(movie) {
 
-            m.push(movie);
+            if (movie) {
+                m.push(movie);
+            }
 
             callback(null);
 

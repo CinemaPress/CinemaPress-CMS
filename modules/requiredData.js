@@ -191,16 +191,35 @@ function pageUrlData(url, sort, page, count, type) {
 
 function addKeywords(text, keywords) {
 
+    var dflt = true;
+
     if (keywords) {
         for (var key in keywords) {
             if (keywords.hasOwnProperty(key)) {
-                var r = new RegExp('\\[' + key + '\\]', 'g');
-                text = text.replace(r, keywords[key]);
+
+                var allSpecific = new RegExp('(\\s*\\(\\s*' + keywords[key] + '\\s*\\)\\s*\\{(.*?)\\}\\s*)', 'gi');
+                var match = allSpecific.exec(text);
+                if (match) {dflt = false;}
+                text = text.replace(allSpecific, ' $2 ');
+
+                var allKeys = new RegExp('\\[' + key + '\\]', 'g');
+                text = text.replace(allKeys, keywords[key]);
+
             }
         }
     }
 
-    text = text.trim();
+    if (dflt) {
+        var defaultSpecific = new RegExp('(\\s*\\(\\s*default\\s*\\)\\s*\\{(.*?)\\}\\s*)', 'gi');
+        text = text.replace(defaultSpecific, ' $2 ');
+    }
+
+    var allSpecifics = new RegExp('(\\s*\\(.*?\\)\\s*\\{(.*?)\\}\\s*)', 'gi');
+    text = text.replace(allSpecifics, ' ');
+
+    text = text.replace(/&nbsp;/g, ' ');
+    text = text.replace(/(^\s*)|(\s*)$/g, '');
+    text = text.replace(/\s+/g, ' ');
 
     while (true) {
 
