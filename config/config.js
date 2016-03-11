@@ -138,6 +138,6 @@ module.exports = {
         "type": "type",
         "search" : "search",
         "sitemap" : "sitemap",
-        "admin": "admin-secret-key"
+        "admin": "admin"
     }
 };

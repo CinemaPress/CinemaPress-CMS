@@ -16,4 +16,6 @@ if ! [ -d ./themes/${THEME} ]; then
 git clone https://github.com/CinemaPress/Theme-${THEME}.git ./themes/${THEME}
 fi
 
-sed -i "s/\"theme\": \".*\",/\"theme\": \"${THEME}\",/g" ./config/config.js
+chown -R :www-data ./config/config.js
+
+sed -i "s/\"theme\":\s*\".*\"/\"theme\":\"${THEME}\"/" ./config/config.js

@@ -62,13 +62,20 @@ wget -qO- https://deb.nodesource.com/setup_5.x | bash -
 apt-get -y install nginx proftpd-basic openssl mysql-client nodejs memcached libltdl7 libodbc1 libpq5
 echo 'OK'
 echo '---------------------'
-echo '-------passwd--------'
+echo '--------user---------'
 echo '---------------------'
 useradd ${DOMAIN} -m -U -s /bin/false
 rm -rf /home/${DOMAIN}/.??*
 git clone https://github.com/CinemaPress/CinemaPress-CMS.git /home/${DOMAIN}
 chown -R ${DOMAIN}:www-data /home/${DOMAIN}/
 echo 'OK'
+echo '---------------------'
+echo '--------admin--------'
+echo '---------------------'
+echo 'Придумайте пароль для админ-панели:'
+echo '---------------------'
+OPENSSL=`openssl passwd`
+echo "${DOMAIN}:$OPENSSL" >> /etc/nginx/nginx_pass
 echo '---------------------'
 echo '--------nginx--------'
 echo '---------------------'
@@ -89,7 +96,7 @@ echo '-------config--------'
 echo '---------------------'
 if [ "$THEME" != "skeleton" ]; then
 git clone https://github.com/CinemaPress/Theme-${THEME}.git /home/${DOMAIN}/themes/${THEME}
-sed -i "s/\"theme\": \".*\",/\"theme\": \"${THEME}\",/g" /home/${DOMAIN}/config/config.js
+sed -i "s/\"theme\":\s*\".*\"/\"theme\":\"${THEME}\"/" /home/${DOMAIN}/config/config.js
 fi
 sed -i "s/example.com/${DOMAIN}/g" /home/${DOMAIN}/config/config.js
 echo 'OK'
@@ -117,7 +124,9 @@ echo 'OK'
 echo '---------------------'
 echo '--------cron---------'
 echo '---------------------'
-echo "@reboot root cd /home/${DOMAIN}/ && npm start >> /home/${DOMAIN}/config/autostart.log 2>&1" >> /etc/crontab
+echo "@reboot root cd /home/${DOMAIN}/ && PORT=3333 npm start >> /home/${DOMAIN}/config/autostart.log 2>&1" >> /etc/crontab
+echo "@reboot root cd /home/${DOMAIN}/ && PORT=3334 forever start --uid=\"cinemapress\" app.js >> /home/${DOMAIN}/config/autostart.log 2>&1" >> /etc/crontab
+echo "@hourly root forever restart cinemapress >> /home/${DOMAIN}/config/autostart.log 2>&1" >> /etc/crontab
 echo 'OK'
 echo '---------------------'
 echo '-------restart-------'
@@ -136,4 +145,10 @@ npm install forever -g
 indexer --all || indexer --all --rotate
 npm start
 echo 'OK'
-echo '~# reboot'
+echo '-------------------------------------'
+echo 'УРА! CinemaPress CMS готова к работе!'
+echo 'Сервер будет перезагружен через 5 сек'
+echo '-------------------------------------'
+echo "Админ панель сайта: http://${DOMAIN}/admin"
+sleep 5
+reboot
