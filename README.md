@@ -133,10 +133,10 @@ barney
 Например: http://example.com/sitemap
 ```
 
-- **URL админ панели** - Как будет выглядеть URL страница админ панели;
+- **URL админ панели** - Должен начинаться с **admin**-secret-key, вместо secret-key любое секретное слово;
 
 ```
-Например: http://example.com/admin-secret-url
+Например: http://example.com/admin-idiot
 ```
 
 # Топ фильмы
