@@ -5,7 +5,7 @@
   "license": "MIT",
   "author": "Surinam <extensionsapp@gmail.com>",
   "scripts": {
-    "start": "forever start --watch --minUptime 1000 --spinSleepTime 1000 app.js"
+    "start": "forever start -c nodemon app.js"
   },
   "repository": {
     "type": "git",

@@ -142,6 +142,7 @@ echo '---------------------'
 cd /home/${DOMAIN}/
 npm install
 npm install forever -g
+npm install nodemon -g
 indexer --all || indexer --all --rotate
 npm start
 echo 'OK'
