@@ -6,8 +6,8 @@
 
 echo ''
 echo '---------------------- DOMAIN URL --------------------------------'
-if [ $2 ]; then
-DOMAIN=${2}
+if [ $1 ]; then
+DOMAIN=${1}
 echo ${DOMAIN}
 else
 read DOMAIN
@@ -17,8 +17,8 @@ echo 'ERROR: URL домена не может быть пустым.'
 exit
 fi
 echo '------------------------ THEME -----------------------------------'
-if [ $3 ]; then
-THEME=${3}
+if [ $2 ]; then
+THEME=${2}
 echo ${THEME}
 else
 read THEME
