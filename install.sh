@@ -126,6 +126,7 @@ echo '--------cron---------'
 echo '---------------------'
 echo "@reboot root cd /home/${DOMAIN}/ && PORT=3333 npm start >> /home/${DOMAIN}/config/autostart.log 2>&1" >> /etc/crontab
 echo "@reboot root cd /home/${DOMAIN}/ && PORT=3334 forever start --uid=\"cinemapress\" app.js >> /home/${DOMAIN}/config/autostart.log 2>&1" >> /etc/crontab
+echo "@reboot root cd /home/${DOMAIN}/ && PORT=3334 forever start --minUptime 1000ms --spinSleepTime 1000ms --append --uid=\"cinemapress\" app.js" >> /etc/crontab
 echo "@hourly root forever restart cinemapress >> /home/${DOMAIN}/config/autostart.log 2>&1" >> /etc/crontab
 echo 'OK'
 echo '---------------------'

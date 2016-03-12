@@ -11,7 +11,7 @@ function relatedRequiredData(keys, movies) {
     for (var key in keys) {
         if (keys.hasOwnProperty(key)) {
             keys[key] = '<a href="' + urlData(key, keys) + '">' + keys[key] + '</a>';
-            data.name = addKeywords(config.titles.related[key], keys)
+            data.name = addKeywords(config.related[key], keys)
         }
     }
 
