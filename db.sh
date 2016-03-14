@@ -48,19 +48,17 @@ NOW=$(date +%Y-%m-%d)
 
 wget -O database.tar.gz --no-check-certificate http://cinemapress.org/download/${KEY}
 
+mkdir -p /var/lib/sphinxsearch/data
 mkdir -p /var/lib/sphinxsearch/old
 rm -rf /var/lib/sphinxsearch/old/*
-cp -R /var/lib/sphinxsearch/data/* /var/lib/sphinxsearch/old/ && rm -rf /var/lib/sphinxsearch/data/*
+cp -R /var/lib/sphinxsearch/data/* /var/lib/sphinxsearch/old/
+rm -rf /var/lib/sphinxsearch/data/*
 tar -xzf database.tar.gz -C /var/lib/sphinxsearch/data
-
+touch /var/lib/sphinxsearch/data/${NOW}.txt
 rm -rf /var/lib/sphinxsearch/data/*.spl
-
 cp /dev/null /home/${DOMAIN}/config/movies.xml
-
 service sphinxsearch start
-
 echo "flush_all" | nc -q 2 localhost 11211
-
 echo '------------------------------------------------------------------'
 echo "Зайдите на сайт ${DOMAIN} для проверки, что все изменения"
 echo "которые были внесены, удачно были приняты сервером."
@@ -82,8 +80,11 @@ echo 'email: support@cinemapress.org'
 echo 'skype: cinemapress'
 echo '------------------------------------------------------------------'
 else
-rm -rf /var/lib/sphinxsearch/data/${DOMAIN}/new/*
-cp -R /var/lib/sphinxsearch/data/${DOMAIN}/old/* /var/lib/sphinxsearch/data/${DOMAIN}/new/
+service sphinxsearch stop
+rm -rf /var/lib/sphinxsearch/data/*
+cp -R /var/lib/sphinxsearch/old/* /var/lib/sphinxsearch/data/
+service sphinxsearch start
+echo "flush_all" | nc -q 2 localhost 11211
 echo '------------------------------------------------------------------'
 echo "Сайт ${DOMAIN} вернулся к предыдущему рабочему состоянию!"
 echo ''

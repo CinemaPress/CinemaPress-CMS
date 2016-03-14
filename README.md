@@ -10,18 +10,9 @@
 ~# sh install.sh [domain] [theme] [password]
 ```
 
-##### Пример:
-```
-~# sh install.sh mydomain.com barney My_SUpER_PasSw0rD
+##### Видео установки (готовый сайт за 6 минут):
 
------------------------ URL ДОМЕНА -------------------------------
-mydomain.com
---------------------- НАЗВАНИЕ ТЕМЫ ------------------------------
-barney
--------------- ПАРОЛЬ ОТ АДМИН-ПАНЕЛИ И FTP ----------------------
-My_SUpER_PasSw0rD
-------------------------------------------------------------------
-```
+[![asciicast](https://asciinema.org/a/16r74l0baunwzp7z44the912u.png)](https://asciinema.org/a/16r74l0baunwzp7z44the912u)
 
 # CinemaPress DataBase
  :minidisc: База данных ~ 500 000 фильмов (все фильмы/сериалы планеты).
