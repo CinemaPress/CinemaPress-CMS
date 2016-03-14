@@ -5,17 +5,22 @@
 #---------------------------
 
 echo ''
-echo '---------------------- URL ДОМЕНА --------------------------------'
+echo '----------------------- URL ДОМЕНА -------------------------------'
+AGAIN=yes
+while [ "$AGAIN" = "yes" ]
+do
 if [ $1 ]; then
 DOMAIN=${1}
 echo ${DOMAIN}
 else
 read DOMAIN
 fi
-if ! [ ${DOMAIN} ]; then
-echo 'ERROR: URL домена не может быть пустым.'
-exit
+if [ ${DOMAIN} ]; then
+AGAIN=no
+else
+echo 'WARNING: URL домена не может быть пустым.'
 fi
+done
 echo '--------------------- НАЗВАНИЕ ТЕМЫ ------------------------------'
 if [ $2 ]; then
 THEME=${2}
@@ -24,12 +29,24 @@ else
 read THEME
 THEME=${THEME:='skeleton'}
 fi
-echo '----------------- ПАРОЛЬ ОТ АДМИН-ПАНЕЛИ -------------------------'
-OPENSSL=`openssl passwd`
-if ! [ ${OPENSSL} ]; then
-echo 'ERROR: Пароль от админ-панели не может быть пустым.'
-exit
+echo '-------------- ПАРОЛЬ ОТ АДМИН-ПАНЕЛИ И FTP ----------------------'
+AGAIN=yes
+while [ "$AGAIN" = "yes" ]
+do
+if [ $3 ]; then
+PASSWD=${3}
+echo ${PASSWD}
+else
+read PASSWD
 fi
+if [ ${PASSWD} ]
+then
+OPENSSL=`echo "${PASSWD}" | openssl passwd -1 -stdin -salt cinemapress`
+AGAIN=no
+else
+echo 'WARNING: Пароль от админ-панели и FTP не может быть пустым.'
+fi
+done
 echo '------------------------------------------------------------------'
 echo ''
 
@@ -41,7 +58,7 @@ sleep 3
 echo '---------------------'
 echo '-------update--------'
 echo '---------------------'
-apt-get -y update && apt-get -y install wget curl nano htop sudo lsb-release ca-certificates git-core
+apt-get -y -qq update && apt-get -y -qq install wget curl nano htop sudo lsb-release ca-certificates git-core
 VER=`lsb_release -cs`
 echo 'OK'
 echo '---------------------'
@@ -59,7 +76,7 @@ echo 'OK'
 echo '---------------------'
 echo '-------upgrade-------'
 echo '---------------------'
-apt-get -y update && apt-get -y upgrade
+apt-get -y -qq update && apt-get -y -qq upgrade
 echo 'OK'
 echo '---------------------'
 echo '-------install-------'
@@ -134,7 +151,7 @@ echo '---------------------'
 echo '---------ftp---------'
 echo '---------------------'
 USERID=`id -u ${DOMAIN}`
-ftpasswd --passwd --file=/etc/proftpd/ftpd.passwd --name=${DOMAIN} --shell=/bin/false --home=/home/${DOMAIN} --uid=${USERID} --gid=${USERID}
+echo ${PASSWD} | ftpasswd --stdin --passwd --file=/etc/proftpd/ftpd.passwd --name=${DOMAIN} --shell=/bin/false --home=/home/${DOMAIN} --uid=${USERID} --gid=${USERID}
 echo 'OK'
 echo '---------------------'
 echo '--------cron---------'
@@ -154,9 +171,9 @@ echo '---------------------'
 echo '--------start--------'
 echo '---------------------'
 cd /home/${DOMAIN}/
-npm install
-npm install forever -g
-npm install nodemon -g
+npm install --loglevel=silent --parseable
+npm install --loglevel=silent --parseable forever -g
+npm install --loglevel=silent --parseable nodemon -g
 indexer --all || indexer --all --rotate
 echo 'OK'
 echo '-------------------------------------'

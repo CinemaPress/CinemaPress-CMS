@@ -27,7 +27,7 @@ function indexRequiredData() {
     data.domain      = config.domain;
     data.urls        = config.urls;
     data.social      = config.social;
-    data.code        = config.code;
+    data.code        = changeCode(config.code);
     data.email       = config.email.replace('@', 'CinemaPress');
     data.title       = addKeywords(config.titles.index);
     data.description = addKeywords(config.descriptions.index);
@@ -47,7 +47,7 @@ function movieRequiredData(key, keys, movies) {
     data.urls        = config.urls;
     data.social      = config.social;
     data.abuse       = config.abuse;
-    data.code        = config.code;
+    data.code        = changeCode(config.code);
     data.email       = config.email.replace('@', 'CinemaPress');
     data.schema      = movieSchemaData(keys, movies);
     data.title       = addKeywords(config.titles.movie[key], keys);
@@ -66,7 +66,7 @@ function categoryRequiredData(keys, sort, page, movies) {
     data.domain = config.domain;
     data.urls   = config.urls;
     data.social = config.social;
-    data.code   = config.code;
+    data.code   = changeCode(config.code);
     data.email  = config.email.replace('@', 'CinemaPress');
 
     for (var key in keys) {
@@ -115,7 +115,7 @@ function categoriesRequiredData(key) {
     data.domain      = config.domain;
     data.urls        = config.urls;
     data.social      = config.social;
-    data.code        = config.code;
+    data.code        = changeCode(config.code);
     data.email       = config.email.replace('@', 'CinemaPress');
 
     data.title       = addKeywords(config.titles[type[key]]);
@@ -449,6 +449,18 @@ function generalSchemaData(data) {
     };
 
     return schemaWebSite;
+
+}
+
+function changeCode(code) {
+
+    for (var key in code) {
+        if (code.hasOwnProperty(key)) {
+            code[key] = code[key].replace(/&nbsp;/gi,'');
+        }
+    }
+
+    return code;
 
 }
 

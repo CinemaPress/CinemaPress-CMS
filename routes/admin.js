@@ -30,7 +30,8 @@ router.post('/save', function(req, res) {
     req.body.keywords            = br(req.body.keywords);
     req.body.keywords.movie      = br(req.body.keywords.movie);
     req.body.titles.sort         = br(req.body.titles.sort);
-    req.body.code                = br(req.body.code);
+    req.body.code.head           = req.body.code.head.replace(/(\n|\r)/g,'&nbsp;');
+    req.body.code.footer         = req.body.code.footer.replace(/(\n|\r)/g,'&nbsp;');
 
     var data = JSON.stringify(req.body);
 
