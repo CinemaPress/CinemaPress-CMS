@@ -23,13 +23,14 @@ router.post('/save', function(req, res) {
     req.body.counts.sitemap      = parseInt(req.body.counts.sitemap);
     req.body.top                 = req.body.top.map(function(id) {return parseInt(id);});
     req.body.abuse               = req.body.abuse.map(function(id) {return parseInt(id);});
-    req.body.titles              = repl(req.body.titles);
-    req.body.titles.movie        = repl(req.body.titles.movie);
-    req.body.descriptions        = repl(req.body.descriptions);
-    req.body.descriptions.movie  = repl(req.body.descriptions.movie);
-    req.body.keywords            = repl(req.body.keywords);
-    req.body.keywords.movie      = repl(req.body.keywords.movie);
-    req.body.titles.sort         = repl(req.body.titles.sort);
+    req.body.titles              = br(req.body.titles);
+    req.body.titles.movie        = br(req.body.titles.movie);
+    req.body.descriptions        = br(req.body.descriptions);
+    req.body.descriptions.movie  = br(req.body.descriptions.movie);
+    req.body.keywords            = br(req.body.keywords);
+    req.body.keywords.movie      = br(req.body.keywords.movie);
+    req.body.titles.sort         = br(req.body.titles.sort);
+    req.body.code                = br(req.body.code);
 
     var data = JSON.stringify(req.body);
 
@@ -51,13 +52,13 @@ router.post('/save', function(req, res) {
 
 });
 
-function repl(obj) {
+function br(obj) {
 
     for (var key in obj) {
 
         if (obj.hasOwnProperty(key) && typeof obj[key] === 'string') {
 
-            obj[key] = obj[key].replace(/(\n|\r)/gi,'&nbsp;').replace(/"/gi,'\'');
+            obj[key] = obj[key].replace(/(\n|\r)/g,'&nbsp;').replace(/\\*?"/g,'\\"');
 
         }
 

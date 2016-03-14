@@ -27,6 +27,7 @@ function indexRequiredData() {
     data.domain      = config.domain;
     data.urls        = config.urls;
     data.social      = config.social;
+    data.code        = config.code;
     data.email       = config.email.replace('@', 'CinemaPress');
     data.title       = addKeywords(config.titles.index);
     data.description = addKeywords(config.descriptions.index);
@@ -46,6 +47,7 @@ function movieRequiredData(key, keys, movies) {
     data.urls        = config.urls;
     data.social      = config.social;
     data.abuse       = config.abuse;
+    data.code        = config.code;
     data.email       = config.email.replace('@', 'CinemaPress');
     data.schema      = movieSchemaData(keys, movies);
     data.title       = addKeywords(config.titles.movie[key], keys);
@@ -64,6 +66,7 @@ function categoryRequiredData(keys, sort, page, movies) {
     data.domain = config.domain;
     data.urls   = config.urls;
     data.social = config.social;
+    data.code   = config.code;
     data.email  = config.email.replace('@', 'CinemaPress');
 
     for (var key in keys) {
@@ -112,6 +115,7 @@ function categoriesRequiredData(key) {
     data.domain      = config.domain;
     data.urls        = config.urls;
     data.social      = config.social;
+    data.code        = config.code;
     data.email       = config.email.replace('@', 'CinemaPress');
 
     data.title       = addKeywords(config.titles[type[key]]);
@@ -217,9 +221,9 @@ function addKeywords(text, keywords) {
     var allSpecifics = new RegExp('(\\s*\\(.*?\\)\\s*\\{(.*?)\\}\\s*)', 'gi');
     text = text.replace(allSpecifics, ' ');
 
-    text = text.replace(/&nbsp;/g, ' ');
-    text = text.replace(/(^\s*)|(\s*)$/g, '');
+    text = text.replace(/&nbsp;/gi, ' ');
     text = text.replace(/\s+/g, ' ');
+    text = text.replace(/(^\s*)|(\s*)$/g, '');
 
     while (true) {
 
@@ -345,25 +349,31 @@ function schemaMovie(movie) {
         }
         : null;
 
-    movie.actors_arr.forEach(function(actor) {
-        schemaMovie['actor'].push({
-            "@type": "Person",
-            "name": actor,
-            "sameAs": "http://" + config.domain + "/" + config.urls.actor + "/" + actor
+    if (movie.actors_arr) {
+        movie.actors_arr.forEach(function (actor) {
+            schemaMovie['actor'].push({
+                "@type": "Person",
+                "name": actor,
+                "sameAs": "http://" + config.domain + "/" + config.urls.actor + "/" + actor
+            });
         });
-    });
+    }
 
-    movie.directors_arr.forEach(function(director) {
-        schemaMovie['director'].push({
-            "@type": "Person",
-            "name": director,
-            "sameAs": "http://" + config.domain + "/" + config.urls.director + "/" + director
+    if (movie.directors_arr) {
+        movie.directors_arr.forEach(function (director) {
+            schemaMovie['director'].push({
+                "@type": "Person",
+                "name": director,
+                "sameAs": "http://" + config.domain + "/" + config.urls.director + "/" + director
+            });
         });
-    });
+    }
 
-    movie.genres_arr.forEach(function(genre) {
-        schemaMovie['genre'].push(genre);
-    });
+    if (movie.genres_arr) {
+        movie.genres_arr.forEach(function (genre) {
+            schemaMovie['genre'].push(genre);
+        });
+    }
 
     return schemaMovie;
 

@@ -5,7 +5,7 @@
 #---------------------------
 
 echo ''
-echo '---------------------- DOMAIN URL --------------------------------'
+echo '---------------------- URL ДОМЕНА --------------------------------'
 if [ $1 ]; then
 DOMAIN=${1}
 echo ${DOMAIN}
@@ -16,13 +16,19 @@ if ! [ ${DOMAIN} ]; then
 echo 'ERROR: URL домена не может быть пустым.'
 exit
 fi
-echo '------------------------ THEME -----------------------------------'
+echo '--------------------- НАЗВАНИЕ ТЕМЫ ------------------------------'
 if [ $2 ]; then
 THEME=${2}
 echo ${THEME}
 else
 read THEME
 THEME=${THEME:='skeleton'}
+fi
+echo '----------------- ПАРОЛЬ ОТ АДМИН-ПАНЕЛИ -------------------------'
+OPENSSL=`openssl passwd`
+if ! [ ${OPENSSL} ]; then
+echo 'ERROR: Пароль от админ-панели не может быть пустым.'
+exit
 fi
 echo '------------------------------------------------------------------'
 echo ''
@@ -70,13 +76,6 @@ git clone https://github.com/CinemaPress/CinemaPress-CMS.git /home/${DOMAIN}
 chown -R ${DOMAIN}:www-data /home/${DOMAIN}/
 echo 'OK'
 echo '---------------------'
-echo '--------admin--------'
-echo '---------------------'
-echo 'Придумайте пароль для админ-панели:'
-echo '---------------------'
-OPENSSL=`openssl passwd`
-echo "${DOMAIN}:$OPENSSL" >> /etc/nginx/nginx_pass
-echo '---------------------'
 echo '--------nginx--------'
 echo '---------------------'
 AGAIN=yes
@@ -105,6 +104,7 @@ sed -i "s/user  nginx;/user  www-data;/g" /etc/nginx/nginx.conf
 sed -i "s/server_names_hash_bucket_size 64;//g" /etc/nginx/nginx.conf
 sed -i "s/http {/http {\n    server_names_hash_bucket_size 64;/g" /etc/nginx/nginx.conf
 sed -i "s/#gzip/gzip/g" /etc/nginx/nginx.conf
+echo "${DOMAIN}:$OPENSSL" >> /etc/nginx/nginx_pass
 echo 'OK'
 echo '---------------------'
 echo '-------config--------'
@@ -150,7 +150,6 @@ service nginx restart
 service proftpd restart
 service memcached restart
 echo "flush_all" | nc -q 2 localhost 11211
-echo 'OK'
 echo '---------------------'
 echo '--------start--------'
 echo '---------------------'
@@ -162,8 +161,11 @@ indexer --all || indexer --all --rotate
 echo 'OK'
 echo '-------------------------------------'
 echo 'УРА! CinemaPress CMS готова к работе!'
-echo 'Сервер будет перезагружен через 5 сек'
+echo 'Сервер будет перезагружен через 10 сек'
+echo '-------------------------------------'
+echo 'Нажмите CTRL+C чтобы отменить перезагрузку!'
 echo '-------------------------------------'
 echo "Админ панель сайта: http://${DOMAIN}/admin"
-sleep 5
+echo '-------------------------------------'
+sleep 10
 reboot

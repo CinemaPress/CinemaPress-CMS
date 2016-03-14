@@ -2,7 +2,7 @@ doctype html
 head
     meta(http-equiv='Content-Type', content='text/html; charset=utf-8')
     title= 'Admin - CinemaPress CMS'
-    link(rel='shortcut icon', href='/favicon.ico')
+    link(rel='shortcut icon', href='/themes/barney/public/favicon.ico')
     style.
         @import url(https://fonts.googleapis.com/css?family=Open+Sans);
 
@@ -11,7 +11,7 @@ head
             color: #fff;
             margin: 0 0 100px 0;
             padding: 0;
-            font-family: "Open Sans";
+            font-family: "Open Sans", sans-serif;
         }
 
         .logo {
@@ -532,91 +532,91 @@ body
                             | Главная:
                     td
                         textarea(id='titles.index').textarea
-                            != titles.index.replace(/&nbsp;/gi, '\n')
+                            != titles.index.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                 tr
                     td
                         label(for='titles.year')
                             | Категория - год:
                     td
                         textarea(id='titles.year').textarea
-                            != titles.year.replace(/&nbsp;/gi, '\n')
+                            != titles.year.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                 tr
                     td
                         label(for='titles.years')
                             | Категория - годы:
                     td
                         textarea(id='titles.years').textarea
-                            != titles.years.replace(/&nbsp;/gi, '\n')
+                            != titles.years.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                 tr
                     td
                         label(for='titles.genre')
                             | Категория - жанр:
                     td
                         textarea(id='titles.genre').textarea
-                            != titles.genre.replace(/&nbsp;/gi, '\n')
+                            != titles.genre.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                 tr
                     td
                         label(for='titles.genres')
                             | Категория - жанры:
                     td
                         textarea(id='titles.genres').textarea
-                            != titles.genres.replace(/&nbsp;/gi, '\n')
+                            != titles.genres.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                 tr
                     td
                         label(for='titles.country')
                             | Категория - страна:
                     td
                         textarea(id='titles.country').textarea
-                            != titles.country.replace(/&nbsp;/gi, '\n')
+                            != titles.country.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                 tr
                     td
                         label(for='titles.countries')
                             | Категория - страны:
                     td
                         textarea(id='titles.countries').textarea
-                            != titles.countries.replace(/&nbsp;/gi, '\n')
+                            != titles.countries.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                 tr
                     td
                         label(for='titles.actor')
                             | Категория - актер:
                     td
                         textarea(id='titles.actor').textarea
-                            != titles.actor.replace(/&nbsp;/gi, '\n')
+                            != titles.actor.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                 tr
                     td
                         label(for='titles.actors')
                             | Категория - актеры:
                     td
                         textarea(id='titles.actors').textarea
-                            != titles.actors.replace(/&nbsp;/gi, '\n')
+                            != titles.actors.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                 tr
                     td
                         label(for='titles.director')
                             | Категория - режисер:
                     td
                         textarea(id='titles.director').textarea
-                            != titles.director.replace(/&nbsp;/gi, '\n')
+                            != titles.director.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                 tr
                     td
                         label(for='titles.directors')
                             | Категория - режисеры:
                     td
                         textarea(id='titles.directors').textarea
-                            != titles.directors.replace(/&nbsp;/gi, '\n')
+                            != titles.directors.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                 tr
                     td
                         label(for='titles.type')
                             | Категория - тип:
                     td
                         textarea(id='titles.type').textarea
-                            != titles.type.replace(/&nbsp;/gi, '\n')
+                            != titles.type.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                 tr
                     td
                         label(for='titles.search')
                             | Страница поиска:
                     td
                         textarea(id='titles.search').textarea
-                            != titles.search.replace(/&nbsp;/gi, '\n')
+                            != titles.search.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
             .name(data-id='titles-movie-menu')
                 | &#10507; На странице фильма
             #titles-movie-menu.config
@@ -627,35 +627,35 @@ body
                                 | Главная:
                         td
                             textarea(id='titles.movie.single').textarea
-                                != titles.movie.single.replace(/&nbsp;/gi, '\n')
+                                != titles.movie.single.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                     tr
                         td
                             label(for='titles.movie.online')
                                 | Страница онлайн:
                         td
                             textarea(id='titles.movie.online').textarea
-                                != titles.movie.online.replace(/&nbsp;/gi, '\n')
+                                != titles.movie.online.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                     tr
                         td
                             label(for='titles.movie.download')
                                 | Страница скачивания:
                         td
                             textarea(id='titles.movie.download').textarea
-                                != titles.movie.download.replace(/&nbsp;/gi, '\n')
+                                != titles.movie.download.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                     tr
                         td
                             label(for='titles.movie.trailer')
                                 | Страница трейлера:
                         td
                             textarea(id='titles.movie.trailer').textarea
-                                != titles.movie.trailer.replace(/&nbsp;/gi, '\n')
+                                != titles.movie.trailer.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                     tr
                         td
                             label(for='titles.movie.picture')
                                 | Страница с кадрами:
                         td
                             textarea(id='titles.movie.picture').textarea
-                                != titles.movie.picture.replace(/&nbsp;/gi, '\n')
+                                != titles.movie.picture.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
             .name(data-id='titles-num-menu')
                 | &#10507; Название номера страницы [page]
             #titles-num-menu.config
@@ -752,91 +752,91 @@ body
                             | Главная:
                     td
                         textarea(id='descriptions.index').textarea
-                            != descriptions.index.replace(/&nbsp;/gi, '\n')
+                            != descriptions.index.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                 tr
                     td
                         label(for='descriptions.year')
                             | Категория - год:
                     td
                         textarea(id='descriptions.year').textarea
-                            != descriptions.year.replace(/&nbsp;/gi, '\n')
+                            != descriptions.year.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                 tr
                     td
                         label(for='descriptions.years')
                             | Категория - годы:
                     td
                         textarea(id='descriptions.years').textarea
-                            != descriptions.years.replace(/&nbsp;/gi, '\n')
+                            != descriptions.years.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                 tr
                     td
                         label(for='descriptions.genre')
                             | Категория - жанр:
                     td
                         textarea(id='descriptions.genre').textarea
-                            != descriptions.genre.replace(/&nbsp;/gi, '\n')
+                            != descriptions.genre.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                 tr
                     td
                         label(for='descriptions.genres')
                             | Категория - жанры:
                     td
                         textarea(id='descriptions.genres').textarea
-                            != descriptions.genres.replace(/&nbsp;/gi, '\n')
+                            != descriptions.genres.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                 tr
                     td
                         label(for='descriptions.country')
                             | Категория - страна:
                     td
                         textarea(id='descriptions.country').textarea
-                            != descriptions.country.replace(/&nbsp;/gi, '\n')
+                            != descriptions.country.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                 tr
                     td
                         label(for='descriptions.countries')
                             | Категория - страны:
                     td
                         textarea(id='descriptions.countries').textarea
-                            != descriptions.countries.replace(/&nbsp;/gi, '\n')
+                            != descriptions.countries.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                 tr
                     td
                         label(for='descriptions.actor')
                             | Категория - актер:
                     td
                         textarea(id='descriptions.actor').textarea
-                            != descriptions.actor.replace(/&nbsp;/gi, '\n')
+                            != descriptions.actor.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                 tr
                     td
                         label(for='descriptions.actors')
                             | Категория - актеры:
                     td
                         textarea(id='descriptions.actors').textarea
-                            != descriptions.actors.replace(/&nbsp;/gi, '\n')
+                            != descriptions.actors.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                 tr
                     td
                         label(for='descriptions.director')
                             | Категория - режисер:
                     td
                         textarea(id='descriptions.director').textarea
-                            != descriptions.director.replace(/&nbsp;/gi, '\n')
+                            != descriptions.director.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                 tr
                     td
                         label(for='descriptions.directors')
                             | Категория - режисеры:
                     td
                         textarea(id='descriptions.directors').textarea
-                            != descriptions.directors.replace(/&nbsp;/gi, '\n')
+                            != descriptions.directors.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                 tr
                     td
                         label(for='descriptions.type')
                             | Категория - тип:
                     td
                         textarea(id='descriptions.type').textarea
-                            != descriptions.type.replace(/&nbsp;/gi, '\n')
+                            != descriptions.type.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                 tr
                     td
                         label(for='descriptions.search')
                             | Страница поиска:
                     td
                         textarea(id='descriptions.search').textarea
-                            != descriptions.search.replace(/&nbsp;/gi, '\n')
+                            != descriptions.search.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
             .name(data-id='descriptions-movie-menu')
                 | &#10507; На странице фильма
             #descriptions-movie-menu.config
@@ -847,35 +847,35 @@ body
                                 | Главная:
                         td
                             textarea(id='descriptions.movie.single').textarea
-                                != descriptions.movie.single.replace(/&nbsp;/gi, '\n')
+                                != descriptions.movie.single.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                     tr
                         td
                             label(for='descriptions.movie.online')
                                 | Страница онлайн:
                         td
                             textarea(id='descriptions.movie.online').textarea
-                                != descriptions.movie.online.replace(/&nbsp;/gi, '\n')
+                                != descriptions.movie.online.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                     tr
                         td
                             label(for='descriptions.movie.download')
                                 | Страница скачивания:
                         td
                             textarea(id='descriptions.movie.download').textarea
-                                != descriptions.movie.download.replace(/&nbsp;/gi, '\n')
+                                != descriptions.movie.download.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                     tr
                         td
                             label(for='descriptions.movie.trailer')
                                 | Страница трейлера:
                         td
                             textarea(id='descriptions.movie.trailer').textarea
-                                != descriptions.movie.trailer.replace(/&nbsp;/gi, '\n')
+                                != descriptions.movie.trailer.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                     tr
                         td
                             label(for='descriptions.movie.picture')
                                 | Страница с кадрами:
                         td
                             textarea(id='descriptions.movie.picture').textarea
-                                != descriptions.movie.picture.replace(/&nbsp;/gi, '\n')
+                                != descriptions.movie.picture.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
         .name(data-id='keywords-menu')
             | &#10507; Параметры ключевых слов
         #keywords-menu.config
@@ -886,91 +886,91 @@ body
                             | Главная:
                     td
                         textarea(id='keywords.index').textarea
-                            != keywords.index.replace(/&nbsp;/gi, '\n')
+                            != keywords.index.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                 tr
                     td
                         label(for='keywords.year')
                             | Категория - год:
                     td
                         textarea(id='keywords.year').textarea
-                            != keywords.year.replace(/&nbsp;/gi, '\n')
+                            != keywords.year.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                 tr
                     td
                         label(for='keywords.years')
                             | Категория - годы:
                     td
                         textarea(id='keywords.years').textarea
-                            != keywords.years.replace(/&nbsp;/gi, '\n')
+                            != keywords.years.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                 tr
                     td
                         label(for='keywords.genre')
                             | Категория - жанр:
                     td
                         textarea(id='keywords.genre').textarea
-                            != keywords.genre.replace(/&nbsp;/gi, '\n')
+                            != keywords.genre.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                 tr
                     td
                         label(for='keywords.genres')
                             | Категория - жанры:
                     td
                         textarea(id='keywords.genres').textarea
-                            != keywords.genres.replace(/&nbsp;/gi, '\n')
+                            != keywords.genres.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                 tr
                     td
                         label(for='keywords.country')
                             | Категория - страна:
                     td
                         textarea(id='keywords.country').textarea
-                            != keywords.country.replace(/&nbsp;/gi, '\n')
+                            != keywords.country.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                 tr
                     td
                         label(for='keywords.countries')
                             | Категория - страны:
                     td
                         textarea(id='keywords.countries').textarea
-                            != keywords.countries.replace(/&nbsp;/gi, '\n')
+                            != keywords.countries.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                 tr
                     td
                         label(for='keywords.actor')
                             | Категория - актер:
                     td
                         textarea(id='keywords.actor').textarea
-                            != keywords.actor.replace(/&nbsp;/gi, '\n')
+                            != keywords.actor.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                 tr
                     td
                         label(for='keywords.actors')
                             | Категория - актеры:
                     td
                         textarea(id='keywords.actors').textarea
-                            != keywords.actors.replace(/&nbsp;/gi, '\n')
+                            != keywords.actors.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                 tr
                     td
                         label(for='keywords.director')
                             | Категория - режисер:
                     td
                         textarea(id='keywords.director').textarea
-                            != keywords.director.replace(/&nbsp;/gi, '\n')
+                            != keywords.director.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                 tr
                     td
                         label(for='keywords.directors')
                             | Категория - режисеры:
                     td
                         textarea(id='keywords.directors').textarea
-                            != keywords.directors.replace(/&nbsp;/gi, '\n')
+                            != keywords.directors.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                 tr
                     td
                         label(for='keywords.type')
                             | Категория - тип:
                     td
                         textarea(id='keywords.type').textarea
-                            != keywords.type.replace(/&nbsp;/gi, '\n')
+                            != keywords.type.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                 tr
                     td
                         label(for='keywords.search')
                             | Страница поиска:
                     td
                         textarea(id='keywords.search').textarea
-                            != keywords.search.replace(/&nbsp;/gi, '\n')
+                            != keywords.search.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
             .name(data-id='keywords-movie-menu')
                 | &#10507; На странице фильма
             #keywords-movie-menu.config
@@ -981,35 +981,35 @@ body
                                 | Главная:
                         td
                             textarea(id='keywords.movie.single').textarea
-                                != keywords.movie.single.replace(/&nbsp;/gi, '\n')
+                                != keywords.movie.single.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                     tr
                         td
                             label(for='keywords.movie.online')
                                 | Страница онлайн:
                         td
                             textarea(id='keywords.movie.online').textarea
-                                != keywords.movie.online.replace(/&nbsp;/gi, '\n')
+                                != keywords.movie.online.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                     tr
                         td
                             label(for='keywords.movie.download')
                                 | Страница скачивания:
                         td
                             textarea(id='keywords.movie.download').textarea
-                                != keywords.movie.download.replace(/&nbsp;/gi, '\n')
+                                != keywords.movie.download.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                     tr
                         td
                             label(for='keywords.movie.trailer')
                                 | Страница трейлера:
                         td
                             textarea(id='keywords.movie.trailer').textarea
-                                != keywords.movie.trailer.replace(/&nbsp;/gi, '\n')
+                                != keywords.movie.trailer.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
                     tr
                         td
                             label(for='keywords.movie.picture')
                                 | Страница с кадрами:
                         td
                             textarea(id='keywords.movie.picture').textarea
-                                != keywords.movie.picture.replace(/&nbsp;/gi, '\n')
+                                != keywords.movie.picture.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
         .name(data-id='sorting-menu')
             | &#10507; Имена сортировок
         #sorting-menu.config
@@ -1120,6 +1120,24 @@ body
                             | twitter:
                     td
                         input(type='text', id='social.twitter', value=social.twitter).input
+        .name(data-id='code-menu')
+            | &#10507; Вставить код
+        #code-menu.config
+            table
+                tr
+                    td
+                        label(for='code.head')
+                            | Верх страницы:
+                    td
+                        textarea(id='code.head').textarea
+                            != code.head.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
+                tr
+                    td
+                        label(for='code.footer')
+                            | Низ страницы:
+                    td
+                        textarea(id='code.footer').textarea
+                            != code.footer.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
     script.
         var showMenu = document.querySelectorAll('.name');
         for (var j = 0; j < showMenu.length; j++) {
@@ -1298,6 +1316,10 @@ body
                     "search": document.getElementById('urls.search').value || "#{urls.search}",
                     "sitemap": document.getElementById('urls.sitemap').value || "#{urls.sitemap}",
                     "admin": document.getElementById('urls.admin').value || "#{urls.admin}"
+                },
+                "code": {
+                    "head": document.getElementById('insert.head').value,
+                    "footer": document.getElementById('insert.footer').value
                 }
             };
 

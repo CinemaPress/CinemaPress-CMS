@@ -21,6 +21,10 @@ module.exports = {
         "related": 5,
         "sitemap": 10000
     },
+    "code": {
+        "head": "",
+        "footer": ""
+    },
     "relates": "countries,genres,directors,actors,year",
     "related": {
         "year": "Фильмы [year] года",
