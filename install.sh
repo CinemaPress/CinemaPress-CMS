@@ -79,12 +79,27 @@ echo "${DOMAIN}:$OPENSSL" >> /etc/nginx/nginx_pass
 echo '---------------------'
 echo '--------nginx--------'
 echo '---------------------'
+AGAIN=yes
+DEFAULT_PORT=3333
+BACKUP_PORT=3334
+while [ "$AGAIN" = "yes" ]
+do
+DEFAULT_PORT_TEST=`netstat -tunlp | grep ${DEFAULT_PORT}`
+BACKUP_PORT_TEST=`netstat -tunlp | grep ${BACKUP_PORT}`
+if [ "$DEFAULT_PORT_TEST" = "" ] && [ "$BACKUP_PORT_TEST" = "" ]
+then
+AGAIN=no
+else
+DEFAULT_PORT=$((DEFAULT_PORT+1))
+BACKUP_PORT=$((BACKUP_PORT+1))
+fi
+done
 rm -rf /etc/nginx/conf.d/rewrite.conf
 ln -s /home/${DOMAIN}/config/rewrite.conf /etc/nginx/conf.d/rewrite.conf
-rm -rf /etc/nginx/conf.d/upstream.conf
-ln -s /home/${DOMAIN}/config/upstream.conf /etc/nginx/conf.d/upstream.conf
 rm -rf /etc/nginx/conf.d/${DOMAIN}.conf
 ln -s /home/${DOMAIN}/config/nginx.conf /etc/nginx/conf.d/${DOMAIN}.conf
+sed -i "s/DEFAULT_PORT/${DEFAULT_PORT}/g" /home/${DOMAIN}/config/nginx.conf
+sed -i "s/BACKUP_PORT/${BACKUP_PORT}/g" /home/${DOMAIN}/config/nginx.conf
 sed -i "s/example.com/${DOMAIN}/g" /home/${DOMAIN}/config/nginx.conf
 sed -i "s/user  nginx;/user  www-data;/g" /etc/nginx/nginx.conf
 sed -i "s/server_names_hash_bucket_size 64;//g" /etc/nginx/nginx.conf
@@ -124,10 +139,9 @@ echo 'OK'
 echo '---------------------'
 echo '--------cron---------'
 echo '---------------------'
-echo "@reboot root cd /home/${DOMAIN}/ && PORT=3333 npm start >> /home/${DOMAIN}/config/autostart.log 2>&1" >> /etc/crontab
-echo "@reboot root cd /home/${DOMAIN}/ && PORT=3334 forever start --uid=\"cinemapress\" app.js >> /home/${DOMAIN}/config/autostart.log 2>&1" >> /etc/crontab
-echo "@reboot root cd /home/${DOMAIN}/ && PORT=3334 forever start --minUptime 1000ms --spinSleepTime 1000ms --append --uid=\"cinemapress\" app.js" >> /etc/crontab
-echo "@hourly root forever restart cinemapress >> /home/${DOMAIN}/config/autostart.log 2>&1" >> /etc/crontab
+echo "@reboot root cd /home/${DOMAIN}/ && PORT=${DEFAULT_PORT} forever start --minUptime 1000ms --spinSleepTime 1000ms --append --uid default --killSignal=SIGTERM -c \"nodemon --delay 2 --exitcrash\" app.js >> /home/${DOMAIN}/config/autostart.log 2>&1" >> /etc/crontab
+echo "@reboot root cd /home/${DOMAIN}/ && PORT=${BACKUP_PORT} forever start --minUptime 1000ms --spinSleepTime 1000ms --append --uid backup app.js >> /home/${DOMAIN}/config/autostart.log 2>&1" >> /etc/crontab
+echo "@hourly root forever restart backup >> /home/${DOMAIN}/config/autostart.log 2>&1" >> /etc/crontab
 echo 'OK'
 echo '---------------------'
 echo '-------restart-------'
@@ -145,7 +159,6 @@ npm install
 npm install forever -g
 npm install nodemon -g
 indexer --all || indexer --all --rotate
-npm start
 echo 'OK'
 echo '-------------------------------------'
 echo 'УРА! CinemaPress CMS готова к работе!'

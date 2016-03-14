@@ -5,7 +5,7 @@
   "license": "MIT",
   "author": "Surinam <extensionsapp@gmail.com>",
   "scripts": {
-    "start": "forever start -c nodemon app.js"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",

@@ -13,7 +13,7 @@ var movie        = require(__dirname + '/routes/movie');
 var admin        = require(__dirname + '/routes/admin');
 var index        = require(__dirname + '/routes/index');
 
-var port = process.env.PORT || 3333;
+var port = process.env.PORT || 2034;
 
 app.set('views', path.join(__dirname, 'themes', config.theme, 'views'));
 app.set('view engine', 'jade');
@@ -21,7 +21,7 @@ app.set('view engine', 'jade');
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, 'themes', config.theme, 'public')));
+app.use('/themes/' + config.theme + '/public', express.static(path.join(__dirname, 'themes', config.theme, 'public')));
 
 app.use('/' + config.urls.year, categories);
 app.use('/' + config.urls.genre, categories);
