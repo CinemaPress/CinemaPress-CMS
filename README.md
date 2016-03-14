@@ -10,9 +10,9 @@
 ~# sh install.sh [domain] [theme] [password]
 ```
 
-##### Видео установки (готовый сайт за 6 минут):
+##### Видео установки (готовый кино-сайт за 5 минут):
 
-[![asciicast](https://asciinema.org/a/16r74l0baunwzp7z44the912u.png)](https://asciinema.org/a/16r74l0baunwzp7z44the912u)
+[![Готовый кино-сайт за 5 минут (видео)](https://asciinema.org/a/ecmqixsphnvy4q0oz8zghp20i.png)](https://asciinema.org/a/ecmqixsphnvy4q0oz8zghp20i)
 
 # CinemaPress DataBase
  :minidisc: База данных ~ 500 000 фильмов (все фильмы/сериалы планеты).
