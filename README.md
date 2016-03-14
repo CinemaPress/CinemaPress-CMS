@@ -36,7 +36,7 @@ MyDatabaseKey
 
 ### Установка темы оформления
 
-- [Barney (kinogo.cc)](https://github.com/CinemaPress/Theme-Barney)
+- [Barney (kinogo.co)](https://github.com/CinemaPress/Theme-Barney)
 ```
 ~# sh theme.sh barney
 ```
