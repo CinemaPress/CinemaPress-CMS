@@ -15,7 +15,7 @@ var index        = require(__dirname + '/routes/index');
 
 var port = process.env.PORT || 2034;
 
-app.set('views', [path.join(__dirname, 'themes', config.theme, 'views'), path.join(__dirname, 'themes', 'skeleton', 'views')]);
+app.set('views', [path.join(__dirname, 'themes', 'skeleton', 'views'), path.join(__dirname, 'themes', config.theme, 'views')]);
 app.set('view engine', 'jade');
 
 app.use(cookieParser());
