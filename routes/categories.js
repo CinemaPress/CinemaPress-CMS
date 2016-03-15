@@ -13,7 +13,7 @@ var memcached    = new Memcached('localhost:11211');
 
 router.get('/', function(req, res) {
 
-    var url = decodeURIComponent(req.originalUrl);
+    var url = decodeURIComponent(config.domain + req.originalUrl);
     var urlHash = md5(url);
     console.time(url);
     
@@ -119,7 +119,7 @@ router.get('/:query/:page?', function(req, res) {
 
     if (!query) return res.redirect('/');
 
-    var url = decodeURIComponent(req.originalUrl);
+    var url = decodeURIComponent(config.domain + req.originalUrl);
     var urlHash = md5(url);
     console.time(url);
 

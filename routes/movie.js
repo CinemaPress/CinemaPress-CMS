@@ -13,7 +13,7 @@ var memcached    = new Memcached('localhost:11211');
 
 router.get('/:movie/:type?', function(req, res) {
 
-    var url = decodeURIComponent(req.originalUrl);
+    var url = decodeURIComponent(config.domain + req.originalUrl);
     var urlHash = md5(url);
     console.time(url);
 

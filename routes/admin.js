@@ -1,14 +1,31 @@
 'use strict';
 
-var config       = require('../config/config');
-var express      = require('express');
-var router       = express.Router();
-var path         = require('path');
-var fs           = require('fs');
+var config    = require('../config/config');
+var express   = require('express');
+var router    = express.Router();
+var path      = require('path');
+var fs        = require('fs');
+var Memcached = require('memcached');
+var memcached = new Memcached('localhost:11211');
 
 router.get('/?', function(req, res) {
 
     res.render('admin', config);
+
+});
+
+router.post('/flush', function(req, res) {
+
+    memcached.flush(function(err) {
+
+        if (err) {
+            res.status(404).send(err);
+        }
+        else {
+            res.status(200).send('Flush');
+        }
+
+    });
 
 });
 
