@@ -8,9 +8,32 @@ var fs        = require('fs');
 var Memcached = require('memcached');
 var memcached = new Memcached('localhost:11211');
 
-router.get('/?', function(req, res) {
+router.get('/:ver?', function(req, res) {
 
     res.render('admin', config);
+
+});
+
+router.post('/downgrade', function(req, res) {
+
+    fs.rename(path.join(path.dirname(__dirname), 'config', 'config.js'), path.join(path.dirname(__dirname), 'config', 'config.downgrade.js'), function (err) {
+        if (err) {
+            res.status(404).send(err);
+        }
+        fs.rename(path.join(path.dirname(__dirname), 'config', 'config.old.js'), path.join(path.dirname(__dirname), 'config', 'config.js'), function (err) {
+            if (err) {
+                res.status(404).send(err);
+            }
+            fs.rename(path.join(path.dirname(__dirname), 'config', 'config.downgrade.js'), path.join(path.dirname(__dirname), 'config', 'config.old.js'), function (err) {
+                if (err) {
+                    res.status(404).send(err);
+                }
+                else {
+                    res.status(200).send('Downgrade');
+                }
+            });
+        });
+    });
 
 });
 

@@ -139,6 +139,18 @@ head
             float: left;
         }
 
+        .downgrade {
+            padding: 20px;
+            background: #272F38;
+            color: #ccc;
+            text-decoration: none;
+            cursor: pointer;
+            border: 1px #5c728c solid;
+            border-radius: 5px;
+            margin: 0;
+            float: left;
+        }
+
         .flush {
             padding: 20px;
             background: #272F38;
@@ -147,11 +159,11 @@ head
             cursor: pointer;
             border: 1px #5c728c solid;
             border-radius: 5px;
-            float: left;
-            margin: 0 5px 0 0;
+            margin: 0;
+            text-align: center;
         }
 
-        .submit:hover, .help:hover, .flush:hover {
+        .submit:hover, .downgrade:hover, .help:hover, .flush:hover {
             background: #2e3742;
             color: #fff;
         }
@@ -166,6 +178,8 @@ body
         .top
             #submit.submit
                 | Сохранить &#9635;
+            #downgrade.downgrade
+                | Откатиться &#128561;
             a(href='https://github.com/CinemaPress/CinemaPress-CMS', target='_blank').help
                 | Помощь &#9822;
         .name(data-id='main-menu')
@@ -319,7 +333,7 @@ body
                                     | 1 неделя
                     td(rowspan=2)
                         #flush.flush
-                            | Очистить кэш &#9730;
+                            | Очистить кэш&nbsp;&#9730;
                 tr
                     td
                         label(for='cache.full_storage' style='width:500px;')
@@ -1360,26 +1374,58 @@ body
             }
             xhr.send(JSON.stringify(data));
 
-            var flushXHR = new XMLHttpRequest();
-            flushXHR.open('POST', '#{urls.admin}/flush', true);
-            flushXHR.onreadystatechange = function () {
-                if (flushXHR.readyState == 4 && flushXHR.status == 200) {
-                    document.getElementById('flush').innerHTML = '<span style="color:#46d0ff;">Очистка кэша &#9762;</span>';
+        }
+
+        var flush = document.getElementById('flush');
+        flush.addEventListener('click', flushData);
+
+        function flushData() {
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '#{urls.admin}/flush', true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    document.getElementById('flush').innerHTML = '<span style="color:#46d0ff;">Очистка кэша&nbsp;&#9762;</span>';
 
                     setTimeout(function () {
-                        document.getElementById('flush').innerHTML = '<span style="color:#78ffa0;">Кэш успешно очищен &#10003;</span>';
+                        document.getElementById('flush').innerHTML = '<span style="color:#78ffa0;">Кэш очищен&nbsp;&#10003;</span>';
                     }, 2000);
 
                     setTimeout(function () {
-                        document.getElementById('flush').innerHTML = 'Очистить кэш &#9730;';
+                        document.getElementById('flush').innerHTML = 'Очистить кэш&nbsp;&#9730;';
                     }, 5000);
                 }
-                else if (flushXHR.status == 404) {
-                    document.getElementById('flush').innerHTML = '<span style="color:#ff916d;">Ошибка очистки кэша &#9773;</span>';
-                    console.log(flushXHR.responseText);
+                else if (xhr.status == 404) {
+                    document.getElementById('flush').innerHTML = '<span style="color:#ff916d;">Ошибка очистки&nbsp;&#9773;</span>';
+                    console.log(xhr.responseText);
                 }
             }
-            flushXHR.send();
+            xhr.send();
+
+        }
+
+        var downgrade = document.getElementById('downgrade');
+        downgrade.addEventListener('click', downgradeData);
+
+        function downgradeData() {
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '#{urls.admin}/downgrade', true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    document.getElementById('downgrade').innerHTML = '<span style="color:#46d0ff;">Откатываемся &#128560;</span>';
+
+                    setTimeout(function () {
+                        document.getElementById('downgrade').innerHTML = '<span style="color:#78ffa0;">Откатились &#128526;</span>';
+                        location.reload(true);
+                    }, 4000);
+                }
+                else if (xhr.status == 404) {
+                    document.getElementById('downgrade').innerHTML = '<span style="color:#ff916d;">Ошибка отката &#128552;</span>';
+                    console.log(xhr.responseText);
+                }
+            }
+            xhr.send();
 
         }
 

@@ -128,6 +128,7 @@ echo '-------config--------'
 echo '---------------------'
 if [ "$THEME" != "skeleton" ]; then
 git clone https://github.com/CinemaPress/Theme-${THEME}.git /home/${DOMAIN}/themes/${THEME}
+chown -R ${DOMAIN}:www-data /home/${DOMAIN}/themes
 sed -i "s/\"theme\":\s*\".*\"/\"theme\":\"${THEME}\"/" /home/${DOMAIN}/config/config.js
 fi
 sed -i "s/example.com/${DOMAIN}/g" /home/${DOMAIN}/config/config.js
