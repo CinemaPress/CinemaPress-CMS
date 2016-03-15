@@ -8,7 +8,7 @@ var fs        = require('fs');
 var Memcached = require('memcached');
 var memcached = new Memcached('localhost:11211');
 
-router.get('/:ver?', function(req, res) {
+router.get('/?', function(req, res) {
 
     res.render('admin', config);
 
