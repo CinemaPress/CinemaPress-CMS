@@ -217,6 +217,9 @@ body
                         label(for='urls.prefix_id')
                             | Префикс перед ID:
                         input(type='text', id='urls.prefix_id', value=urls.prefix_id, style='margin:0 20px; width:40px;').input
+                        label(for='urls.unique_id')
+                            | Уникальный ID:
+                        input(type='text', id='urls.unique_id', value=urls.unique_id, style='margin:0 20px; width:40px;').input
                 tr
                     td
                         label(for='urls.movie')
@@ -1333,7 +1336,8 @@ body
                 },
                 "urls": {
                     "prefix_id": document.getElementById('urls.prefix_id').value,
-                    "separator": document.getElementById('urls.separator').value || "#{urls.separator}",
+                    "unique_id": (parseInt(document.getElementById('urls.unique_id').value) > -298 && parseInt(document.getElementById('urls.unique_id').value) < 297001) ? document.getElementById('urls.unique_id').value : '0',
+                    "separator": document.getElementById('urls.separator').value,
                     "movie_url": document.getElementById('urls.movie_url').value || "#{urls.movie_url}",
                     "movie": document.getElementById('urls.movie').value || "#{urls.movie}",
                     "year": document.getElementById('urls.year').value || "#{urls.year}",

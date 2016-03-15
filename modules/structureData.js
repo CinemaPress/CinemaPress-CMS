@@ -31,6 +31,10 @@ function moviesData(movies) {
 
     return movies.map(function(movie) {
 
+        var kp_id = movie.kp_id;
+
+        movie.kp_id = parseInt(movie.kp_id) + parseInt(config.urls.unique_id);
+
         var poster      = 'https://st.kp.yandex.net/images/film_iphone/iphone360_' + movie.kp_id + '.jpg';
         var poster_big  = 'https://st.kp.yandex.net/images/film_big/' + movie.kp_id + '.jpg';
         var poster_min  = 'https://st.kp.yandex.net/images/sm_film/' + movie.kp_id + '.jpg';
@@ -52,6 +56,7 @@ function moviesData(movies) {
 
         return {
             "id"            : movie.kp_id,
+            "kp_id"         : kp_id,
             "title"         : movie.search,
             "poster"        : poster,
             "poster_big"    : poster_big,

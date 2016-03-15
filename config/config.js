@@ -131,6 +131,7 @@ module.exports = {
     },
     "urls": {
         "prefix_id": "id",
+        "unique_id": 0,
         "separator": "-",
         "movie_url": "[prefix_id][separator][title_ru][separator][title_en]",
         "movie": "movie",

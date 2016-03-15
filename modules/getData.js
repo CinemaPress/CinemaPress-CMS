@@ -124,6 +124,8 @@ function getMovies(query, sort, page, type, callback) {
 
 function getMovie(id, callback) {
 
+    id = parseInt(id) - parseInt(config.urls.unique_id);
+
     var queryString = 'SELECT * FROM movies WHERE kp_id = ' + id + ' LIMIT 1';
 
     var queryHash = md5(queryString);

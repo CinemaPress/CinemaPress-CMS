@@ -54,6 +54,7 @@ router.post('/flush', function(req, res) {
 
 router.post('/save', function(req, res) {
 
+    req.body.urls.unique_id      = (parseInt(req.body.urls.unique_id) > -298 && parseInt(req.body.urls.unique_id) < 297001) ? parseInt(req.body.urls.unique_id) : 0;
     req.body.cache.time_storage  = parseInt(req.body.cache.time_storage);
     req.body.cache.full_storage  = parseInt(req.body.cache.full_storage);
     req.body.counts.index        = parseInt(req.body.counts.index);
