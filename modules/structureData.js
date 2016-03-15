@@ -44,11 +44,15 @@ function moviesData(movies) {
         if (movie.pictures) {
             var p = movie.pictures.split(',');
             var r = Math.floor(Math.random() * p.length);
-            picture     = 'https://st.kp.yandex.net/images/kadr/' + p[r] + '.jpg';
-            picture_big = 'https://st.kp.yandex.net/images/kadr/' + p[r] + '.jpg';
-            picture_min = 'https://st.kp.yandex.net/images/kadr/sm_' + p[r] + '.jpg';
+            if (p[r] > 363866) {
+                picture     = 'https://st.kp.yandex.net/images/kadr/' + p[r] + '.jpg';
+                picture_big = 'https://st.kp.yandex.net/images/kadr/' + p[r] + '.jpg';
+                picture_min = 'https://st.kp.yandex.net/images/kadr/sm_' + p[r] + '.jpg';
+            }
             pictures    = p.map(function(id) {
-                return 'https://st.kp.yandex.net/images/kadr/' + id + '.jpg';
+                if (id > 363866) {
+                    return 'https://st.kp.yandex.net/images/kadr/' + id + '.jpg';
+                }
             });
         }
 
