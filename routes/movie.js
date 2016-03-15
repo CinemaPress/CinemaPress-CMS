@@ -22,7 +22,7 @@ router.get('/:movie/:type?', function(req, res) {
 
     var prefix_id  = config.urls.prefix_id || '/';
     var regexpId   = new RegExp(decodeURIComponent(prefix_id) + '([0-9]{1,7})', 'ig');
-    var id         = regexpId.exec(req.params.movie); id = (id) ? id[1] : '';
+    var id         = regexpId.exec(req.params.movie); id = (id) ? parseInt(id[1]) : '';
     var regexpType = new RegExp('(single|online|trailer|download|picture)', 'ig');
     var type       = regexpType.exec(req.params.type); type = (type) ? type[1] : 'single';
 

@@ -212,6 +212,8 @@ function getTopMovies(callback) {
 
     async.forEachOfSeries(config.top, function (id, key, callback) {
 
+        id = parseInt(id) + parseInt(config.urls.unique_id);
+
         getMovie(id, function(movie) {
 
             if (movie) {

@@ -31,9 +31,7 @@ function moviesData(movies) {
 
     return movies.map(function(movie) {
 
-        var kp_id = movie.kp_id;
-
-        movie.kp_id = parseInt(movie.kp_id) + parseInt(config.urls.unique_id);
+        var id = parseInt(movie.kp_id) + parseInt(config.urls.unique_id);
 
         var poster      = 'https://st.kp.yandex.net/images/film_iphone/iphone360_' + movie.kp_id + '.jpg';
         var poster_big  = 'https://st.kp.yandex.net/images/film_big/' + movie.kp_id + '.jpg';
@@ -55,8 +53,8 @@ function moviesData(movies) {
         }
 
         return {
-            "id"            : movie.kp_id,
-            "kp_id"         : kp_id,
+            "id"            : id,
+            "kp_id"         : movie.kp_id,
             "title"         : movie.search,
             "poster"        : poster,
             "poster_big"    : poster_big,
@@ -96,7 +94,7 @@ function moviesData(movies) {
             "imdb_vote"     : movie.imdb_vote,
             "premiere"      : toDate(movie.premiere),
             "type"          : movie.type,
-            "url"           : createMovieUrl(movie.kp_id, {
+            "url"           : createMovieUrl(id, {
                 "title_ru"  : movie.title_ru,
                 "title_en"  : movie.title_en,
                 "year"      : movie.year,
