@@ -56,13 +56,14 @@ rm -rf /var/lib/sphinxsearch/data/*
 tar -xzf database.tar.gz -C /var/lib/sphinxsearch/data
 touch /var/lib/sphinxsearch/data/${NOW}.txt
 rm -rf /var/lib/sphinxsearch/data/*.spl
+rm -rf /var/lib/sphinxsearch/data/binlog.*
 cp /dev/null /home/${DOMAIN}/config/movies.xml
 service sphinxsearch start
 echo "flush_all" | nc -q 2 localhost 11211
 echo '------------------------------------------------------------------'
 echo "Зайдите на сайт ${DOMAIN} для проверки, что все изменения"
 echo "которые были внесены, удачно были приняты сервером."
-echo "Если Вы ответите 'Нет', тогда сайт вернётся к предыдущему рабочему состочнию!"
+echo "Если Вы ответите 'Нет', тогда сайт вернётся к предыдущему рабочему состоянию!"
 echo "Всё работает? (ДА/нет)"
 read WORK
 WORK=${WORK:='ДА'}
