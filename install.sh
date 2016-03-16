@@ -157,9 +157,9 @@ echo 'OK'
 echo '---------------------'
 echo '--------cron---------'
 echo '---------------------'
-echo "@reboot root cd /home/${DOMAIN}/ && PORT=${DEFAULT_PORT} forever start --minUptime 1000ms --spinSleepTime 1000ms --append --uid \"default-${DOMAIN}\" --killSignal=SIGTERM -c \"nodemon --delay 2 --exitcrash\" app.js >> /home/${DOMAIN}/config/autostart.log 2>&1" >> /etc/crontab
-echo "@reboot root cd /home/${DOMAIN}/ && PORT=${BACKUP_PORT} forever start --minUptime 1000ms --spinSleepTime 1000ms --append --uid \"backup-${DOMAIN}\" app.js >> /home/${DOMAIN}/config/autostart.log 2>&1" >> /etc/crontab
-echo "@hourly root forever restart backup-${DOMAIN} >> /home/${DOMAIN}/config/autostart.log 2>&1" >> /etc/crontab
+echo "@reboot root cd /home/${DOMAIN}/ && PORT=${DEFAULT_PORT} forever start --minUptime 1000ms --spinSleepTime 1000ms --append --uid \"${DOMAIN}-default\" --killSignal=SIGTERM -c \"nodemon --delay 2 --exitcrash\" app.js >> /home/${DOMAIN}/config/autostart.log 2>&1" >> /etc/crontab
+echo "@reboot root cd /home/${DOMAIN}/ && PORT=${BACKUP_PORT} forever start --minUptime 1000ms --spinSleepTime 1000ms --append --uid \"${DOMAIN}-backup\" app.js >> /home/${DOMAIN}/config/autostart.log 2>&1" >> /etc/crontab
+echo "@hourly root forever restart ${DOMAIN}-backup >> /home/${DOMAIN}/config/autostart.log 2>&1" >> /etc/crontab
 echo 'OK'
 echo '---------------------'
 echo '-------restart-------'

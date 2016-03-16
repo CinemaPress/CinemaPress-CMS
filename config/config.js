@@ -27,11 +27,26 @@ module.exports = {
     },
     "relates": "countries,genres,directors,actors,year",
     "related": {
-        "year": "Фильмы [year] года",
-        "genre": "Фильмы в жанре - [genre]",
-        "country": "Фильмы из страны - [country]",
-        "actor": "Лучшие фильмы актера - [actor]",
-        "director": "Лучшие фильмы режиссера - [director]"
+        "year": {
+            "name": "Фильмы [year] года",
+            "sort": "kinopoisk-vote-up"
+        },
+        "genre": {
+            "name": "Фильмы в жанре - [genre]",
+            "sort": "kinopoisk-vote-up"
+        },
+        "country": {
+            "name": "Фильмы из страны - [country]",
+            "sort": "kinopoisk-vote-up"
+        },
+        "actor": {
+            "name": "Лучшие фильмы актера - [actor]",
+            "sort": "kinopoisk-vote-up"
+        },
+        "director": {
+            "name": "Лучшие фильмы режиссера - [director]",
+            "sort": "kinopoisk-vote-up"
+        }
     },
     "titles": {
         "index": "Фильмы онлайн",

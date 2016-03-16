@@ -57,7 +57,7 @@ router.get('/:movie/:type?', function(req, res) {
                         async.series({
                                 "countries": function(callback) {
                                     if (related && related.countries && config.relates.indexOf('countries')+1) {
-                                        getData.related('country', related.countries, 'kinopoisk-vote-up', function (movies) {
+                                        getData.related('country', related.countries, config.related.country.sort, function (movies) {
                                             callback(null, movies);
                                         });
                                     }
@@ -67,7 +67,7 @@ router.get('/:movie/:type?', function(req, res) {
                                 },
                                 "genres": function(callback) {
                                     if (related && related.genres && config.relates.indexOf('genres')+1) {
-                                        getData.related('genre', related.genres, 'kinopoisk-vote-up', function(movies) {
+                                        getData.related('genre', related.genres, config.related.genre.sort, function(movies) {
                                             callback(null, movies);
                                         });
                                     }
@@ -77,7 +77,7 @@ router.get('/:movie/:type?', function(req, res) {
                                 },
                                 "directors": function(callback) {
                                     if (related && related.directors && config.relates.indexOf('directors')+1) {
-                                        getData.related('director', related.directors, 'kinopoisk-vote-up', function(movies) {
+                                        getData.related('director', related.directors, config.related.director.sort, function(movies) {
                                             callback(null, movies);
                                         });
                                     }
@@ -87,7 +87,7 @@ router.get('/:movie/:type?', function(req, res) {
                                 },
                                 "actors": function(callback) {
                                     if (related && related.actors && config.relates.indexOf('actors')+1) {
-                                        getData.related('actor', related.actors, 'kinopoisk-vote-up', function(movies) {
+                                        getData.related('actor', related.actors, config.related.actor.sort, function(movies) {
                                             callback(null, movies);
                                         });
                                     }
@@ -97,7 +97,7 @@ router.get('/:movie/:type?', function(req, res) {
                                 },
                                 "country": function(callback) {
                                     if (related && related.country && config.relates.indexOf('country')+1) {
-                                        getData.related('country', related.country, 'kinopoisk-vote-up', function (movies) {
+                                        getData.related('country', related.country, config.related.country.sort, function (movies) {
                                             callback(null, movies);
                                         });
                                     }
@@ -107,7 +107,7 @@ router.get('/:movie/:type?', function(req, res) {
                                 },
                                 "genre": function(callback) {
                                     if (related && related.genre && config.relates.indexOf('genre')+1) {
-                                        getData.related('genre', related.genre, 'kinopoisk-vote-up', function(movies) {
+                                        getData.related('genre', related.genre, config.related.genre.sort, function(movies) {
                                             callback(null, movies);
                                         });
                                     }
@@ -116,8 +116,8 @@ router.get('/:movie/:type?', function(req, res) {
                                     }
                                 },
                                 "director": function(callback) {
-                                    if (related && related.director && config.relates.indexOf('directors')+1) {
-                                        getData.related('director', related.director, 'kinopoisk-vote-up', function(movies) {
+                                    if (related && related.director && config.relates.indexOf('director')+1) {
+                                        getData.related('director', related.director, config.related.director.sort, function(movies) {
                                             callback(null, movies);
                                         });
                                     }
@@ -126,8 +126,8 @@ router.get('/:movie/:type?', function(req, res) {
                                     }
                                 },
                                 "actor": function(callback) {
-                                    if (related && related.actor && config.relates.indexOf('actors')+1) {
-                                        getData.related('actor', related.actor, 'kinopoisk-vote-up', function(movies) {
+                                    if (related && related.actor && config.relates.indexOf('actor')+1) {
+                                        getData.related('actor', related.actor, config.related.actor.sort, function(movies) {
                                             callback(null, movies);
                                         });
                                     }
@@ -137,7 +137,7 @@ router.get('/:movie/:type?', function(req, res) {
                                 },
                                 "year": function(callback) {
                                     if (related && related.year && config.relates.indexOf('year')+1) {
-                                        getData.related('year', related.year, 'kinopoisk-vote-up', function(movies) {
+                                        getData.related('year', related.year, config.related.year.sort, function(movies) {
                                             callback(null, movies);
                                         });
                                     }

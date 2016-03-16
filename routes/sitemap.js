@@ -28,8 +28,7 @@ router.get('/:year?', function(req, res) {
         res.header('Content-Type', 'application/xml');
         res.render('sitemap', {
             "domain" : config.domain,
-            "urls"   : config.urls,
-            "movies" : []
+            "urls"   : config.urls
         });
 
     }

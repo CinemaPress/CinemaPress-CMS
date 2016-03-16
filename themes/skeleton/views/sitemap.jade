@@ -7,12 +7,10 @@ if movies
                 url
                     loc= 'http://' + domain + '' + decodeURIComponent(movie.url)
                     lastmod= movie.premiere.replace(/(?!2016)[0-9]{4}/g, year)
-    else
-        urlset(xmlns='http://www.sitemaps.org/schemas/sitemap/0.9')
 else
     sitemapindex
         sitemap
             - n = new Date().getFullYear()
-            while n > 1900
+            while n > 1887
                 loc
                     = 'http://' + domain + '/' + urls.sitemap + '/' + n--

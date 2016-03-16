@@ -10,8 +10,8 @@ function relatedRequiredData(keys, movies) {
 
     for (var key in keys) {
         if (keys.hasOwnProperty(key)) {
-            keys[key] = '<a href="' + urlData(key, keys) + '">' + keys[key] + '</a>';
-            data.name = addKeywords(config.related[key], keys)
+            keys[key] = '<a href="' + urlData(config.urls[key], keys[key]) + '">' + keys[key] + '</a>';
+            data.name = addKeywords(config.related[key].name, keys)
         }
     }
 
@@ -82,7 +82,7 @@ function categoryRequiredData(keys, sort, page, movies) {
             data.title       = addKeywords(config.titles[key], keys);
             data.description = addKeywords(config.descriptions[key], keys);
             data.keywords    = addKeywords(config.keywords[key], keys);
-            data.url         = urlData(config.urls[key], keys);
+            data.url         = urlData(config.urls[key], keys[key]);
             data.sort        = sortUrlData(data.url, sort);
             data.page        = {
                 "current" : page,
@@ -130,7 +130,7 @@ function categoriesRequiredData(key) {
 
 function urlData(attribute, query) {
 
-    return '/' + config.urls[attribute] + '/' + encodeURIComponent(query[attribute]);
+    return '/' + attribute + '/' + encodeURIComponent(query);
 
 }
 

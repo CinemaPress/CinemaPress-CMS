@@ -20,7 +20,7 @@ function getCategories(category, callback) {
         'LIMIT 10000 ' +
         'OPTION max_matches = 10000';
 
-    var queryHash = md5(queryString);
+    var queryHash = md5(config.domain + queryString);
 
     memcached.get(queryHash, function (err, categories) {
 
@@ -78,7 +78,7 @@ function getMovies(query, sort, page, type, callback) {
         'LIMIT ' + start + ', ' + limit + ' ' +
         'OPTION max_matches = ' + max;
 
-    var queryHash = md5(queryString);
+    var queryHash = md5(config.domain + queryString);
 
     memcached.get(queryHash, function (err, movies) {
 
@@ -128,7 +128,7 @@ function getMovie(id, callback) {
 
     var queryString = 'SELECT * FROM movies WHERE kp_id = ' + id + ' LIMIT 1';
 
-    var queryHash = md5(queryString);
+    var queryHash = md5(config.domain + queryString);
 
     memcached.get(queryHash, function (err, movie) {
 
