@@ -96,7 +96,7 @@ router.get('/:movie/:type?', function(req, res) {
                                     }
                                 },
                                 "country": function(callback) {
-                                    if (related && related.country && config.relates.indexOf('country')+1) {
+                                    if (related && related.country && config.relates.indexOf('countries') === -1 && config.relates.indexOf('country')+1) {
                                         getData.related('country', related.country, config.related.country.sort, function (movies) {
                                             callback(null, movies);
                                         });
@@ -106,7 +106,7 @@ router.get('/:movie/:type?', function(req, res) {
                                     }
                                 },
                                 "genre": function(callback) {
-                                    if (related && related.genre && config.relates.indexOf('genre')+1) {
+                                    if (related && related.genre && config.relates.indexOf('genres') === -1 && config.relates.indexOf('genre')+1) {
                                         getData.related('genre', related.genre, config.related.genre.sort, function(movies) {
                                             callback(null, movies);
                                         });
@@ -116,7 +116,7 @@ router.get('/:movie/:type?', function(req, res) {
                                     }
                                 },
                                 "director": function(callback) {
-                                    if (related && related.director && config.relates.indexOf('director')+1) {
+                                    if (related && related.director && config.relates.indexOf('directors') === -1 && config.relates.indexOf('director')+1) {
                                         getData.related('director', related.director, config.related.director.sort, function(movies) {
                                             callback(null, movies);
                                         });
@@ -126,7 +126,7 @@ router.get('/:movie/:type?', function(req, res) {
                                     }
                                 },
                                 "actor": function(callback) {
-                                    if (related && related.actor && config.relates.indexOf('actor')+1) {
+                                    if (related && related.actor && config.relates.indexOf('actors') === -1 && config.relates.indexOf('actor')+1) {
                                         getData.related('actor', related.actor, config.related.actor.sort, function(movies) {
                                             callback(null, movies);
                                         });

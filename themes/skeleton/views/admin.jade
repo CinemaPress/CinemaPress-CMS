@@ -509,15 +509,13 @@ body
                         option(value='', selected='selected')
                             | не нужно
             .name(data-id='related-menu')
-                | &#10507; Названия связанных категорий и сортировка
+                | &#10507; Сортировка и названия связанных категорий
             #related-menu.config
                 table
                     tr
                         td
                             label(for='related.year.name')
                                 | Связанные фильмы по году:
-                        td
-                            input(type='text', id='related.year.name', value=related.year.name).input
                         td
                             select(id='related.year.sort').input
                                 each sort, key in sorting
@@ -527,12 +525,12 @@ body
                                     else if key != 'default'
                                         option(value=key)
                                             != sort
+                        td
+                            input(type='text', id='related.year.name', value=related.year.name).input
                     tr
                         td
                             label(for='related.genre.name')
                                 | Связанные фильмы по жанру:
-                        td
-                            input(type='text', id='related.genre.name', value=related.genre.name).input
                         td
                             select(id='related.genre.sort').input
                                 each sort, key in sorting
@@ -542,12 +540,12 @@ body
                                     else if key != 'default'
                                         option(value=key)
                                             != sort
+                        td
+                            input(type='text', id='related.genre.name', value=related.genre.name).input
                     tr
                         td
                             label(for='related.country.name')
                                 | Связанные фильмы по стране:
-                        td
-                            input(type='text', id='related.country.name', value=related.country.name).input
                         td
                             select(id='related.country.sort').input
                                 each sort, key in sorting
@@ -557,12 +555,12 @@ body
                                     else if key != 'default'
                                         option(value=key)
                                             != sort
+                        td
+                            input(type='text', id='related.country.name', value=related.country.name).input
                     tr
                         td
                             label(for='related.actor.name')
                                 | Связанные фильмы по актеру:
-                        td
-                            input(type='text', id='related.actor.name', value=related.actor.name).input
                         td
                             select(id='related.actor.sort').input
                                 each sort, key in sorting
@@ -572,12 +570,12 @@ body
                                     else if key != 'default'
                                         option(value=key)
                                             != sort
+                        td
+                            input(type='text', id='related.actor.name', value=related.actor.name).input
                     tr
                         td
                             label(for='related.director.name')
                                 | Связанные фильмы по режиссеру:
-                        td
-                            input(type='text', id='related.director.name', value=related.director.name).input
                         td
                             select(id='related.director.sort').input
                                 each sort, key in sorting
@@ -587,6 +585,8 @@ body
                                     else if key != 'default'
                                         option(value=key)
                                             != sort
+                        td
+                            input(type='text', id='related.director.name', value=related.director.name).input
         .name(data-id='titles-menu')
             | &#10507; Параметры названий
         #titles-menu.config
