@@ -75,7 +75,7 @@ function getMovie(id, callback) {
             if (err) throw err;
             connection.release();
 
-            movie = structureData.movies(movies)[0];
+            var movie = structureData.movies(movies)[0];
 
             callback(movie);
 

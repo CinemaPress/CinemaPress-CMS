@@ -2,6 +2,7 @@
 
 var getData = require('../modules/getData');
 var config  = require('../config/config');
+var md5     = require('md5');
 var express = require('express');
 var router  = express.Router();
 
@@ -11,15 +12,55 @@ router.get('/:year?', function(req, res) {
         ? parseInt(req.params.year)
         : '';
 
+    var url = decodeURIComponent(config.domain + req.originalUrl);
+    var urlHash = md5(url.toLowerCase());
+    console.time(url);
+
     if (year) {
 
-        getData.movies({"year": year}, 'premiere-up', 1, 'sitemap', function(movies) {
-            res.header('Content-Type', 'application/xml');
-            res.render('sitemap', {
-                "domain" : config.domain,
-                "urls"   : config.urls,
-                "movies" : movies
-            });
+        memcached.get(urlHash, function (err, movies) {
+
+            if (err) throw err;
+
+            if (movies) {
+
+                res.header('Content-Type', 'application/xml');
+                res.render('sitemap', {
+                    "domain": config.domain,
+                    "urls": config.urls,
+                    "movies": movies
+                });
+                console.timeEnd(url);
+
+            }
+            else {
+
+                getData.movies({"year": year}, 'premiere-up', 1, 'sitemap', function (movies) {
+                    res.header('Content-Type', 'application/xml');
+                    res.render('sitemap', {
+                        "domain": config.domain,
+                        "urls": config.urls,
+                        "movies": movies
+                    });
+
+                    if (movies && config.cache.time) {
+                        memcached.set(
+                            urlHash,
+                            movies,
+                            config.cache.time,
+                            function (err) {
+                                if (err) {
+                                    console.log(err);
+                                }
+                            }
+                        );
+                    }
+
+                    console.timeEnd(url);
+
+                });
+
+            }
         });
 
     }
@@ -30,6 +71,8 @@ router.get('/:year?', function(req, res) {
             "domain" : config.domain,
             "urls"   : config.urls
         });
+
+        console.timeEnd(url);
 
     }
 

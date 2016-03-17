@@ -4,7 +4,7 @@
  :movie_camera: Система управления самообновляемым кино-сайтом.
 
 ## Установка:
-Работает на Debian 7 "wheezy" (64-bit), Debian 8 "Jessie" (64-bit)
+Работает на Debian 7 «Wheezy» (64-bit), Debian 8 «Jessie» (64-bit)
 ```
 ~# wget --no-check-certificate https://git.io/v2XAV -qO install.sh
 ~# sh install.sh [domain] [theme] [password]

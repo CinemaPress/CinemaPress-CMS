@@ -12,8 +12,8 @@ var router       = express.Router();
 
 router.get('/', function(req, res) {
 
-    var url = decodeURIComponent((config.domain + req.originalUrl).toLowerCase());
-    var urlHash = md5(url);
+    var url = decodeURIComponent(config.domain + req.originalUrl);
+    var urlHash = md5(url.toLowerCase());
     console.time(url);
 
     memcached.get(urlHash, function (err, render) {
