@@ -3,17 +3,16 @@
 var getData      = require('../modules/getData');
 var requiredData = require('../modules/requiredData');
 var mergeData    = require('../modules/mergeData');
+var memcached    = require('../modules/memcached');
 var config       = require('../config/config');
 var express      = require('express');
 var async        = require('async');
-var Memcached    = require('memcached');
 var md5          = require('md5');
 var router       = express.Router();
-var memcached    = new Memcached('localhost:11211');
 
 router.get('/:movie/:type?', function(req, res) {
 
-    var url = decodeURIComponent(config.domain + req.originalUrl);
+    var url = decodeURIComponent((config.domain + req.originalUrl).toLowerCase());
     var urlHash = md5(url);
     console.time(url);
 
@@ -164,11 +163,11 @@ router.get('/:movie/:type?', function(req, res) {
 
                     renderData(res, type, render, url);
 
-                    if (render && config.cache.full_storage) {
+                    if (render && config.cache.time) {
                         memcached.set(
                             urlHash,
                             render,
-                            config.cache.time_storage,
+                            config.cache.time,
                             function (err) {
                                 if (err) {
                                     console.log(err);

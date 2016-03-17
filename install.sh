@@ -124,18 +124,6 @@ sed -i "s/#gzip/gzip/g" /etc/nginx/nginx.conf
 echo "${DOMAIN}:$OPENSSL" >> /etc/nginx/nginx_pass
 echo 'OK'
 echo '---------------------'
-echo '-------config--------'
-echo '---------------------'
-if [ "$THEME" != "skeleton" ]; then
-git clone https://github.com/CinemaPress/Theme-${THEME}.git /home/${DOMAIN}/themes/${THEME}
-chown -R ${DOMAIN}:www-data /home/${DOMAIN}/themes
-sed -i "s/\"theme\":\s*\".*\"/\"theme\":\"${THEME}\"/" /home/${DOMAIN}/config/config.js
-sed -i "s/\"theme\":\s*\".*\"/\"theme\":\"${THEME}\"/" /home/${DOMAIN}/config/config.old.js
-fi
-sed -i "s/example.com/${DOMAIN}/g" /home/${DOMAIN}/config/config.js
-sed -i "s/example.com/${DOMAIN}/g" /home/${DOMAIN}/config/config.old.js
-echo 'OK'
-echo '---------------------'
 echo '-------sphinx--------'
 echo '---------------------'
 wget --no-check-certificate http://sphinxsearch.com/files/sphinxsearch_2.2.10-release-1~${VER}_amd64.deb && dpkg -i sphinxsearch* && rm -rf sphinxsearch_2.2.10-release-1~${VER}_amd64.deb
@@ -155,6 +143,37 @@ echo '---------ftp---------'
 echo '---------------------'
 USERID=`id -u ${DOMAIN}`
 echo ${PASSWD} | ftpasswd --stdin --passwd --file=/etc/proftpd/ftpd.passwd --name=${DOMAIN} --shell=/bin/false --home=/home/${DOMAIN} --uid=${USERID} --gid=${USERID}
+echo 'OK'
+echo '---------------------'
+echo '------memcached------'
+echo '---------------------'
+AGAIN=yes
+MEMCACHED_PORT=11212
+while [ "$AGAIN" = "yes" ]
+do
+MEMCACHED_PORT_TEST=`netstat -tunlp | grep ${MEMCACHED_PORT}`
+if [ "$MEMCACHED_PORT_TEST" = "" ]
+then
+AGAIN=no
+else
+MEMCACHED_PORT=$((MEMCACHED_PORT+1))
+fi
+done
+rm -rf /etc/memcached_${DOMAIN}.conf
+ln -s /home/${DOMAIN}/config/memcached.conf /etc/memcached_${DOMAIN}.conf
+sed -i "s/MEMCACHED_PORT/${MEMCACHED_PORT}/g" /home/${DOMAIN}/config/memcached.conf
+echo 'OK'
+echo '---------------------'
+echo '-------config--------'
+echo '---------------------'
+if [ "$THEME" != "skeleton" ]; then
+git clone https://github.com/CinemaPress/Theme-${THEME}.git /home/${DOMAIN}/themes/${THEME}
+chown -R ${DOMAIN}:www-data /home/${DOMAIN}/themes
+sed -i "s/\"theme\":\s*\".*\"/\"theme\":\"${THEME}\"/" /home/${DOMAIN}/config/config.js
+fi
+sed -i "s/example.com/${DOMAIN}/g" /home/${DOMAIN}/config/config.js
+sed -i "s/11211/${MEMCACHED_PORT}\"/" /home/${DOMAIN}/config/config.js
+cp /home/${DOMAIN}/config/config.js /home/${DOMAIN}/config/config.old.js
 echo 'OK'
 echo '---------------------'
 echo '--------cron---------'
@@ -179,14 +198,22 @@ npm install --loglevel=silent --parseable forever -g
 npm install --loglevel=silent --parseable nodemon -g
 indexer --all || indexer --all --rotate
 echo 'OK'
-echo '---------------------------------------------'
-echo 'УРА! CinemaPress CMS готова к работе!'
-echo 'Чтобы все заработало, требуется перезагрузка.'
-echo 'Сервер будет перезагружен через 10 сек ...'
-echo '---------------------------------------------'
-echo 'Нажмите CTRL+C ^C чтобы отменить перезагрузку'
-echo '---------------------------------------------'
+echo '---------------------------------------------------------'
+echo '---------------------------------------------------------'
+echo '-----     УРА! CinemaPress CMS готова к работе!     -----'
+echo '----- Чтобы все заработало, требуется перезагрузка. -----'
+echo '-----   Сервер будет перезагружен через 10 сек ...  -----'
+echo '---------------------------------------------------------'
+echo '---------------------------------------------------------'
+echo '!!!!! Нажмите CTRL+C ^C чтобы отменить перезагрузку !!!!!'
+echo '---------------------------------------------------------'
+echo '---------------------------------------------------------'
+echo ''
+echo ''
+echo '---------------------------------------------------------'
+echo '---------------------------------------------------------'
 echo "Админ панель сайта: http://${DOMAIN}/admin"
-echo '---------------------------------------------'
+echo '---------------------------------------------------------'
+echo '---------------------------------------------------------'
 sleep 10
 reboot

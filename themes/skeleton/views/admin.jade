@@ -143,11 +143,14 @@ head
         }
 
         .flush {
-            margin: 0;
-            text-align: center;
+            margin: 0 0 0 5px;
         }
 
-        .submit:hover, .downgrade:hover, .hide:hover, .help:hover, .flush:hover {
+        .site {
+            margin: 0 0 0 5px;
+        }
+
+        .submit:hover, .downgrade:hover, .hide:hover, .help:hover, .site:hover, .flush:hover {
             background: #2e3742;
             color: #fff;
         }
@@ -164,10 +167,14 @@ body
                 | Сохранить &#9635;
             #downgrade.button.downgrade
                 | Откатиться &#128561;
+            #flush.button.flush
+                | Очистить кэш &#9730;
             a(href='https://github.com/CinemaPress/CinemaPress-CMS', target='_blank').button.help
                 | Помощь &#9822;
             #hide.button.hide
                 | &#11021;
+            a(href='/', target='_blank').button.site
+                | &#128376;
         .name(data-id='main-menu')
             | &#10507; Основное
         #main-menu.config
@@ -294,55 +301,25 @@ body
             table
                 tr
                     td
-                        label(for='cache.time_storage' style='width:500px;')
-                            | Время кэша (в секундах):
+                        label(for='cache.time')
+                            | Кэширование:
                     td
-                        select(id='cache.time_storage', style='margin-left: 0;').input
-                            if (cache.time_storage)
-                                option(value=cache.time_storage, selected='selected')
-                                    = cache.time_storage + ' сек.'
-                                option(value='0')
-                                    | Нет
-                                option(value='3600')
-                                    | 1 час
-                                option(value='43200')
-                                    | 12 часов
-                                option(value='86400')
-                                    | 1 день
-                                option(value='604800')
-                                    | 1 неделя
-                            else
-                                option(value='0', selected='selected')
-                                    | Нет
-                                option(value='3600')
-                                    | 1 час
-                                option(value='43200')
-                                    | 12 часов
-                                option(value='86400')
-                                    | 1 день
-                                option(value='604800')
-                                    | 1 неделя
-                    td(rowspan=2)
-                        #flush.button.flush
-                            | Очистить кэш&nbsp;&#9730;
-                tr
+                        select(id='cache.time', style='margin-left: 0;').input
+                            - times = {"0": "Отключить", "3600": "1 час", "43200": "12 часов", "86400": "1 день", "604800": "1 неделя", "2592000": "1 месяц", "7862400": "1 квартал", "31536000": "1 год"}
+                            each time, key in times
+                                if cache.time == key
+                                    option(value=key, selected='selected')
+                                        = time
+                                else
+                                    option(value=key)
+                                        = time
                     td
-                        label(for='cache.full_storage' style='width:500px;')
-                            | Полное кэширование:
+                        label(for='cache.addr')
+                            | Адрес:
                     td
-                        select(id='cache.full_storage', style='margin-left: 0;').input
-                            if (cache.full_storage)
-                                option(value='1', selected='selected')
-                                    | Да
-                                option(value='0')
-                                    | Нет
-                            else
-                                option(value='1')
-                                    | Да
-                                option(value='0', selected='selected')
-                                    | Нет
+                        input(type='text', id='cache.addr', value=cache.addr).input
             .name(data-id='count-menu')
-                | &#10507; Счетчик
+                | &#10507; Фильмов на странице
             #count-menu.config
                 table
                     tr
@@ -1253,8 +1230,8 @@ body
                     "twitter": document.getElementById('social.twitter').value
                 },
                 "cache": {
-                    "time_storage": document.getElementById('cache.time_storage').options[document.getElementById('cache.time_storage').selectedIndex].value || "#{cache.time_storage}",
-                    "full_storage": document.getElementById('cache.full_storage').options[document.getElementById('cache.full_storage').selectedIndex].value || "#{cache.full_storage}"
+                    "time": document.getElementById('cache.time').options[document.getElementById('cache.time').selectedIndex].value || "#{cache.time}",
+                    "addr": document.getElementById('cache.addr').value || "#{cache.addr}"
                 },
                 "counts": {
                     "index": document.getElementById('counts.index').value,
@@ -1440,18 +1417,18 @@ body
             xhr.open('POST', '#{urls.admin}/flush', true);
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4 && xhr.status == 200) {
-                    document.getElementById('flush').innerHTML = '<span style="color:#46d0ff;">Очистка кэша&nbsp;&#9762;</span>';
+                    document.getElementById('flush').innerHTML = '<span style="color:#46d0ff;">Очистка кэша &#9762;</span>';
 
                     setTimeout(function () {
-                        document.getElementById('flush').innerHTML = '<span style="color:#78ffa0;">Кэш очищен&nbsp;&#10003;</span>';
+                        document.getElementById('flush').innerHTML = '<span style="color:#78ffa0;">Кэш очищен &#10003;</span>';
                     }, 3000);
 
                     setTimeout(function () {
-                        document.getElementById('flush').innerHTML = 'Очистить кэш&nbsp;&#9730;';
+                        document.getElementById('flush').innerHTML = 'Очистить кэш &#9730;';
                     }, 5000);
                 }
                 else if (xhr.status == 404) {
-                    document.getElementById('flush').innerHTML = '<span style="color:#ff916d;">Ошибка очистки&nbsp;&#9773;</span>';
+                    document.getElementById('flush').innerHTML = '<span style="color:#ff916d;">Ошибка очистки &#9773;</span>';
                     console.log(xhr.responseText);
                 }
             }

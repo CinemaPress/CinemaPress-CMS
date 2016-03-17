@@ -4,16 +4,15 @@ var getData      = require('../modules/getData');
 var requiredData = require('../modules/requiredData');
 var mergeData    = require('../modules/mergeData');
 var config       = require('../config/config');
+var memcached    = require('../modules/memcached');
 var express      = require('express');
 var async        = require('async');
-var Memcached    = require('memcached');
 var md5          = require('md5');
 var router       = express.Router();
-var memcached    = new Memcached('localhost:11211');
 
 router.get('/', function(req, res) {
 
-    var url = decodeURIComponent(config.domain + req.originalUrl);
+    var url = decodeURIComponent((config.domain + req.originalUrl).toLowerCase());
     var urlHash = md5(url);
     console.time(url);
     
@@ -84,11 +83,11 @@ function getCategories(category, urlHash, callback) {
 
                     callback(render);
 
-                    if (render && config.cache.full_storage) {
+                    if (render && config.cache.time) {
                         memcached.set(
                             urlHash,
                             render,
-                            config.cache.time_storage,
+                            config.cache.time,
                             function (err) {
                                 if (err) {
                                     console.log(err);
@@ -119,7 +118,7 @@ router.get('/:query/:page?', function(req, res) {
 
     if (!query) return res.redirect('/');
 
-    var url = decodeURIComponent(config.domain + req.originalUrl);
+    var url = decodeURIComponent((config.domain + req.originalUrl).toLowerCase());
     var urlHash = md5(url);
     console.time(url);
 
@@ -206,11 +205,11 @@ function getMovies(query, sort, page, urlHash, callback) {
 
                     callback(render);
 
-                    if (render && config.cache.full_storage) {
+                    if (render && config.cache.time) {
                         memcached.set(
                             urlHash,
                             render,
-                            config.cache.time_storage,
+                            config.cache.time,
                             function (err) {
                                 if (err) {
                                     console.log(err);

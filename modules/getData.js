@@ -5,10 +5,6 @@ var structureData = require('./structureData');
 var requiredData  = require('./requiredData');
 var pool          = require('./sphinx');
 var async         = require('async');
-var Memcached     = require('memcached');
-var md5           = require('md5');
-
-var memcached = new Memcached('localhost:11211');
 
 function getCategories(category, callback) {
 
@@ -20,46 +16,18 @@ function getCategories(category, callback) {
         'LIMIT 10000 ' +
         'OPTION max_matches = 10000';
 
-    var queryHash = md5(config.domain + queryString);
+    pool.getConnection(function(err, connection) {
 
-    memcached.get(queryHash, function (err, categories) {
+        connection.query(queryString, function (err, movies) {
 
-        if (err) throw err;
+            if (err) throw err;
+            connection.release();
 
-        if (categories) {
+            var categories = structureData.categories(movies);
 
             callback(categories);
 
-        }
-        else {
-
-            pool.getConnection(function(err, connection) {
-
-                connection.query(queryString, function (err, movies) {
-
-                    if (err) throw err;
-                    connection.release();
-
-                    var categories = structureData.categories(movies);
-
-                    callback(categories);
-
-                    if (categories) {
-                        memcached.set(
-                            queryHash,
-                            categories,
-                            config.cache.time_storage,
-                            function (err) {
-                                if (err) {
-                                    console.log(err);
-                                }
-                            }
-                        );
-                    }
-
-                });
-            });
-        }
+        });
     });
 
 }
@@ -78,46 +46,18 @@ function getMovies(query, sort, page, type, callback) {
         'LIMIT ' + start + ', ' + limit + ' ' +
         'OPTION max_matches = ' + max;
 
-    var queryHash = md5(config.domain + queryString);
+    pool.getConnection(function(err, connection) {
 
-    memcached.get(queryHash, function (err, movies) {
+        connection.query(queryString, function (err, movies) {
 
-        if (err) throw err;
+            if (err) throw err;
+            connection.release();
 
-        if (movies) {
+            movies = structureData.movies(movies);
 
             callback(movies);
 
-        }
-        else {
-
-            pool.getConnection(function(err, connection) {
-
-                connection.query(queryString, function (err, movies) {
-
-                    if (err) throw err;
-                    connection.release();
-
-                    movies = structureData.movies(movies);
-
-                    callback(movies);
-
-                    if (movies) {
-                        memcached.set(
-                            queryHash,
-                            movies,
-                            config.cache.time_storage,
-                            function (err) {
-                                if (err) {
-                                    console.log(err);
-                                }
-                            }
-                        );
-                    }
-
-                });
-            });
-        }
+        });
     });
 
 }
@@ -128,48 +68,18 @@ function getMovie(id, callback) {
 
     var queryString = 'SELECT * FROM movies WHERE kp_id = ' + id + ' LIMIT 1';
 
-    var queryHash = md5(config.domain + queryString);
+    pool.getConnection(function(err, connection) {
 
-    memcached.get(queryHash, function (err, movie) {
+        connection.query(queryString, function (err, movies) {
 
-        if (err) throw err;
+            if (err) throw err;
+            connection.release();
 
-        if (movie) {
+            movie = structureData.movies(movies)[0];
 
             callback(movie);
 
-        }
-        else {
-
-            pool.getConnection(function(err, connection) {
-
-                connection.query(queryString, function (err, movies) {
-
-                    if (err) throw err;
-                    connection.release();
-
-                    movie = structureData.movies(movies)[0];
-
-                    callback(movie);
-
-                    if (movie) {
-                        memcached.set(
-                            queryHash,
-                            movie,
-                            config.cache.time_storage,
-                            function (err) {
-                                if (err) {
-                                    console.log(err);
-                                }
-                            }
-                        );
-                    }
-
-                });
-
-            });
-
-        }
+        });
 
     });
 

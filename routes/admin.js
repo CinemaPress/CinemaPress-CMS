@@ -1,12 +1,11 @@
 'use strict';
 
 var config    = require('../config/config');
+var memcached = require('../modules/memcached');
 var express   = require('express');
 var router    = express.Router();
 var path      = require('path');
 var fs        = require('fs');
-var Memcached = require('memcached');
-var memcached = new Memcached('localhost:11211');
 
 router.get('/?', function(req, res) {
 
@@ -55,8 +54,7 @@ router.post('/flush', function(req, res) {
 router.post('/save', function(req, res) {
 
     req.body.urls.unique_id      = (parseInt(req.body.urls.unique_id) > -298 && parseInt(req.body.urls.unique_id) < 297001) ? parseInt(req.body.urls.unique_id) : 0;
-    req.body.cache.time_storage  = parseInt(req.body.cache.time_storage);
-    req.body.cache.full_storage  = parseInt(req.body.cache.full_storage);
+    req.body.cache.time          = parseInt(req.body.cache.time);
     req.body.counts.index        = parseInt(req.body.counts.index);
     req.body.counts.category     = parseInt(req.body.counts.category);
     req.body.counts.top_category = parseInt(req.body.counts.top_category);

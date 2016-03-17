@@ -6,13 +6,13 @@ module.exports = {
     "top": [299, 300, 301, 302, 303, 304, 305, 306],
     "abuse": [299, 300, 301],
     "social": {
-        "vk": "http://vk.com/group",
-        "facebook": "http://facebook.com/group",
-        "twitter": "http://twitter.com/group"
+        "vk": "",
+        "facebook": "",
+        "twitter": ""
     },
     "cache": {
-        "time_storage": 60 * 60 * 24,
-        "full_storage": 0
+        "time": 86400,
+        "addr": "127.0.0.1:11211"
     },
     "counts": {
         "index": 20,
