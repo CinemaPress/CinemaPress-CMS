@@ -112,11 +112,11 @@ head
             position: fixed;
             top: 0;
             right: 0;
-            margin: 20px;
+            margin: 15px 10px;
         }
 
         .button {
-            padding: 20px;
+            padding: 10px;
             background: #272F38;
             color: #ccc;
             text-decoration: none;
@@ -124,33 +124,10 @@ head
             border: 1px #5c728c solid;
             border-radius: 5px;
             float: left;
-        }
-
-        .submit {
-            margin: 0 5px 0 0;
-        }
-
-        .help {
             margin: 0 0 0 5px;
         }
 
-        .downgrade {
-            margin: 0;
-        }
-
-        .hide {
-            margin: 0 0 0 5px;
-        }
-
-        .flush {
-            margin: 0 0 0 5px;
-        }
-
-        .site {
-            margin: 0 0 0 5px;
-        }
-
-        .submit:hover, .downgrade:hover, .hide:hover, .help:hover, .site:hover, .flush:hover {
+        .submit:hover, .downgrade:hover, .hide:hover, .help:hover, .flush:hover {
             background: #2e3742;
             color: #fff;
         }
@@ -173,8 +150,6 @@ body
                 | Помощь &#9822;
             #hide.button.hide
                 | &#11021;
-            a(href='/', target='_blank').button.site
-                | &#128376;
         .name(data-id='main-menu')
             | &#10507; Основное
         #main-menu.config
@@ -313,6 +288,7 @@ body
                                 else
                                     option(value=key)
                                         = time
+                tr
                     td
                         label(for='cache.addr')
                             | Адрес:

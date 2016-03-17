@@ -41,7 +41,6 @@ read PASSWD
 fi
 if [ ${PASSWD} ]
 then
-OPENSSL=`echo "${PASSWD}" | openssl passwd -1 -stdin -salt cinemapress`
 AGAIN=no
 else
 echo 'WARNING: Пароль от админ-панели и FTP не может быть пустым.'
@@ -52,13 +51,10 @@ echo ''
 
 sleep 3
 
-#---------------------------
-#---------------------------
-
 echo '---------------------'
 echo '-------update--------'
 echo '---------------------'
-apt-get -y -qq update && apt-get -y -qq install wget curl nano htop sudo lsb-release ca-certificates git-core
+apt-get -y -qq update && apt-get -y -qq install debian-keyring debian-archive-keyring wget curl nano htop sudo lsb-release ca-certificates git-core openssl netcat
 VER=`lsb_release -cs`
 echo 'OK'
 echo '---------------------'
@@ -88,6 +84,7 @@ echo '---------------------'
 echo '--------user---------'
 echo '---------------------'
 useradd ${DOMAIN} -m -U -s /bin/false
+OPENSSL=`echo "${PASSWD}" | openssl passwd -1 -stdin -salt cinemapress`
 rm -rf /home/${DOMAIN}/.??*
 git clone https://github.com/CinemaPress/CinemaPress-CMS.git /home/${DOMAIN}
 chown -R ${DOMAIN}:www-data /home/${DOMAIN}/
@@ -160,8 +157,8 @@ MEMCACHED_PORT=$((MEMCACHED_PORT+1))
 fi
 done
 rm -rf /etc/memcached_${DOMAIN}.conf
-ln -s /home/${DOMAIN}/config/memcached.conf /etc/memcached_${DOMAIN}.conf
-sed -i "s/MEMCACHED_PORT/${MEMCACHED_PORT}/g" /home/${DOMAIN}/config/memcached.conf
+cp /etc/memcached.conf /etc/memcached_${DOMAIN}.conf
+sed -i "s/11211/${MEMCACHED_PORT}/g" /etc/memcached_${DOMAIN}.conf
 echo 'OK'
 echo '---------------------'
 echo '-------config--------'
@@ -172,7 +169,7 @@ chown -R ${DOMAIN}:www-data /home/${DOMAIN}/themes
 sed -i "s/\"theme\":\s*\".*\"/\"theme\":\"${THEME}\"/" /home/${DOMAIN}/config/config.js
 fi
 sed -i "s/example.com/${DOMAIN}/g" /home/${DOMAIN}/config/config.js
-sed -i "s/11211/${MEMCACHED_PORT}\"/" /home/${DOMAIN}/config/config.js
+sed -i "s/11211/${MEMCACHED_PORT}/" /home/${DOMAIN}/config/config.js
 cp /home/${DOMAIN}/config/config.js /home/${DOMAIN}/config/config.old.js
 echo 'OK'
 echo '---------------------'
@@ -188,7 +185,6 @@ echo '---------------------'
 service nginx restart
 service proftpd restart
 service memcached restart
-echo "flush_all" | nc -q 2 localhost 11211
 echo '---------------------'
 echo '--------start--------'
 echo '---------------------'
