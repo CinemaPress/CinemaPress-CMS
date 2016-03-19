@@ -81,6 +81,14 @@ head
             margin: 5px;
         }
 
+        .descr .poster {
+            width: 170px;
+            height: 260px;
+            border: 1px #ccc solid;
+            border-radius: 2px;
+            margin: 10px 0 auto;
+        }
+
         table {
             width: 100%;
         }
@@ -153,7 +161,7 @@ body
         #main-write.config
             table
                 tr
-                    td(id='description.poster')
+                    td(id='description.poster', style='width: 20%;').descr
                     td
                         input(type='text', id='description.id', placeholder='ID КиноПоиск').input
                         textarea(id='description.text', placeholder='Описание к фильму ...').textarea
@@ -1469,4 +1477,4 @@ body
 
         addPoster('top', 'top-movies');
         addPoster('abuse', 'abuse-movies');
-        addPoster('description.id', 'description.poser');
+        addPoster('description.id', 'description.poster');

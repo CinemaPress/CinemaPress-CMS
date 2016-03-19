@@ -55,6 +55,8 @@ router.post('/save', function(req, res) {
 
     if (parseInt(req.body.description.id) && req.body.description.text) {
 
+        req.body.text = {};
+
         var id = parseInt(req.body.description.id);
         var text = br(req.body.description.text);
 
@@ -64,11 +66,9 @@ router.post('/save', function(req, res) {
         config.text.descriptions[id] = text;
         req.body.text.descriptions = config.text.descriptions;
 
-        delete req.body.description;
-
-        console.log(req.body.text);
-
     }
+
+    delete req.body.description;
 
     req.body.urls.unique_id      = (parseInt(req.body.urls.unique_id) > -298 && parseInt(req.body.urls.unique_id) < 297001) ? parseInt(req.body.urls.unique_id) : 0;
     req.body.cache.time          = parseInt(req.body.cache.time);
@@ -125,19 +125,9 @@ function nbsp(obj) {
 
 }
 
-function br(obj) {
+function br(text) {
 
-    for (var key in obj) {
-
-        if (obj.hasOwnProperty(key) && typeof obj[key] === 'string') {
-
-            obj[key] = obj[key].replace(/(\n|\r)/g,'<br>').replace(/\\*?"/g,'\\"');
-
-        }
-
-    }
-
-    return obj;
+    return text.replace(/(\n|\r)/g,'<br>').replace(/\\*?"/g,'\\"');
 
 }
 
