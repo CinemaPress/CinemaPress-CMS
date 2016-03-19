@@ -25,6 +25,10 @@ module.exports = {
         "head": "",
         "footer": ""
     },
+    "text": {
+        "ids": [],
+        "descriptions": {}
+    },
     "relates": "countries,genres,directors,actors,year",
     "related": {
         "year": {

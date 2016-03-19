@@ -112,7 +112,7 @@ head
             position: fixed;
             top: 0;
             right: 0;
-            margin: 15px 10px;
+            margin: 20px 10px;
         }
 
         .button {
@@ -127,7 +127,7 @@ head
             margin: 0 0 0 5px;
         }
 
-        .submit:hover, .downgrade:hover, .hide:hover, .help:hover, .flush:hover {
+        .button:hover {
             background: #2e3742;
             color: #fff;
         }
@@ -140,16 +140,23 @@ body
             | (ver. 1.1.3)
     div
         .top
-            #submit.button.submit
+            #submit.button
                 | Сохранить &#9635;
-            #downgrade.button.downgrade
+            #downgrade.button
                 | Откатиться &#128561;
-            #flush.button.flush
+            #flush.button
                 | Очистить кэш &#9730;
-            a(href='https://github.com/CinemaPress/CinemaPress-CMS', target='_blank').button.help
+            a(href='https://github.com/CinemaPress/CinemaPress-CMS', target='_blank').button
                 | Помощь &#9822;
-            #hide.button.hide
-                | &#11021;
+            #write.button(data-id='main-write')
+                | &#9998;
+        #main-write.config
+            table
+                tr
+                    td(id='description.poster')
+                    td
+                        input(type='text', id='description.id', placeholder='ID КиноПоиск').input
+                        textarea(id='description.text', placeholder='Описание к фильму ...').textarea
         .name(data-id='main-menu')
             | &#10507; Основное
         #main-menu.config
@@ -1153,7 +1160,7 @@ body
                         textarea(id='code.footer').textarea
                             != code.footer.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
     script.
-        var showMenu = document.querySelectorAll('.name');
+        var showMenu = document.querySelectorAll('.name, #write');
         for (var j = 0; j < showMenu.length; j++) {
             showMenu[j].addEventListener('click', function () {
                 var id = this.getAttribute('data-id');
@@ -1350,6 +1357,10 @@ body
                 "code": {
                     "head": document.getElementById('code.head').value,
                     "footer": document.getElementById('code.footer').value
+                },
+                "description": {
+                    "id": document.getElementById('description.id').value,
+                    "text": document.getElementById('description.text').value
                 }
             };
 
@@ -1437,14 +1448,6 @@ body
 
         }
 
-        var hide = document.getElementById('hide');
-        hide.addEventListener('click', function() {
-            var hideMenu = document.querySelectorAll('.config');
-            for (var j = 0; j < hideMenu.length; j++) {
-                hideMenu[j].style.display = 'none';
-            }
-        });
-
         function addPoster(elementId, moviesId) {
 
             var movies = document.getElementById(elementId);
@@ -1466,3 +1469,4 @@ body
 
         addPoster('top', 'top-movies');
         addPoster('abuse', 'abuse-movies');
+        addPoster('description.id', 'description.poser');

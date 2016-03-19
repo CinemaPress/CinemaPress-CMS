@@ -69,7 +69,7 @@ function moviesData(movies) {
             "pictures"      : pictures,
             "title_ru"      : movie.title_ru || movie.title_en,
             "title_en"      : movie.title_en,
-            "description"   : movie.description,
+            "description"   : uniqueDescription(movie.kp_id) || movie.description,
             "year"          : movie.year,
             "year_url"      : createCategoryUrl('year', movie.year),
             "countries"     : (movie.country == '_empty')  ? '' : movie.country,
@@ -110,6 +110,21 @@ function moviesData(movies) {
         }
 
     });
+
+}
+
+function uniqueDescription(id) {
+
+    if (config.text.ids.indexOf(id)+1) {
+
+        return config.text.descriptions[id];
+
+    }
+    else {
+
+        return null;
+
+    }
 
 }
 
