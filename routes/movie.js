@@ -56,7 +56,7 @@ router.get('/:movie/:type?', function(req, res) {
                         async.series({
                                 "countries": function(callback) {
                                     if (related && related.countries && config.relates.indexOf('countries')+1) {
-                                        getData.related('country', related.countries, config.related.country.sort, function (movies) {
+                                        getData.additional('country', related.countries, config.related.country.sort, 'related', function (movies) {
                                             callback(null, movies);
                                         });
                                     }
@@ -66,7 +66,7 @@ router.get('/:movie/:type?', function(req, res) {
                                 },
                                 "genres": function(callback) {
                                     if (related && related.genres && config.relates.indexOf('genres')+1) {
-                                        getData.related('genre', related.genres, config.related.genre.sort, function(movies) {
+                                        getData.additional('genre', related.genres, config.related.genre.sort, 'related', function(movies) {
                                             callback(null, movies);
                                         });
                                     }
@@ -76,7 +76,7 @@ router.get('/:movie/:type?', function(req, res) {
                                 },
                                 "directors": function(callback) {
                                     if (related && related.directors && config.relates.indexOf('directors')+1) {
-                                        getData.related('director', related.directors, config.related.director.sort, function(movies) {
+                                        getData.additional('director', related.directors, config.related.director.sort, 'related', function(movies) {
                                             callback(null, movies);
                                         });
                                     }
@@ -86,7 +86,7 @@ router.get('/:movie/:type?', function(req, res) {
                                 },
                                 "actors": function(callback) {
                                     if (related && related.actors && config.relates.indexOf('actors')+1) {
-                                        getData.related('actor', related.actors, config.related.actor.sort, function(movies) {
+                                        getData.additional('actor', related.actors, config.related.actor.sort, 'related', function(movies) {
                                             callback(null, movies);
                                         });
                                     }
@@ -96,7 +96,7 @@ router.get('/:movie/:type?', function(req, res) {
                                 },
                                 "country": function(callback) {
                                     if (related && related.country && config.relates.indexOf('countries') === -1 && config.relates.indexOf('country')+1) {
-                                        getData.related('country', related.country, config.related.country.sort, function (movies) {
+                                        getData.additional('country', related.country, config.related.country.sort, 'related', function (movies) {
                                             callback(null, movies);
                                         });
                                     }
@@ -106,7 +106,7 @@ router.get('/:movie/:type?', function(req, res) {
                                 },
                                 "genre": function(callback) {
                                     if (related && related.genre && config.relates.indexOf('genres') === -1 && config.relates.indexOf('genre')+1) {
-                                        getData.related('genre', related.genre, config.related.genre.sort, function(movies) {
+                                        getData.additional('genre', related.genre, config.related.genre.sort, 'related', function(movies) {
                                             callback(null, movies);
                                         });
                                     }
@@ -116,7 +116,7 @@ router.get('/:movie/:type?', function(req, res) {
                                 },
                                 "director": function(callback) {
                                     if (related && related.director && config.relates.indexOf('directors') === -1 && config.relates.indexOf('director')+1) {
-                                        getData.related('director', related.director, config.related.director.sort, function(movies) {
+                                        getData.additional('director', related.director, config.related.director.sort, 'related', function(movies) {
                                             callback(null, movies);
                                         });
                                     }
@@ -126,7 +126,7 @@ router.get('/:movie/:type?', function(req, res) {
                                 },
                                 "actor": function(callback) {
                                     if (related && related.actor && config.relates.indexOf('actors') === -1 && config.relates.indexOf('actor')+1) {
-                                        getData.related('actor', related.actor, config.related.actor.sort, function(movies) {
+                                        getData.additional('actor', related.actor, config.related.actor.sort, 'related', function(movies) {
                                             callback(null, movies);
                                         });
                                     }
@@ -136,7 +136,7 @@ router.get('/:movie/:type?', function(req, res) {
                                 },
                                 "year": function(callback) {
                                     if (related && related.year && config.relates.indexOf('year')+1) {
-                                        getData.related('year', related.year, config.related.year.sort, function(movies) {
+                                        getData.additional('year', related.year, config.related.year.sort, 'related', function(movies) {
                                             callback(null, movies);
                                         });
                                     }

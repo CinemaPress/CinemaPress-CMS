@@ -2,16 +2,16 @@
 
 var config = require('../config/config');
 
-function relatedRequiredData(keys, movies) {
+function additionalRequiredData(keys, movies, type) {
 
     var data = {};
 
-    data.related = movies;
+    data[type] = movies;
 
     for (var key in keys) {
         if (keys.hasOwnProperty(key)) {
             keys[key] = '<a href="' + urlData(config.urls[key], keys[key]) + '">' + keys[key] + '</a>';
-            data.name = addKeywords(config.related[key].name, keys)
+            data.name = addKeywords(config[type][key].name, keys)
         }
     }
 
@@ -469,5 +469,5 @@ module.exports = {
     "movie"      : movieRequiredData,
     "category"   : categoryRequiredData,
     "categories" : categoriesRequiredData,
-    "related"    : relatedRequiredData
+    "additional" : additionalRequiredData
 };

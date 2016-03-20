@@ -2,6 +2,7 @@
 
 var config    = require('../config/config');
 var memcached = require('../modules/memcached');
+var getData   = require('../modules/getData');
 var express   = require('express');
 var router    = express.Router();
 var path      = require('path');
@@ -10,6 +11,28 @@ var fs        = require('fs');
 router.get('/?', function(req, res) {
 
     res.render('admin', config);
+
+});
+
+router.post('/movie', function(req, res) {
+
+    if (parseInt(req.body.id)) {
+
+        getData.movie(parseInt(req.body.id), function (movie) {
+            if (movie && movie.title) {
+                res.json(movie);
+            }
+            else {
+                res.json({"error": "Not found"});
+            }
+        });
+
+    }
+    else {
+
+        res.status(404).send('Not found');
+
+    }
 
 });
 
@@ -53,18 +76,15 @@ router.post('/flush', function(req, res) {
 
 router.post('/save', function(req, res) {
 
-    if (parseInt(req.body.description.id) && req.body.description.text) {
+    req.body.text = config.text;
 
-        req.body.text = {};
+    if (parseInt(req.body.description.id) && req.body.description.text) {
 
         var id = parseInt(req.body.description.id);
         var text = br(req.body.description.text);
 
-        if (config.text.ids.indexOf(id) == -1) config.text.ids.push(id);
-        req.body.text.ids = config.text.ids;
-
-        config.text.descriptions[id] = text;
-        req.body.text.descriptions = config.text.descriptions;
+        if (req.body.text.ids.indexOf(id) == -1) req.body.text.ids.push(id);
+        if (text) req.body.text.descriptions[id] = text;
 
     }
 
@@ -127,7 +147,7 @@ function nbsp(obj) {
 
 function br(text) {
 
-    return text.replace(/(\n|\r)/g,'<br>').replace(/\\*?"/g,'\\"');
+    return text.replace(/(\n|\r)/g,'<br>');
 
 }
 

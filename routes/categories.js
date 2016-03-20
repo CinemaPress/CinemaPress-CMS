@@ -112,7 +112,7 @@ router.get('/:query/:page?', function(req, res) {
     var sort = (req.query.sort)
         ? req.query.sort
         : config.sorting.default;
-    var page = (req.params.page)
+    var page = (parseInt(req.params.page))
         ? parseInt(req.params.page)
         : 1;
 
@@ -184,7 +184,7 @@ function getMovies(query, sort, page, urlHash, callback) {
                         });
                     },
                     "top": function (callback) {
-                        getData.movies(query, 'kinopoisk-rating-up', 1, 'top_category', function(movies) {
+                        getData.movies(query, 'kinopoisk-vote-up', 1, 'top_category', function(movies) {
                             if (movies.length) {
                                 callback(null, movies);
                             }

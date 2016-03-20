@@ -29,6 +29,38 @@ module.exports = {
         "ids": [],
         "descriptions": {}
     },
+    "index": {
+        "type": {
+            "name": "Лучшие [type] онлайн",
+            "keys": "фильмы",
+            "sort": "kinopoisk-vote-up"
+        },
+        "year": {
+            "name": "Фильмы [year] года",
+            "keys": "2006,2007",
+            "sort": "kinopoisk-vote-up"
+        },
+        "genre": {
+            "name": "Фильмы в жанре [genre]",
+            "keys": "комедия,драма,ужасы",
+            "sort": "kinopoisk-vote-up"
+        },
+        "country": {
+            "name": "Фильмы из страны [country]",
+            "keys": "США",
+            "sort": "kinopoisk-vote-up"
+        },
+        "actor": {
+            "name": "Лучшие фильмы [actor]",
+            "keys": "Киану Ривз",
+            "sort": "kinopoisk-vote-up"
+        },
+        "director": {
+            "name": "Лучшие фильмы [director]",
+            "keys": "Дэвид Финчер",
+            "sort": "kinopoisk-vote-up"
+        }
+    },
     "relates": "countries,genres,directors,actors,year",
     "related": {
         "year": {

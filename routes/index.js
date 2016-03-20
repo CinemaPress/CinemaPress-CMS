@@ -33,25 +33,81 @@ router.get('/', function(req, res) {
         else {
 
             async.series({
-                    "premieres": function (callback) {
-                        getData.movies({}, 'premiere-up', 1, 'index', function (movies) {
-                            callback(null, movies);
-                        });
-                    },
-                    "bests": function (callback) {
-                        getData.movies({}, 'imdb-vote-up', 1, 'index', function (movies) {
-                            callback(null, movies);
-                        });
-                    },
-                    "year": function (callback) {
-                        getData.movies({"year": new Date().getFullYear()}, 'kinopoisk-vote-up', 1, 'index', function (movies) {
-                            callback(null, movies);
-                        });
-                    },
                     "top": function (callback) {
                         getData.top(function (movies) {
                             callback(null, movies);
                         });
+                    },
+                    "movies": function(callback) {
+                        async.series({
+                                "type": function(callback) {
+                                    if (config.index.type.keys != '') {
+                                        getData.additional('type', config.index.type.keys, config.index.type.sort, 'index', function (movies) {
+                                            callback(null, movies);
+                                        });
+                                    }
+                                    else {
+                                        callback(null, []);
+                                    }
+                                },
+                                "country": function(callback) {
+                                    if (config.index.country.keys != '') {
+                                        getData.additional('country', config.index.country.keys, config.index.country.sort, 'index', function (movies) {
+                                            callback(null, movies);
+                                        });
+                                    }
+                                    else {
+                                        callback(null, []);
+                                    }
+                                },
+                                "genre": function(callback) {
+                                    if (config.index.genre.keys != '') {
+                                        getData.additional('genre', config.index.genre.keys, config.index.genre.sort, 'index', function(movies) {
+                                            callback(null, movies);
+                                        });
+                                    }
+                                    else {
+                                        callback(null, []);
+                                    }
+                                },
+                                "director": function(callback) {
+                                    if (config.index.director.keys != '') {
+                                        getData.additional('director', config.index.director.keys, config.index.director.sort, 'index', function(movies) {
+                                            callback(null, movies);
+                                        });
+                                    }
+                                    else {
+                                        callback(null, []);
+                                    }
+                                },
+                                "actor": function(callback) {
+                                    if (config.index.actor.keys != '') {
+                                        getData.additional('actor', config.index.actor.keys, config.index.actor.sort, 'index', function(movies) {
+                                            callback(null, movies);
+                                        });
+                                    }
+                                    else {
+                                        callback(null, []);
+                                    }
+                                },
+                                "year": function(callback) {
+                                    if (config.index.year.keys != '') {
+                                        getData.additional('year', config.index.year.keys, config.index.year.sort, 'index', function(movies) {
+                                            callback(null, movies);
+                                        });
+                                    }
+                                    else {
+                                        callback(null, []);
+                                    }
+                                }
+                            },
+                            function(err, result) {
+
+                                if (err) console.error(err.message);
+
+                                callback(null, result);
+
+                            });
                     }
                 },
                 function(err, result) {

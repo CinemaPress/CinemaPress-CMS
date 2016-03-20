@@ -85,7 +85,7 @@ function getMovie(id, callback) {
 
 }
 
-function getRelatedMovies(attribute, categories, sort, callback) {
+function getAdditionalMovies(attribute, categories, sort, type, callback) {
 
     var m = [];
 
@@ -96,10 +96,10 @@ function getRelatedMovies(attribute, categories, sort, callback) {
         var query = {};
         query[attribute] = category;
 
-        getMovies(query, sort, 1, 'related', function(movies) {
+        getMovies(query, sort, 1, type, function(movies) {
 
             if (movies && movies.length) {
-                m.push(requiredData.related(query, movies));
+                m.push(requiredData.additional(query, movies, type));
             }
 
             callback(null);
@@ -186,7 +186,7 @@ function createQuery(query, sort) {
                 }
             }
             else {
-                match.push('@' + attribute + ' ' + query[attribute]);
+                match.push('@' + attribute + ' ' + (query[attribute]).replace(/'/g,"\\'"));
             }
 
         }
@@ -256,6 +256,6 @@ module.exports = {
     "categories" : getCategories,
     "movies"     : getMovies,
     "movie"      : getMovie,
-    "related"    : getRelatedMovies,
+    "additional" : getAdditionalMovies,
     "top"        : getTopMovies
 };
