@@ -410,16 +410,16 @@ body
                         img(src='http://st.kp.yandex.net/images/film_iphone/iphone360_#{id}.jpg').poster
             table
                 tr
-                    td
+                    td(style='width:150px;')
                         label(for='top')
                             | ID КиноПоиск:
                     td
                         input(type='text', id='top', value=top).input
                 tr
-                    td
+                    td(style='width:150px;')
                         label(for='top_category')
                             | Топ в категориях:
-                    td
+                    td(style='padding: 0 20px 0 0;')
                         select(id='top_category').select
                             each sort, key in sorting
                                 if key == top_category
@@ -437,11 +437,11 @@ body
                         img(src='http://st.kp.yandex.net/images/film_iphone/iphone360_#{id}.jpg').poster
             table
                 tr
-                    td
+                    td(style='width:150px;')
                         label(for='abuse')
                             | ID КиноПоиск:
                     td
-                        input(type='text', id='abuse', value=top).input
+                        input(type='text', id='abuse', value=abuse).input
         .name(data-id='counts-menu')
             | &#10507; Числовые параметры
         #counts-menu.config

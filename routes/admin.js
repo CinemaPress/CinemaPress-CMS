@@ -135,7 +135,7 @@ function nbsp(obj) {
 
         if (obj.hasOwnProperty(key) && typeof obj[key] === 'string') {
 
-            obj[key] = obj[key].replace(/[^0-9A-Za-zА-Яа-яЁё\s.\[\]\(\)\{}«»-]/g,'');
+            obj[key] = obj[key].replace(/[^0-9A-Za-zА-Яа-яЁё\s.\[\]\(\)\{}«»_-]/g,'');
             obj[key] = obj[key].replace(/(\n|\r)/g,'&nbsp;');
             obj[key] = obj[key].replace(/\s+/g, ' ');
             obj[key] = obj[key].replace(/(^\s*)|(\s*)$/g, '');
