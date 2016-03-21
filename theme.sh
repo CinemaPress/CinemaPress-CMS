@@ -17,8 +17,10 @@ then
 git clone https://github.com/CinemaPress/Theme-${THEME}.git ./themes/${THEME}
 fi
 
-chown -R :www-data ./config/config.js
-chown -R :www-data ./themes
+SITE=`basename \`pwd\``
+
+chown -R ${SITE}:www-data ./config/config.js
+chown -R ${SITE}:www-data ./themes
 
 sed -i "s/\"theme\":\s*\".*\"/\"theme\":\"${THEME}\"/" ./config/config.js
 
