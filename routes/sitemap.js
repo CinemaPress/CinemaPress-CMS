@@ -18,50 +18,36 @@ router.get('/:year?', function(req, res) {
 
     if (year) {
 
-        memcached.get(urlHash, function (err, movies) {
+        if (config.cache.time) {
 
-            if (err) throw err;
+            memcached.get(urlHash, function (err, movies) {
 
-            if (movies) {
+                if (err) throw err;
 
-                res.header('Content-Type', 'application/xml');
-                res.render('sitemap', {
-                    "domain": config.domain,
-                    "urls": config.urls,
-                    "movies": movies
-                });
-                console.timeEnd(url);
+                if (movies) {
 
-            }
-            else {
-
-                getData.movies({"year": year}, 'premiere-up', 1, 'sitemap', function (movies) {
                     res.header('Content-Type', 'application/xml');
                     res.render('sitemap', {
                         "domain": config.domain,
                         "urls": config.urls,
                         "movies": movies
                     });
-
-                    if (movies && config.cache.time) {
-                        memcached.set(
-                            urlHash,
-                            movies,
-                            config.cache.time,
-                            function (err) {
-                                if (err) {
-                                    console.log(err);
-                                }
-                            }
-                        );
-                    }
-
                     console.timeEnd(url);
 
-                });
+                }
+                else {
 
-            }
-        });
+                    run();
+
+                }
+            });
+
+        }
+        else {
+
+            run();
+
+        }
 
     }
     else {
@@ -73,6 +59,35 @@ router.get('/:year?', function(req, res) {
         });
 
         console.timeEnd(url);
+
+    }
+
+    function run() {
+
+        getData.movies({"year": year}, 'premiere-up', 1, 'sitemap', function (movies) {
+            res.header('Content-Type', 'application/xml');
+            res.render('sitemap', {
+                "domain": config.domain,
+                "urls": config.urls,
+                "movies": movies
+            });
+
+            if (movies && config.cache.time) {
+                memcached.set(
+                    urlHash,
+                    movies,
+                    config.cache.time,
+                    function (err) {
+                        if (err) {
+                            console.log(err);
+                        }
+                    }
+                );
+            }
+
+            console.timeEnd(url);
+
+        });
 
     }
 

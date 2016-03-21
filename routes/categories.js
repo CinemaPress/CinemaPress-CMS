@@ -50,57 +50,72 @@ router.get('/', function(req, res) {
 
 function getCategories(category, urlHash, callback) {
 
-    memcached.get(urlHash, function (err, render) {
+    if (config.cache.time) {
 
-        if (err) throw err;
+        memcached.get(urlHash, function (err, render) {
 
-        if (render) {
+            if (err) throw err;
 
-            callback(render);
+            if (render) {
 
-        }
-        else {
+                callback(render);
 
-            async.series({
-                    "categories": function (callback) {
-                        getData.categories(category, function(categories) {
-                            callback(null, categories);
-                        });
-                    },
-                    "top": function (callback) {
-                        getData.top(function (movies) {
-                            callback(null, movies);
-                        });
-                    }
+            }
+            else {
+
+                run();
+
+            }
+
+        });
+
+    }
+    else {
+
+        run();
+
+    }
+
+    function run() {
+
+        async.series({
+                "categories": function (callback) {
+                    getData.categories(category, function(categories) {
+                        callback(null, categories);
+                    });
                 },
-                function(err, result) {
+                "top": function (callback) {
+                    getData.top(function (movies) {
+                        callback(null, movies);
+                    });
+                }
+            },
+            function(err, result) {
 
-                    if (err) throw err;
+                if (err) throw err;
 
-                    var required = requiredData.categories(category);
+                var required = requiredData.categories(category);
 
-                    var render = mergeData(result, required);
+                var render = mergeData(result, required);
 
-                    callback(render);
+                callback(render);
 
-                    if (render && config.cache.time) {
-                        memcached.set(
-                            urlHash,
-                            render,
-                            config.cache.time,
-                            function (err) {
-                                if (err) {
-                                    console.log(err);
-                                }
+                if (render && config.cache.time) {
+                    memcached.set(
+                        urlHash,
+                        render,
+                        config.cache.time,
+                        function (err) {
+                            if (err) {
+                                console.log(err);
                             }
-                        );
-                    }
+                        }
+                    );
+                }
 
-                });
+            });
 
-        }
-
-    });
+    }
 
 }
 
@@ -166,70 +181,86 @@ router.get('/:query/:page?', function(req, res) {
 
 function getMovies(query, sort, page, urlHash, callback) {
 
-    memcached.get(urlHash, function (err, render) {
 
-        if (err) throw err;
+    if (config.cache.time) {
 
-        if (render) {
+        memcached.get(urlHash, function (err, render) {
 
-            callback(render);
+            if (err) throw err;
 
-        }
-        else {
+            if (render) {
 
-            async.series({
-                    "movies": function (callback) {
-                        getData.movies(query, sort, page, 'category', function (movies) {
+                callback(render);
+
+            }
+            else {
+
+                run();
+
+            }
+
+        });
+
+    }
+    else {
+
+        run();
+
+    }
+
+    function run() {
+
+        async.series({
+                "movies": function (callback) {
+                    getData.movies(query, sort, page, 'category', function (movies) {
+                        callback(null, movies);
+                    });
+                },
+                "top": function (callback) {
+                    if (config.top_category) {
+                        getData.movies(query, config.top_category, 1, 'top_category', function(movies) {
+                            if (movies.length) {
+                                callback(null, movies);
+                            }
+                            else {
+                                getData.top(function (movies) {
+                                    callback(null, movies);
+                                });
+                            }
+                        });
+                    }
+                    else {
+                        getData.top(function (movies) {
                             callback(null, movies);
                         });
-                    },
-                    "top": function (callback) {
-                        if (config.top_category) {
-                            getData.movies(query, config.top_category, 1, 'top_category', function(movies) {
-                                if (movies.length) {
-                                    callback(null, movies);
-                                }
-                                else {
-                                    getData.top(function (movies) {
-                                        callback(null, movies);
-                                    });
-                                }
-                            });
-                        }
-                        else {
-                            getData.top(function (movies) {
-                                callback(null, movies);
-                            });
-                        }
                     }
-                },
-                function(err, result) {
+                }
+            },
+            function(err, result) {
 
-                    if (err) console.error(err.message);
+                if (err) console.error(err.message);
 
-                    var required = requiredData.category(query, sort, page, result.movies);
-                    var render = mergeData(result, required);
+                var required = requiredData.category(query, sort, page, result.movies);
+                var render = mergeData(result, required);
 
-                    callback(render);
+                callback(render);
 
-                    if (render && config.cache.time) {
-                        memcached.set(
-                            urlHash,
-                            render,
-                            config.cache.time,
-                            function (err) {
-                                if (err) {
-                                    console.log(err);
-                                }
+                if (render && config.cache.time) {
+                    memcached.set(
+                        urlHash,
+                        render,
+                        config.cache.time,
+                        function (err) {
+                            if (err) {
+                                console.log(err);
                             }
-                        );
-                    }
+                        }
+                    );
+                }
 
-                });
+            });
 
-        }
-
-    });
+    }
 
 }
 

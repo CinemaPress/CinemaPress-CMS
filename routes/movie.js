@@ -29,158 +29,173 @@ router.get('/:movie/:type?', function(req, res) {
 
     var related = {};
 
-    memcached.get(urlHash, function (err, render) {
+    if (config.cache.time) {
 
-        if (err) throw err;
+        memcached.get(urlHash, function (err, render) {
 
-        if (render) {
+            if (err) throw err;
 
-            renderData(res, type, render, url);
+            if (render) {
 
-        }
-        else {
+                renderData(res, type, render, url);
 
-            async.series({
-                    "movie": function (callback) {
-                        getData.movie(id, function (movie) {
-                            related = movie;
-                            callback(null, movie);
-                        });
-                    },
-                    "top": function (callback) {
-                        getData.top(function (movies) {
-                            callback(null, movies);
-                        });
-                    },
-                    "movies": function(callback) {
-                        async.series({
-                                "countries": function(callback) {
-                                    if (related && related.countries && config.relates.indexOf('countries')+1) {
-                                        getData.additional('country', related.countries, config.related.country.sort, 'related', function (movies) {
-                                            callback(null, movies);
-                                        });
-                                    }
-                                    else {
-                                        callback(null, []);
-                                    }
-                                },
-                                "genres": function(callback) {
-                                    if (related && related.genres && config.relates.indexOf('genres')+1) {
-                                        getData.additional('genre', related.genres, config.related.genre.sort, 'related', function(movies) {
-                                            callback(null, movies);
-                                        });
-                                    }
-                                    else {
-                                        callback(null, []);
-                                    }
-                                },
-                                "directors": function(callback) {
-                                    if (related && related.directors && config.relates.indexOf('directors')+1) {
-                                        getData.additional('director', related.directors, config.related.director.sort, 'related', function(movies) {
-                                            callback(null, movies);
-                                        });
-                                    }
-                                    else {
-                                        callback(null, []);
-                                    }
-                                },
-                                "actors": function(callback) {
-                                    if (related && related.actors && config.relates.indexOf('actors')+1) {
-                                        getData.additional('actor', related.actors, config.related.actor.sort, 'related', function(movies) {
-                                            callback(null, movies);
-                                        });
-                                    }
-                                    else {
-                                        callback(null, []);
-                                    }
-                                },
-                                "country": function(callback) {
-                                    if (related && related.country && config.relates.indexOf('countries') === -1 && config.relates.indexOf('country')+1) {
-                                        getData.additional('country', related.country, config.related.country.sort, 'related', function (movies) {
-                                            callback(null, movies);
-                                        });
-                                    }
-                                    else {
-                                        callback(null, []);
-                                    }
-                                },
-                                "genre": function(callback) {
-                                    if (related && related.genre && config.relates.indexOf('genres') === -1 && config.relates.indexOf('genre')+1) {
-                                        getData.additional('genre', related.genre, config.related.genre.sort, 'related', function(movies) {
-                                            callback(null, movies);
-                                        });
-                                    }
-                                    else {
-                                        callback(null, []);
-                                    }
-                                },
-                                "director": function(callback) {
-                                    if (related && related.director && config.relates.indexOf('directors') === -1 && config.relates.indexOf('director')+1) {
-                                        getData.additional('director', related.director, config.related.director.sort, 'related', function(movies) {
-                                            callback(null, movies);
-                                        });
-                                    }
-                                    else {
-                                        callback(null, []);
-                                    }
-                                },
-                                "actor": function(callback) {
-                                    if (related && related.actor && config.relates.indexOf('actors') === -1 && config.relates.indexOf('actor')+1) {
-                                        getData.additional('actor', related.actor, config.related.actor.sort, 'related', function(movies) {
-                                            callback(null, movies);
-                                        });
-                                    }
-                                    else {
-                                        callback(null, []);
-                                    }
-                                },
-                                "year": function(callback) {
-                                    if (related && related.year && config.relates.indexOf('year')+1) {
-                                        getData.additional('year', related.year, config.related.year.sort, 'related', function(movies) {
-                                            callback(null, movies);
-                                        });
-                                    }
-                                    else {
-                                        callback(null, []);
-                                    }
+            }
+            else {
+
+                run();
+
+            }
+
+        });
+
+    }
+    else {
+
+        run();
+
+    }
+
+    function run() {
+
+        async.series({
+                "movie": function (callback) {
+                    getData.movie(id, function (movie) {
+                        related = movie;
+                        callback(null, movie);
+                    });
+                },
+                "top": function (callback) {
+                    getData.top(function (movies) {
+                        callback(null, movies);
+                    });
+                },
+                "movies": function(callback) {
+                    async.series({
+                            "countries": function(callback) {
+                                if (related && related.countries && config.relates.indexOf('countries')+1) {
+                                    getData.additional('country', related.countries, config.related.country.sort, 'related', function (movies) {
+                                        callback(null, movies);
+                                    });
+                                }
+                                else {
+                                    callback(null, []);
                                 }
                             },
-                            function(err, result) {
-
-                                if (err) console.error(err.message);
-
-                                callback(null, result);
-
-                            });
-                    }
-                },
-                function(err, result) {
-
-                    if (err) console.error(err.message);
-
-                    var required = requiredData.movie(type, result.movie, result.movies);
-                    var render = mergeData(result, required);
-
-                    renderData(res, type, render, url);
-
-                    if (render && config.cache.time) {
-                        memcached.set(
-                            urlHash,
-                            render,
-                            config.cache.time,
-                            function (err) {
-                                if (err) {
-                                    console.log(err);
+                            "genres": function(callback) {
+                                if (related && related.genres && config.relates.indexOf('genres')+1) {
+                                    getData.additional('genre', related.genres, config.related.genre.sort, 'related', function(movies) {
+                                        callback(null, movies);
+                                    });
+                                }
+                                else {
+                                    callback(null, []);
+                                }
+                            },
+                            "directors": function(callback) {
+                                if (related && related.directors && config.relates.indexOf('directors')+1) {
+                                    getData.additional('director', related.directors, config.related.director.sort, 'related', function(movies) {
+                                        callback(null, movies);
+                                    });
+                                }
+                                else {
+                                    callback(null, []);
+                                }
+                            },
+                            "actors": function(callback) {
+                                if (related && related.actors && config.relates.indexOf('actors')+1) {
+                                    getData.additional('actor', related.actors, config.related.actor.sort, 'related', function(movies) {
+                                        callback(null, movies);
+                                    });
+                                }
+                                else {
+                                    callback(null, []);
+                                }
+                            },
+                            "country": function(callback) {
+                                if (related && related.country && config.relates.indexOf('countries') === -1 && config.relates.indexOf('country')+1) {
+                                    getData.additional('country', related.country, config.related.country.sort, 'related', function (movies) {
+                                        callback(null, movies);
+                                    });
+                                }
+                                else {
+                                    callback(null, []);
+                                }
+                            },
+                            "genre": function(callback) {
+                                if (related && related.genre && config.relates.indexOf('genres') === -1 && config.relates.indexOf('genre')+1) {
+                                    getData.additional('genre', related.genre, config.related.genre.sort, 'related', function(movies) {
+                                        callback(null, movies);
+                                    });
+                                }
+                                else {
+                                    callback(null, []);
+                                }
+                            },
+                            "director": function(callback) {
+                                if (related && related.director && config.relates.indexOf('directors') === -1 && config.relates.indexOf('director')+1) {
+                                    getData.additional('director', related.director, config.related.director.sort, 'related', function(movies) {
+                                        callback(null, movies);
+                                    });
+                                }
+                                else {
+                                    callback(null, []);
+                                }
+                            },
+                            "actor": function(callback) {
+                                if (related && related.actor && config.relates.indexOf('actors') === -1 && config.relates.indexOf('actor')+1) {
+                                    getData.additional('actor', related.actor, config.related.actor.sort, 'related', function(movies) {
+                                        callback(null, movies);
+                                    });
+                                }
+                                else {
+                                    callback(null, []);
+                                }
+                            },
+                            "year": function(callback) {
+                                if (related && related.year && config.relates.indexOf('year')+1) {
+                                    getData.additional('year', related.year, config.related.year.sort, 'related', function(movies) {
+                                        callback(null, movies);
+                                    });
+                                }
+                                else {
+                                    callback(null, []);
                                 }
                             }
-                        );
-                    }
+                        },
+                        function(err, result) {
 
-                });
+                            if (err) console.error(err.message);
 
-        }
+                            callback(null, result);
 
-    });
+                        });
+                }
+            },
+            function(err, result) {
+
+                if (err) console.error(err.message);
+
+                var required = requiredData.movie(type, result.movie, result.movies);
+                var render = mergeData(result, required);
+
+                renderData(res, type, render, url);
+
+                if (render && config.cache.time) {
+                    memcached.set(
+                        urlHash,
+                        render,
+                        config.cache.time,
+                        function (err) {
+                            if (err) {
+                                console.log(err);
+                            }
+                        }
+                    );
+                }
+
+            });
+
+    }
 
 });
 
