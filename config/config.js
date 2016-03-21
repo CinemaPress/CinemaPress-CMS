@@ -12,7 +12,7 @@ module.exports = {
         "twitter": ""
     },
     "cache": {
-        "time": 86400,
+        "time": 0,
         "addr": "127.0.0.1:11211"
     },
     "counts": {
