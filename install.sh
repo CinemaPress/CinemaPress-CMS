@@ -180,6 +180,12 @@ echo "@reboot root cd /home/${DOMAIN}/ && PORT=${BACKUP_PORT} forever start --mi
 echo "@hourly root forever restart ${DOMAIN}-backup >> /home/${DOMAIN}/config/autostart.log 2>&1" >> /etc/crontab
 echo 'OK'
 echo '---------------------'
+echo '-------sysctl--------'
+echo '---------------------'
+mv /etc/sysctl.conf /etc/sysctl.old.conf
+cp /home/${DOMAIN}/config/sysctl.conf /etc/sysctl.conf
+echo 'OK'
+echo '---------------------'
 echo '-------restart-------'
 echo '---------------------'
 service nginx restart
