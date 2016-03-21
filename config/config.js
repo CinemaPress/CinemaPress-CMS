@@ -4,6 +4,7 @@ module.exports = {
     "disqus": "films-online",
     "theme": "skeleton",
     "top": [299, 300, 301, 302, 303, 304, 305, 306],
+    "top_category": "imdb-vote-up",
     "abuse": [299, 300, 301],
     "social": {
         "vk": "",

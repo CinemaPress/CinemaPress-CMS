@@ -201,12 +201,15 @@ function addKeywords(text, keywords) {
         for (var key in keywords) {
             if (keywords.hasOwnProperty(key)) {
 
-                var allSpecific = new RegExp('(\\s*\\(\\s*' + keywords[key] + '\\s*\\)\\s*\\{(.*?)\\}\\s*)', 'gi');
+                var keyRegExp = ('' + key).replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+                var keywordRegExp = ('' + keywords[key]).replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+
+                var allSpecific = new RegExp('(\\s*\\(\\s*' + keywordRegExp + '\\s*\\)\\s*\\{(.*?)\\}\\s*)', 'gi');
                 var match = allSpecific.exec(text);
                 if (match) {dflt = false;}
                 text = text.replace(allSpecific, ' $2 ');
 
-                var allKeys = new RegExp('\\[' + key + '\\]', 'g');
+                var allKeys = new RegExp('\\[' + keyRegExp + '\\]', 'g');
                 text = text.replace(allKeys, keywords[key]);
 
             }

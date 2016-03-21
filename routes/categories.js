@@ -184,16 +184,23 @@ function getMovies(query, sort, page, urlHash, callback) {
                         });
                     },
                     "top": function (callback) {
-                        getData.movies(query, 'kinopoisk-vote-up', 1, 'top_category', function(movies) {
-                            if (movies.length) {
-                                callback(null, movies);
-                            }
-                            else {
-                                getData.top(function (movies) {
+                        if (config.top_category) {
+                            getData.movies(query, config.top_category, 1, 'top_category', function(movies) {
+                                if (movies.length) {
                                     callback(null, movies);
-                                });
-                            }
-                        });
+                                }
+                                else {
+                                    getData.top(function (movies) {
+                                        callback(null, movies);
+                                    });
+                                }
+                            });
+                        }
+                        else {
+                            getData.top(function (movies) {
+                                callback(null, movies);
+                            });
+                        }
                     }
                 },
                 function(err, result) {
