@@ -184,6 +184,7 @@ echo '-------sysctl--------'
 echo '---------------------'
 mv /etc/sysctl.conf /etc/sysctl.old.conf
 cp /home/${DOMAIN}/config/sysctl.conf /etc/sysctl.conf
+sysctl -p
 echo 'OK'
 echo '---------------------'
 echo '-------restart-------'

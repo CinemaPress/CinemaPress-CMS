@@ -165,27 +165,27 @@ function createQuery(query, sort) {
     for (var attribute in query) {
         if (query.hasOwnProperty(attribute)) {
 
-            query[attribute] = '' + query[attribute].toLowerCase();
-            query[attribute] = query[attribute].replace(/[^0-9A-Za-zА-Яа-яЁё.,;/}«»_!#%№\]\[\?\(\)\{\s\+-]/g,'');
-            query[attribute] = query[attribute].replace(/\s+/g, ' ');
-            query[attribute] = query[attribute].replace(/(^\s*)|(\s*)$/g, '');
+            var search = '' + query[attribute].toLowerCase();
+            search = search.replace(/[^0-9A-Za-zА-Яа-яЁё.,;/}«»_!#%№\]\[\?\(\)\{\s\+-]/g,'');
+            search = search.replace(/\s+/g, ' ');
+            search = search.replace(/(^\s*)|(\s*)$/g, '');
 
             if (attribute == 'type') {
-                if (query[attribute].indexOf("сериалы") + 1) {
+                if (search.indexOf("сериалы") + 1) {
                     where.push('`type` = 1');
                     match.push('@all_movies _all_ @genre !аниме !короткометражка');
                 }
-                else if (query[attribute].indexOf("мультфильмы") + 1) {
+                else if (search.indexOf("мультфильмы") + 1) {
                     where.push('`type` != 1');
                     match.push('@genre мультфильм | детский !аниме !короткометражка');
                 }
-                else if (query[attribute].indexOf("аниме") + 1) {
+                else if (search.indexOf("аниме") + 1) {
                     match.push('@genre аниме');
                 }
-                else if (query[attribute].indexOf("тв-передачи") + 1) {
+                else if (search.indexOf("тв-передачи") + 1) {
                     match.push('@genre ток-шоу | новости | реальное | церемония | концерт');
                 }
-                else if (query[attribute].indexOf("фильмы") + 1) {
+                else if (search.indexOf("фильмы") + 1) {
                     where.push('`type` != 1');
                     match.push('@all_movies _all_ @genre !мультфильм');
                 }
@@ -194,7 +194,7 @@ function createQuery(query, sort) {
                 }
             }
             else {
-                match.push('@' + attribute + ' ' + query[attribute]);
+                match.push('@' + attribute + ' ' + search);
             }
 
         }
