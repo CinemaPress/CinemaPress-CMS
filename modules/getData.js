@@ -165,28 +165,36 @@ function createQuery(query, sort) {
     for (var attribute in query) {
         if (query.hasOwnProperty(attribute)) {
 
+            query[attribute] = '' + query[attribute].toLowerCase();
+            query[attribute] = query[attribute].replace(/[^0-9A-Za-zА-Яа-яЁё.,;/}«»_!#%№\]\[\?\(\)\{\s\+-]/g,'');
+            query[attribute] = query[attribute].replace(/\s+/g, ' ');
+            query[attribute] = query[attribute].replace(/(^\s*)|(\s*)$/g, '');
+
             if (attribute == 'type') {
-                if (query[attribute].toLowerCase().indexOf("сериалы") + 1) {
+                if (query[attribute].indexOf("сериалы") + 1) {
                     where.push('`type` = 1');
                     match.push('@all_movies _all_ @genre !аниме !короткометражка');
                 }
-                else if (query[attribute].toLowerCase().indexOf("мультфильмы") + 1) {
+                else if (query[attribute].indexOf("мультфильмы") + 1) {
                     where.push('`type` != 1');
                     match.push('@genre мультфильм | детский !аниме !короткометражка');
                 }
-                else if (query[attribute].toLowerCase().indexOf("аниме") + 1) {
+                else if (query[attribute].indexOf("аниме") + 1) {
                     match.push('@genre аниме');
                 }
-                else if (query[attribute].toLowerCase().indexOf("тв-передачи") + 1) {
+                else if (query[attribute].indexOf("тв-передачи") + 1) {
                     match.push('@genre ток-шоу | новости | реальное | церемония | концерт');
                 }
-                else if (query[attribute].toLowerCase().indexOf("фильмы") + 1) {
+                else if (query[attribute].indexOf("фильмы") + 1) {
                     where.push('`type` != 1');
                     match.push('@all_movies _all_ @genre !мультфильм');
                 }
+                else {
+                    match.push('@all_movies _all_');
+                }
             }
             else {
-                match.push('@' + attribute + ' ' + (query[attribute]).replace(/'/g,"\\'"));
+                match.push('@' + attribute + ' ' + query[attribute]);
             }
 
         }
