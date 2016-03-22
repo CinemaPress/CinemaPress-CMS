@@ -156,6 +156,13 @@ else
 MEMCACHED_PORT=$((MEMCACHED_PORT+1))
 fi
 done
+if [ "$VER" = "jessie" ]
+then
+cp /lib/systemd/system/memcached.service /lib/systemd/system/memcached_${DOMAIN}.service
+sed -i "s/memcached.conf/memcached_${DOMAIN}.conf/g" /lib/systemd/system/memcached_${DOMAIN}.service
+systemctl enable memcached_${DOMAIN}.service
+systemctl start memcached_${DOMAIN}.service
+fi
 rm -rf /etc/memcached_${DOMAIN}.conf
 cp /etc/memcached.conf /etc/memcached_${DOMAIN}.conf
 sed -i "s/11211/${MEMCACHED_PORT}/g" /etc/memcached_${DOMAIN}.conf
