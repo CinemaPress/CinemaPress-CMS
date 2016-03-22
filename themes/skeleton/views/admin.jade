@@ -1574,7 +1574,7 @@ body
 
                     setTimeout(function () {
                         document.getElementById('submit').innerHTML = '<span style="color:#78ffa0;">Сохранено &#128505;</span>';
-                        if (data.urls.admin != "#{urls.admin}") {
+                        if (data.urls.admin != "#{urls.admin}" || data.cache.time != "#{cache.time}") {
                             window.location = '/' + data.urls.admin;
                         }
                         if (data.description) {
@@ -1597,8 +1597,13 @@ body
 
         }
 
-        var flush = document.getElementById('flush');
-        flush.addEventListener('click', flushData);
+        if (parseInt(document.getElementById('cache.time').options[document.getElementById('cache.time').selectedIndex].value)) {
+            var flush = document.getElementById('flush');
+            flush.addEventListener('click', flushData);
+        }
+        else {
+            document.getElementById('flush').innerHTML = '<span style="color:#ecfaa2;">Кэш отключен &#8864;</span>';
+        }
 
         function flushData() {
 
