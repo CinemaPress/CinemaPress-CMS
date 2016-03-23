@@ -72,18 +72,18 @@ function moviesData(movies) {
             "description"   : uniqueDescription(movie.kp_id) || movie.description,
             "year"          : movie.year,
             "year_url"      : createCategoryUrl('year', movie.year),
-            "countries"     : (movie.country == '_empty')  ? '' : movie.country,
-            "directors"     : (movie.director == '_empty') ? '' : movie.director,
-            "genres"        : (movie.genre == '_empty')    ? '' : movie.genre,
-            "actors"        : (movie.actor == '_empty')    ? '' : movie.actor,
+            "countries"     : (movie.country == '_empty')  ? '' : randPos(movie.country),
+            "directors"     : (movie.director == '_empty') ? '' : randPos(movie.director),
+            "genres"        : (movie.genre == '_empty')    ? '' : randPos(movie.genre),
+            "actors"        : (movie.actor == '_empty')    ? '' : randPos(movie.actor),
             "country"       : (movie.country == '_empty')  ? '' : movie.country.split(',')[0],
             "director"      : (movie.director == '_empty') ? '' : movie.director.split(',')[0],
             "genre"         : (movie.genre == '_empty')    ? '' : movie.genre.split(',')[0],
             "actor"         : (movie.actor == '_empty')    ? '' : movie.actor.split(',')[0],
-            "countries_url" : (movie.country == '_empty')  ? '' : createCategoryUrl('country', movie.country),
-            "directors_url" : (movie.director == '_empty') ? '' : createCategoryUrl('director', movie.director),
-            "genres_url"    : (movie.genre == '_empty')    ? '' : createCategoryUrl('genre', movie.genre),
-            "actors_url"    : (movie.actor == '_empty')    ? '' : createCategoryUrl('actor', movie.actor),
+            "countries_url" : (movie.country == '_empty')  ? '' : randPos(createCategoryUrl('country', movie.country)),
+            "directors_url" : (movie.director == '_empty') ? '' : randPos(createCategoryUrl('director', movie.director)),
+            "genres_url"    : (movie.genre == '_empty')    ? '' : randPos(createCategoryUrl('genre', movie.genre)),
+            "actors_url"    : (movie.actor == '_empty')    ? '' : randPos(createCategoryUrl('actor', movie.actor)),
             "country_url"   : (movie.country == '_empty')  ? '' : createCategoryUrl('country', movie.country.split(',')[0]),
             "director_url"  : (movie.director == '_empty') ? '' : createCategoryUrl('director', movie.director.split(',')[0]),
             "genre_url"     : (movie.genre == '_empty')    ? '' : createCategoryUrl('genre', movie.genre.split(',')[0]),
@@ -111,6 +111,37 @@ function moviesData(movies) {
 
     });
 
+}
+
+function randPos(items) {
+
+    var itemsArr = shuffle(('' + items).split(','));
+    if (itemsArr.length > 1) {
+        var lastArr = itemsArr.pop();
+        items = (itemsArr.join(', ')) + ' и ' + lastArr;
+    }
+    else {
+        items = itemsArr.join(', ');
+    }
+
+    return items;
+
+}
+
+function shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+
+    while (0 !== currentIndex) {
+
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+
+    return array;
 }
 
 function uniqueDescription(id) {

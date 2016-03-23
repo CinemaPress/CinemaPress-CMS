@@ -9,8 +9,8 @@ if movies
                     lastmod= movie.premiere.replace(/(?!2016)[0-9]{4}/g, year)
 else
     sitemapindex
-        sitemap
-            - n = new Date().getFullYear()
-            while n > 1887
+        - n = new Date().getFullYear()
+        while n > 1887
+            sitemap
                 loc
                     = 'http://' + domain + '/' + urls.sitemap + '/' + n--

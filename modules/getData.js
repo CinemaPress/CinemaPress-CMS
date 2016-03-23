@@ -94,7 +94,7 @@ function getAdditionalMovies(attribute, categories, sort, type, callback) {
     async.forEachOfSeries(categories, function (category, key, callback) {
 
         var query = {};
-        query[attribute] = category;
+        query[attribute] = (category.replace(/\s+/g, ' ')).replace(/(^\s*)|(\s*)$/g, '');
 
         getMovies(query, sort, 1, type, function(movies) {
 

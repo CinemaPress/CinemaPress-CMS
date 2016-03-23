@@ -1674,6 +1674,8 @@ body
 
                         var id = parseInt(movie[i]);
 
+                        movie[i] = decodeURIComponent(movie[i]);
+
                         if (movie[i].indexOf('#{domain}') + 1) {
                             var prefix_id = '#{urls.prefix_id}' || '/';
                             var regexpId = new RegExp(decodeURIComponent(prefix_id) + '([0-9]{1,7})', 'ig');
@@ -1699,6 +1701,8 @@ body
                     idTimeOut = setTimeout(function() {
 
                         var id = parseInt(document.getElementById(elementId).value) + parseInt(document.getElementById('urls.unique_id').value);
+
+                        document.getElementById(elementId).value = decodeURIComponent(document.getElementById(elementId).value);
 
                         if (document.getElementById(elementId).value.indexOf('#{domain}')+1) {
                             var prefix_id = '#{urls.prefix_id}' || '/';
