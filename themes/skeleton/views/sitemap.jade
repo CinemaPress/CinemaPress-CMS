@@ -1,7 +1,7 @@
 doctype xml
 if movies
-    if movies.length
-        urlset(xmlns='http://www.sitemaps.org/schemas/sitemap/0.9')
+    urlset(xmlns='http://www.sitemaps.org/schemas/sitemap/0.9')
+        if movies.length
             - year = new Date().getFullYear() - 1
             each movie in movies
                 url
