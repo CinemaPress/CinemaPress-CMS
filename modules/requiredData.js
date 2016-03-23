@@ -197,6 +197,8 @@ function addKeywords(text, keywords) {
 
     var dflt = true;
 
+    text = text.replace(/&nbsp;/g,' ');
+
     if (keywords) {
         for (var key in keywords) {
             if (keywords.hasOwnProperty(key)) {

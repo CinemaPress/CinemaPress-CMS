@@ -166,7 +166,7 @@ function createQuery(query, sort) {
         if (query.hasOwnProperty(attribute)) {
 
             var search = '' + query[attribute].toLowerCase();
-            search = search.replace(/[^0-9A-Za-zА-Яа-яЁё.,;/}«»_!#%№\]\[\?\(\)\{\s\+-]/g,'');
+            search = search.replace(/[^0-9A-Za-zА-Яа-яЁё\s\+-]/g,'');
             search = search.replace(/\s+/g, ' ');
             search = search.replace(/(^\s*)|(\s*)$/g, '');
 
