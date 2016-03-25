@@ -12,7 +12,7 @@
 
 ##### Видео установки (готовый кино-сайт за 5 минут):
 
-<a href="https://asciinema.org/a/ecmqixsphnvy4q0oz8zghp20i" target="_blank"><img src="https://asciinema.org/a/ecmqixsphnvy4q0oz8zghp20i.png" width="589" alt="Готовый кино-сайт за 5 минут (видео)"/></a>
+<a href="https://asciinema.org/a/ecmqixsphnvy4q0oz8zghp20i" target="_blank"><img src="https://raw.githubusercontent.com/CinemaPress/Theme-Barney/master/asciinema.png" width="589" alt="Готовый кино-сайт за 5 минут (видео)"/></a>
 
 # CinemaPress DataBase
  :minidisc: База данных ~ **500 000 фильмов/сериалов** (все фильмы/сериалы планеты).
