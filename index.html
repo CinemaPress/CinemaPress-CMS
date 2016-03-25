@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>CinemaPress CMS by CinemaPress</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">CinemaPress CMS</h1>
+      <h2 class="project-tagline">Система управления самообновляемым кино-сайтом.</h2>
+      <a href="https://github.com/CinemaPress/CinemaPress-CMS" class="btn">View on GitHub</a>
+      <a href="https://github.com/CinemaPress/CinemaPress-CMS/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/CinemaPress/CinemaPress-CMS/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="cinemapress-cms" class="anchor" href="#cinemapress-cms" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>CinemaPress CMS</h1>
+
+<p><img class="emoji" title=":movie_camera:" alt=":movie_camera:" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f3a5.png" height="20" width="20" align="absmiddle"> Система управления самообновляемым кино-сайтом.</p>
+
+<h2>
+<a id="Установка" class="anchor" href="#%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Установка:</h2>
+
+<p>Работает на Debian 7 «Wheezy» (64-bit), Debian 8 «Jessie» (64-bit)</p>
+
+<pre><code>~# wget --no-check-certificate https://git.io/v2XAV -qO install.sh
+~# sh install.sh [domain] [theme] [password]
+</code></pre>
+
+<h5>
+<a id="Видео-установки-готовый-кино-сайт-за-5-минут" class="anchor" href="#%D0%92%D0%B8%D0%B4%D0%B5%D0%BE-%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B8-%D0%B3%D0%BE%D1%82%D0%BE%D0%B2%D1%8B%D0%B9-%D0%BA%D0%B8%D0%BD%D0%BE-%D1%81%D0%B0%D0%B9%D1%82-%D0%B7%D0%B0-5-%D0%BC%D0%B8%D0%BD%D1%83%D1%82" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Видео установки (готовый кино-сайт за 5 минут):</h5>
+
+<p><a href="https://asciinema.org/a/ecmqixsphnvy4q0oz8zghp20i"><img src="https://raw.githubusercontent.com/CinemaPress/Theme-Barney/master/asciinema.png" width="589" alt="Готовый кино-сайт за 5 минут (видео)"></a></p>
+
+<h1>
+<a id="cinemapress-database" class="anchor" href="#cinemapress-database" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>CinemaPress DataBase</h1>
+
+<p><img class="emoji" title=":minidisc:" alt=":minidisc:" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f4bd.png" height="20" width="20" align="absmiddle"> База данных ~ <strong>500 000 фильмов/сериалов</strong> (все фильмы/сериалы планеты).</p>
+
+<h2>
+<a id="Установка-1" class="anchor" href="#%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Установка:</h2>
+
+<p>После успешного запуска CinemaPress CMS, можете <a href="http://cinemapress.org/">приобрести</a> и импортировать полную базу данных.</p>
+
+<pre><code>~# sh db.sh [domain] [key]
+</code></pre>
+
+<h5>
+<a id="Пример" class="anchor" href="#%D0%9F%D1%80%D0%B8%D0%BC%D0%B5%D1%80" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Пример:</h5>
+
+<pre><code>~# sh db.sh mydomain.com MyDatabaseKey
+
+----------------------- URL ДОМЕНА -------------------------------
+mydomain.com
+---------------------- КЛЮЧ ДОСТУПА ------------------------------
+MyDatabaseKey
+------------------------------------------------------------------
+</code></pre>
+
+<h3>
+<a id="Установка-темы-оформления" class="anchor" href="#%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0-%D1%82%D0%B5%D0%BC%D1%8B-%D0%BE%D1%84%D0%BE%D1%80%D0%BC%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Установка темы оформления</h3>
+
+<ul>
+<li><a href="https://github.com/CinemaPress/Theme-Barney">Barney (kinogo.co)</a></li>
+</ul>
+
+<pre><code>~# sh theme.sh barney
+</code></pre>
+
+<h2>
+<a id="" class="anchor" href="#" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="https://github.com/CinemaPress/Theme-Barney"><img src="https://raw.githubusercontent.com/CinemaPress/Theme-Barney/master/screenshot.jpg" width="400"></a>
+</h2>
+
+<ul>
+<li><a href="https://github.com/CinemaPress/Theme-Ted">Ted (kinogb.net)</a></li>
+</ul>
+
+<pre><code>~# sh theme.sh ted
+</code></pre>
+
+<h2>
+<a id="-1" class="anchor" href="#-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="https://github.com/CinemaPress/Theme-Ted"><img src="https://raw.githubusercontent.com/CinemaPress/Theme-Ted/master/screenshot.jpg" width="400"></a>
+</h2>
+
+<ul>
+<li><a href="https://github.com/CinemaPress/Theme-Lily">Lily (kinokong.net)</a></li>
+</ul>
+
+<pre><code>~# sh theme.sh lily
+</code></pre>
+
+<h2>
+<a id="-2" class="anchor" href="#-2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="https://github.com/CinemaPress/Theme-Lily"><img src="https://raw.githubusercontent.com/CinemaPress/Theme-Lily/master/screenshot.jpg" width="400"></a>
+</h2>
+
+<ul>
+<li><a href="https://github.com/CinemaPress/Theme-Marshall">Marshall (zerx.cc)</a></li>
+</ul>
+
+<pre><code>~# sh theme.sh marshall
+</code></pre>
+
+<p><a href="https://github.com/CinemaPress/Theme-Marshall"><img src="https://raw.githubusercontent.com/CinemaPress/Theme-Marshall/master/screenshot.jpg" width="400"></a></p>
+
+<h1>
+<a id="Что-такое-cinemapress-cms" class="anchor" href="#%D0%A7%D1%82%D0%BE-%D1%82%D0%B0%D0%BA%D0%BE%D0%B5-cinemapress-cms" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Что такое CinemaPress CMS?</h1>
+
+<p>Это система управления самообновляемым кино-сайтом, которая строится на базе данных <strong>CinemaPress</strong> и работает на <code>NodeJS (ExpressJS) + Sphinx</code>.</p>
+
+<p><img src="https://raw.githubusercontent.com/CinemaPress/CinemaPress.github.io/master/images/admin/screen.png" alt="Admin page CinemaPress CMS"></p>
+
+<ul>
+<li>
+<strong>Сохранить</strong> - сохраняет все изменения которые были сделаны в админ панели;</li>
+<li>
+<strong>Откатиться</strong> - возвращается на <code>одно!</code> сохранение назад, к примеру если Вы сделали изменение в админ панели, зашли на сайт и что-то изменилось в худшую сторону, то просто откатитесь на предыдущую версию конфигурации;</li>
+<li>
+<strong>Очистить кэш</strong> - любое изменение и сохранение в админ панели нужно сопровождать очисткой кэша (если кэширование включено), иначе Вы не увидите изменений на сайте;</li>
+<li>
+<strong>Помощь</strong> - ссылка на документацию CinemaPress CMS;</li>
+<li>
+<strong>Карандаш</strong> - позволяет изменять стандартные описания к фильмам.</li>
+</ul>
+
+<h1>
+<a id="Основное" class="anchor" href="#%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D0%BD%D0%BE%D0%B5" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Основное</h1>
+
+<ul>
+<li>
+<strong>Домен</strong> - доменное имя Вашего сайта, без <code>http://</code> и обратного слеша в конце, например «<code>example.com</code>»;</li>
+<li>
+<strong>Email</strong> - электронная почта для связи с администрацией сайта;</li>
+<li>
+<strong>Disqus</strong> - Ваш <code>shortname</code>.disqus.com на сайте <a href="https://disqus.com/admin/create/">disqus</a>, требуется для того, чтобы Вы через свой аккаунт могли модерировать комментарии Ваших пользователей;</li>
+<li>
+<strong>Тема</strong> - название темы оформления, должно быть с точности таким как называется папка с темой в дирректории <code>themes</code>.</li>
+</ul>
+
+<h1>
+<a id="Главная-страница" class="anchor" href="#%D0%93%D0%BB%D0%B0%D0%B2%D0%BD%D0%B0%D1%8F-%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Главная страница</h1>
+
+<p>Формирования фильмов на главной странице из различных категорий и сортировок.</p>
+
+<ul>
+<li>
+<strong>Типы</strong>
+
+<ul>
+<li>
+<strong>Название</strong> - Название категории, можно использовать ключ <code>[type]</code>;</li>
+<li>
+<strong>Сортировка</strong> - Сортировка фильмов;</li>
+<li>
+<strong>Типы</strong> - Типы, которые перечисляются через запятую, можно использовать такие типы <code>фильмы</code>, <code>сериалы</code>, <code>мультфильмы</code>, <code>аниме</code>, <code>тв-передачи</code>.</li>
+</ul>
+</li>
+<li>
+<strong>Страны</strong>
+
+<ul>
+<li>
+<strong>Название</strong> - Название категории, можно использовать ключ <code>[country]</code>;</li>
+<li>
+<strong>Сортировка</strong> - Сортировка фильмов;</li>
+<li>
+<strong>Страны</strong> - Страны, которые перечисляются через запятую, можно использовать названия стран в именительном падеже <code>Россия</code>, <code>США</code>, <code>Франция</code>, <code>Индия</code>, <code>СССР</code>, и др.</li>
+</ul>
+</li>
+<li>
+<strong>Жанры</strong>
+
+<ul>
+<li>
+<strong>Название</strong> - Название категории, можно использовать ключ <code>[genre]</code>;</li>
+<li>
+<strong>Сортировка</strong> - Сортировка фильмов;</li>
+<li>
+<strong>Жанры</strong> - Жанры, которые перечисляются через запятую, можно использовать названия жанров в именительном падеже <code>комедия</code>, <code>ужасы</code>, <code>история</code>, <code>спорт</code>, <code>драма</code>, и др.</li>
+</ul>
+</li>
+<li>
+<strong>Режиссеры</strong>
+
+<ul>
+<li>
+<strong>Название</strong> - Название категории, можно использовать ключ <code>[director]</code>;</li>
+<li>
+<strong>Сортировка</strong> - Сортировка фильмов;</li>
+<li>
+<strong>Режиссеры</strong> - Режиссеры, которые перечисляются через запятую, можно использовать имена режиссеров в именительном падеже <code>Дэвид Финчер</code>, <code>Ф. Гэри Грей</code>, <code>Джонатан Демме</code>, и др.</li>
+</ul>
+</li>
+<li>
+<strong>Актеры</strong>
+
+<ul>
+<li>
+<strong>Название</strong> - Название категории, можно использовать ключ <code>[actor]</code>;</li>
+<li>
+<strong>Сортировка</strong> - Сортировка фильмов;</li>
+<li>
+<strong>Актеры</strong> - Актеры, которые перечисляются через запятую, можно использовать имена актеров в именительном падеже <code>Джоди Фостер</code>, <code>Том Круз</code>, <code>Леонардо ДиКаприо</code>, и др.</li>
+</ul>
+</li>
+<li>
+<strong>Годы</strong>
+
+<ul>
+<li>
+<strong>Название</strong> - Название категории, можно использовать ключ <code>[year]</code>;</li>
+<li>
+<strong>Сортировка</strong> - Сортировка фильмов;</li>
+<li>
+<strong>Годы</strong> - Годы, которые перечисляются через запятую <code>2007</code>, <code>2016</code>, <code>1994</code>, и др.</li>
+</ul>
+</li>
+</ul>
+
+<h1>
+<a id="Параметры-url" class="anchor" href="#%D0%9F%D0%B0%D1%80%D0%B0%D0%BC%D0%B5%D1%82%D1%80%D1%8B-url" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Параметры URL</h1>
+
+<ul>
+<li>
+<strong>Страница фильма</strong> - Как будет выглядеть URL страница фильма;
+
+<ul>
+<li>
+<strong>Разделитель</strong> - будет подставлено в URL на месте <code>[separator]</code>;</li>
+<li>
+<strong>Префикс перед ID</strong> - будет подставлено в URL перед ID «<code>id299</code>» (по умолчанию «<code>id</code>»);</li>
+<li>
+<strong>Уникальный ID</strong> - принимает значение от <code>-297</code> до <code>297000</code>, требуется для того, чтобы ID фильмов в URL на сайте не совпадали с ID КиноПоиск (по умолчанию <code>0</code>, ID такие-же как на КиноПоиске).</li>
+</ul>
+</li>
+</ul>
+
+<pre><code>По умолчанию: http://example.com/movie/id299-Матрица-The Matrix
+
+Доступные параметры:
+[prefix_id] - обязательный праметр, отображает ID фильма, например «id299»;
+[separator] - разделитель между параметрами, например «-»;
+[title_ru] - русское название, например «Матрица»;
+[title_en] - оригинальное название, например «The Matrix»;
+[genre] - жанр фильма, например «комедия»;
+[country] - страна фильма, например «США»;
+[year] - год фильма, например «2016»;
+[actor] - главный актер, например «Том Круз»;
+[director] - режиссер, например «Тим Бертон».
+</code></pre>
+
+<ul>
+<li>
+<strong>URL фильма</strong> - Как будет выглядеть URL страница фильма;</li>
+</ul>
+
+<pre><code>Например: http://example.com/movie/id299-Матрица-The Matrix
+</code></pre>
+
+<ul>
+<li>
+<strong>URL года</strong> - Как будет выглядеть URL страница года;</li>
+</ul>
+
+<pre><code>Например: http://example.com/year/2016
+</code></pre>
+
+<ul>
+<li>
+<strong>URL жанра</strong> - Как будет выглядеть URL страница жанра;</li>
+</ul>
+
+<pre><code>Например: http://example.com/genre/комедия
+</code></pre>
+
+<ul>
+<li>
+<strong>URL страны</strong> - Как будет выглядеть URL страница страны;</li>
+</ul>
+
+<pre><code>Например: http://example.com/country/США
+</code></pre>
+
+<ul>
+<li>
+<strong>URL актера</strong> - Как будет выглядеть URL страница актера;</li>
+</ul>
+
+<pre><code>Например: http://example.com/actor/Том Круз
+</code></pre>
+
+<ul>
+<li>
+<strong>URL режиссера</strong> - Как будет выглядеть URL страница режиссера;</li>
+</ul>
+
+<pre><code>Например: http://example.com/director/Тим Бертон
+</code></pre>
+
+<ul>
+<li>
+<strong>URL типа</strong> - Как будет выглядеть URL страница типа;</li>
+</ul>
+
+<pre><code>Например: http://example.com/type/Сериалы
+</code></pre>
+
+<ul>
+<li>
+<strong>URL поиска</strong> - Как будет выглядеть URL страница поиска;</li>
+</ul>
+
+<pre><code>Например: http://example.com/search/Аватар
+</code></pre>
+
+<ul>
+<li>
+<strong>URL карты сайта</strong> - Как будет выглядеть URL страница карты сайта;</li>
+</ul>
+
+<pre><code>Например: http://example.com/sitemap
+</code></pre>
+
+<ul>
+<li>
+<strong>URL админ панели</strong> - Должен начинаться с <strong>admin</strong>-<code>secret-key</code>, вместо <code>secret-key</code> любое секретное слово;</li>
+</ul>
+
+<pre><code>Например: http://example.com/admin-idiot
+</code></pre>
+
+<h1>
+<a id="Топ-фильмы" class="anchor" href="#%D0%A2%D0%BE%D0%BF-%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%D1%8B" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Топ фильмы</h1>
+
+<p><img src="https://raw.githubusercontent.com/CinemaPress/CinemaPress.github.io/master/images/admin/top.png" alt="Top movies CinemaPress CMS"></p>
+
+<ul>
+<li>
+<strong>ID</strong> - ID фильмов (ID КиноПоиск) которые будут отображаться в «карусели фильмов» вверху (если это поддерживает тема оформления).</li>
+</ul>
+
+<pre><code>Например: 299,300,301,302
+</code></pre>
+
+<h1>
+<a id="Скрыть-фильмы" class="anchor" href="#%D0%A1%D0%BA%D1%80%D1%8B%D1%82%D1%8C-%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%D1%8B" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Скрыть фильмы</h1>
+
+<ul>
+<li>
+<strong>ID</strong> - ID фильмов (ID КиноПоиск) на которые поступили жалобы от правообладателей и требуется ограничить их скачивание и онлайн просмотр.</li>
+</ul>
+
+<pre><code>Например: 299,300,301,302
+</code></pre>
+
+<h1>
+<a id="Числовые-параметры" class="anchor" href="#%D0%A7%D0%B8%D1%81%D0%BB%D0%BE%D0%B2%D1%8B%D0%B5-%D0%BF%D0%B0%D1%80%D0%B0%D0%BC%D0%B5%D1%82%D1%80%D1%8B" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Числовые параметры</h1>
+
+<ul>
+<li>
+<strong>Кэширование</strong> - Кэширует каждую страницу сайта на заданное время, чтобы не нагружать Sphinx ресурсоёмкими запросами;</li>
+<li>
+<strong>Адрес</strong> - Кэш можно вынести на отдельный сервер, просто укажите адрес этого сервера.</li>
+</ul>
+
+<h4>
+<a id="Фильмов-на-странице" class="anchor" href="#%D0%A4%D0%B8%D0%BB%D1%8C%D0%BC%D0%BE%D0%B2-%D0%BD%D0%B0-%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B5" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Фильмов на странице</h4>
+
+<ul>
+<li>
+<strong>Главная</strong> - Число фильмов на главной странице (в каждой категории «Фильмы года», «Новинки», и т.д.);</li>
+<li>
+<strong>Категория</strong> - Число фильмов в категориях;</li>
+<li>
+<strong>Топ в категории</strong> - Число топовых фильмов в категории, в большинстве шаблонах, вставляются в «карусель фильмов» в категории;</li>
+<li>
+<strong>Связанные фильмы</strong> - Число связанных фильмов в каждой категории, которые отображаются на странице фильма;</li>
+<li>
+<strong>Карта сайта</strong> - Число фильмов в карте сайта в каждом году.</li>
+</ul>
+
+<h1>
+<a id="Связанные-фильмы" class="anchor" href="#%D0%A1%D0%B2%D1%8F%D0%B7%D0%B0%D0%BD%D0%BD%D1%8B%D0%B5-%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%D1%8B" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Связанные фильмы</h1>
+
+<p><img src="https://raw.githubusercontent.com/CinemaPress/CinemaPress.github.io/master/images/admin/related.png" alt="Related movies CinemaPress CMS"></p>
+
+<ul>
+<li>
+<strong>Страны</strong> - Отображать связанные фильмы по всем странам оригинального фильма, одной стране или не отображать;</li>
+<li>
+<strong>Жанры</strong> - Отображать связанные фильмы по всем жанрам оригинального фильма, одному жанру или не отображать;</li>
+<li>
+<strong>Актеры</strong> - Отображать связанные фильмы по всем актерам оригинального фильма, одному актеру или не отображать;</li>
+<li>
+<strong>Режиссеры</strong> - Отображать связанные фильмы по всем режиссерам оригинального фильма, одному режиссеру или не отображать;</li>
+<li>
+<strong>Год</strong> - Отображать связанные фильмы по году или не отображать.</li>
+</ul>
+
+<h4>
+<a id="Сортировка-и-названия-связанных-категорий" class="anchor" href="#%D0%A1%D0%BE%D1%80%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%BA%D0%B0-%D0%B8-%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F-%D1%81%D0%B2%D1%8F%D0%B7%D0%B0%D0%BD%D0%BD%D1%8B%D1%85-%D0%BA%D0%B0%D1%82%D0%B5%D0%B3%D0%BE%D1%80%D0%B8%D0%B9" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Сортировка и названия связанных категорий</h4>
+
+<ul>
+<li>
+<strong>Связанные фильмы по году</strong> - можно использовать ключ <code>[year]</code>, куда будет подставлен год связанных фильмов;</li>
+<li>
+<strong>Связанные фильмы по жанру</strong> - можно использовать ключ <code>[genre]</code>, куда будет подставлен жанр связанных фильмов;</li>
+<li>
+<strong>Связанные фильмы по стране</strong> - можно использовать ключ <code>[country]</code>, куда будет подставлена страна связанных фильмов;</li>
+<li>
+<strong>Связанные фильмы по актеру</strong> - можно использовать ключ <code>[actor]</code>, куда будет подставлено имя актера связанных фильмов;</li>
+<li>
+<strong>Связанные фильмы по режиссеру</strong> - можно использовать ключ <code>[director]</code>, куда будет подставлено имя режиссера связанных фильмов;</li>
+</ul>
+
+<h1>
+<a id="Параметры-названий-описаний-ключевых-слов" class="anchor" href="#%D0%9F%D0%B0%D1%80%D0%B0%D0%BC%D0%B5%D1%82%D1%80%D1%8B-%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D0%B9-%D0%BE%D0%BF%D0%B8%D1%81%D0%B0%D0%BD%D0%B8%D0%B9-%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%B2%D1%8B%D1%85-%D1%81%D0%BB%D0%BE%D0%B2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Параметры названий, описаний, ключевых слов</h1>
+
+<h5>
+<a id="Что-такое-синонимация" class="anchor" href="#%D0%A7%D1%82%D0%BE-%D1%82%D0%B0%D0%BA%D0%BE%D0%B5-%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D0%B0%D1%86%D0%B8%D1%8F" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="https://github.com/CinemaPress/CinemaPress-CMS/wiki/%D0%A7%D1%82%D0%BE-%D1%82%D0%B0%D0%BA%D0%BE%D0%B5-%C2%AB%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D0%B0%D1%86%D0%B8%D1%8F%C2%BB-%D0%B2-CinemaPress-CMS%3F">Что такое «синонимация»?</a>
+</h5>
+
+<h5>
+<a id="Как-написать-текст-для-определенного-фильма-жанра-страны-года-актера-режиссера" class="anchor" href="#%D0%9A%D0%B0%D0%BA-%D0%BD%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D1%8C-%D1%82%D0%B5%D0%BA%D1%81%D1%82-%D0%B4%D0%BB%D1%8F-%D0%BE%D0%BF%D1%80%D0%B5%D0%B4%D0%B5%D0%BB%D0%B5%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%D0%B0-%D0%B6%D0%B0%D0%BD%D1%80%D0%B0-%D1%81%D1%82%D1%80%D0%B0%D0%BD%D1%8B-%D0%B3%D0%BE%D0%B4%D0%B0-%D0%B0%D0%BA%D1%82%D0%B5%D1%80%D0%B0-%D1%80%D0%B5%D0%B6%D0%B8%D1%81%D1%81%D0%B5%D1%80%D0%B0" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="https://github.com/CinemaPress/CinemaPress-CMS/wiki/%D0%9A%D0%B0%D0%BA-%D0%BD%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D1%8C-%D1%82%D0%B5%D0%BA%D1%81%D1%82-%D0%B4%D0%BB%D1%8F-%D0%BE%D0%BF%D1%80%D0%B5%D0%B4%D0%B5%D0%BB%D0%B5%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%D0%B0,-%D0%B6%D0%B0%D0%BD%D1%80%D0%B0,-%D1%81%D1%82%D1%80%D0%B0%D0%BD%D1%8B,-%D0%B3%D0%BE%D0%B4%D0%B0,-%D0%B0%D0%BA%D1%82%D0%B5%D1%80%D0%B0,-%D1%80%D0%B5%D0%B6%D0%B8%D1%81%D1%81%D0%B5%D1%80%D0%B0%3F">Как написать текст для определенного фильма, жанра, страны, года, актера, режиссера?</a>
+</h5>
+
+<ul>
+<li>
+<strong>Главная</strong> - Можно использовать «синонимацию»;</li>
+<li>
+<strong>Категория - год</strong> - Можно использовать «синонимацию», текст для определенного года и ключи:</li>
+</ul>
+
+<pre><code>[year] - год текущей категории, на сайте отобразится например, как «2016»;
+[sort] - название сортировки;
+[page] - текст и номер страницы при переходе.
+</code></pre>
+
+<ul>
+<li>
+<strong>Категория - годы</strong> - Можно использовать «синонимацию»;</li>
+<li>
+<strong>Категория - жанр</strong> - Можно использовать «синонимацию», текст для определенного жанра и ключи:</li>
+</ul>
+
+<pre><code>[genre] - жанр текущей категории, на сайте отобразится например, как «комедия»;
+[sort] - название сортировки;
+[page] - текст и номер страницы при переходе.
+</code></pre>
+
+<ul>
+<li>
+<strong>Категория - жанры</strong> - Можно использовать «синонимацию»;</li>
+<li>
+<strong>Категория - страна</strong> - Можно использовать «синонимацию», текст для определенной страны и ключи:</li>
+</ul>
+
+<pre><code>[country] - страна текущей категории, на сайте отобразится например, как «Россия»;
+[sort] - название сортировки;
+[page] - текст и номер страницы при переходе.
+</code></pre>
+
+<ul>
+<li>
+<strong>Категория - страны</strong> - Можно использовать «синонимацию»;</li>
+<li>
+<strong>Категория - актер</strong> - Можно использовать «синонимацию», текст для определенного актера и ключи:</li>
+</ul>
+
+<pre><code>[actor] - актер текущей категории, на сайте отобразится например, как «Том Круз»;
+[sort] - название сортировки;
+[page] - текст и номер страницы при переходе.
+</code></pre>
+
+<ul>
+<li>
+<strong>Категория - актеры</strong> - Можно использовать «синонимацию»;</li>
+<li>
+<strong>Категория - режиссер</strong> - Можно использовать «синонимацию», текст для определенного режиссера и ключи:</li>
+</ul>
+
+<pre><code>[director] - режиссер текущей категории, на сайте отобразится например, как «Тим Бертон»;
+[sort] - название сортировки;
+[page] - текст и номер страницы при переходе.
+</code></pre>
+
+<ul>
+<li>
+<strong>Категория - режиссеры</strong> - Можно использовать «синонимацию»;</li>
+<li>
+<strong>Категория - тип</strong> - Можно использовать «синонимацию», текст для определенного типа и ключи:</li>
+</ul>
+
+<pre><code>[type] - тип текущей категории, на сайте отобразится например, как «Сериалы»;
+[sort] - название сортировки;
+[page] - текст и номер страницы при переходе.
+</code></pre>
+
+<ul>
+<li>
+<strong>Страница поиска</strong> - Можно использовать «синонимацию», текст для определенного поискового запроса и ключи:</li>
+</ul>
+
+<pre><code>[search] - поисковый запрос пользователя, на сайте отобразится например, как «Аватар»;
+[sort] - название сортировки;
+[page] - текст и номер страницы при переходе.
+</code></pre>
+
+<h2>
+<a id="На-странице-фильма" class="anchor" href="#%D0%9D%D0%B0-%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B5-%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%D0%B0" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>На странице фильма</h2>
+
+<p>Везде можно использовать «синонимацию», текст для определенного фильма и ключи:</p>
+
+<blockquote>
+<p><strong>[id]</strong> - ID фильма, например «299»;</p>
+
+<p><strong>[title]</strong> - название фильма, например «Аватар / Avatar»;</p>
+
+<p><strong>[title_ru]</strong> - русское название фильма, например «Аватар»;</p>
+
+<p><strong>[title_en]</strong> - оригинальное фильма, например «Avatar»;</p>
+
+<p><strong>[description]</strong> - стандартное описание фильма;</p>
+
+<p><strong>[year]</strong> - год фильма, например «2016»;</p>
+
+<p><strong>[countries]</strong> - страны фильма через запятую, например «США,Япония»;</p>
+
+<p><strong>[country]</strong> - одна из стран фильма, например «США»;</p>
+
+<p><strong>[genres]</strong> - жанры фильма через запятую, например «комедия,драма»;</p>
+
+<p><strong>[genre]</strong> - один из жанров фильма, например «комедия»;</p>
+
+<p><strong>[actors]</strong> - актеры фильма через запятую, например «Том Круз,Бред Питт»;</p>
+
+<p><strong>[actor]</strong> - один из актеров фильма, например «Бред Питт»;</p>
+
+<p><strong>[directors]</strong> - режиссеры фильма через запятую, например «Стивен Брилл,Питер Фаррелли»;</p>
+
+<p><strong>[director]</strong> - один из режиссеров фильма, например «Стивен Брилл»;</p>
+
+<p><strong>[premiere]</strong> - дата премьеры фильма, например «2016-02-12»;</p>
+</blockquote>
+
+<h1>
+<a id="Имена-сортировок" class="anchor" href="#%D0%98%D0%BC%D0%B5%D0%BD%D0%B0-%D1%81%D0%BE%D1%80%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%BE%D0%BA" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Имена сортировок</h1>
+
+<ul>
+<li>
+<strong>Сортировка по умолчанию</strong> - сортировка по умолчанию для всех категорий.</li>
+</ul>
+
+<h1>
+<a id="Аккаунты-соц-сетей" class="anchor" href="#%D0%90%D0%BA%D0%BA%D0%B0%D1%83%D0%BD%D1%82%D1%8B-%D1%81%D0%BE%D1%86-%D1%81%D0%B5%D1%82%D0%B5%D0%B9" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Аккаунты соц. сетей</h1>
+
+<ul>
+<li>
+<strong>ВКонтакте</strong> - URL страницы ВКонтакте;</li>
+<li>
+<strong>facebook</strong> - URL страницы facebook;</li>
+<li>
+<strong>twitter</strong> - URL страницы twitter.</li>
+</ul>
+
+<h1>
+<a id="Вставить-код" class="anchor" href="#%D0%92%D1%81%D1%82%D0%B0%D0%B2%D0%B8%D1%82%D1%8C-%D0%BA%D0%BE%D0%B4" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Вставить код</h1>
+
+<ul>
+<li>
+<strong>Верх страницы</strong> - код будет добавлен в <code>&lt;head&gt;</code> сайта, подходит для подтверждения и т.д.;</li>
+<li>
+<strong>Низ страницы</strong> - код будет добавлен перед <code>&lt;/body&gt;</code> сайта, подходит для вставки рекламных скриптов и т.д.</li>
+</ul>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/CinemaPress/CinemaPress-CMS">CinemaPress CMS</a> is maintained by <a href="https://github.com/CinemaPress">CinemaPress</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
