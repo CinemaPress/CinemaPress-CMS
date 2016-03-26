@@ -127,6 +127,7 @@ wget --no-check-certificate http://sphinxsearch.com/files/sphinxsearch_2.2.10-re
 rm -rf /etc/sphinxsearch/sphinx.conf
 ln -s /home/${DOMAIN}/config/sphinx.conf /etc/sphinxsearch/sphinx.conf
 sed -i "s/example.com/${DOMAIN}/g" /home/${DOMAIN}/config/sphinx.conf
+sed -i "s/example_com/${DOMAIN//./_}/g" /home/${DOMAIN}/config/sphinx.conf
 echo 'OK'
 echo '---------------------'
 echo '------proftpd--------'
