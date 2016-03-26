@@ -208,7 +208,7 @@ cd /home/${DOMAIN}/
 npm install --loglevel=silent --parseable
 npm install --loglevel=silent --parseable forever -g
 npm install --loglevel=silent --parseable nodemon -g
-indexer --all --config "/etc/sphinxsearch/${DOMAIN}.conf" || indexer --all --rotate --config "/etc/sphinxsearch/${DOMAIN}.conf"
+indexer --all --config "/home/${DOMAIN}/config/sphinx.conf" || indexer --all --rotate --config "/home/${DOMAIN}/config/sphinx.conf"
 echo 'OK'
 echo '-----------------------------------------------------------------'
 echo '-----------------------------------------------------------------'

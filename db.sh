@@ -42,7 +42,7 @@ echo ''
 
 sleep 3
 
-searchd --stop
+searchd --stop --config "/home/${DOMAIN}/config/sphinx.conf"
 
 NOW=$(date +%Y-%m-%d)
 
@@ -121,7 +121,7 @@ echo '------------------------------------------------------------------'
 
 else
 
-searchd --stop
+searchd --stop --config "/home/${DOMAIN}/config/sphinx.conf"
 
 rm -rf /var/lib/sphinxsearch/data/movies_${INDEX_DOMAIN}.*
 rm -rf /var/lib/sphinxsearch/data/bests_${INDEX_DOMAIN}.*
