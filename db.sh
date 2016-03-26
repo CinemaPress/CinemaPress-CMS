@@ -9,56 +9,82 @@ echo '----------------------- URL ДОМЕНА -------------------------------'
 AGAIN=yes
 while [ "$AGAIN" = "yes" ]
 do
-if [ $1 ]; then
-DOMAIN=${1}
-echo ${DOMAIN}
-else
-read DOMAIN
-fi
-if [ ${DOMAIN} ]; then
-AGAIN=no
-else
-echo 'WARNING: URL домена не может быть пустым.'
-fi
+    if [ $1 ]; then
+        DOMAIN=${1}
+        echo ${DOMAIN}
+    else
+        read DOMAIN
+    fi
+    if [ ${DOMAIN} ]; then
+        AGAIN=no
+    else
+        echo 'WARNING: URL домена не может быть пустым.'
+    fi
 done
 echo '---------------------- КЛЮЧ ДОСТУПА ------------------------------'
 AGAIN=yes
 while [ "$AGAIN" = "yes" ]
 do
-if [ $2 ]; then
-KEY=${2}
-echo ${KEY}
-else
-read KEY
-fi
-if [ ${KEY} ]; then
-AGAIN=no
-else
-echo 'WARNING: Ключ не может быть пустым.'
-fi
+    if [ $2 ]; then
+        KEY=${2}
+        echo ${KEY}
+    else
+        read KEY
+    fi
+    if [ ${KEY} ]; then
+        AGAIN=no
+    else
+        echo 'WARNING: Ключ не может быть пустым.'
+    fi
 done
 echo '------------------------------------------------------------------'
 echo ''
 
 sleep 3
 
-service sphinxsearch stop
+searchd --stop
 
 NOW=$(date +%Y-%m-%d)
 
-wget -O database.tar.gz --no-check-certificate http://cinemapress.org/download/${KEY}
+wget -O database.tar.gz --no-check-certificate http://database.cinemapress.org/${KEY}/${DOMAIN}
+
+INDEX_DOMAIN=`echo ${DOMAIN} | sed -r "s/[^A-Za-z0-9]/_/g"`
 
 mkdir -p /var/lib/sphinxsearch/data
 mkdir -p /var/lib/sphinxsearch/old
-rm -rf /var/lib/sphinxsearch/old/*
-cp -R /var/lib/sphinxsearch/data/* /var/lib/sphinxsearch/old/
-rm -rf /var/lib/sphinxsearch/data/*
+
+rm -rf /var/lib/sphinxsearch/old/movies_${INDEX_DOMAIN}.*
+rm -rf /var/lib/sphinxsearch/old/bests_${INDEX_DOMAIN}.*
+
+cp -R /var/lib/sphinxsearch/data/movies_${INDEX_DOMAIN}.* /var/lib/sphinxsearch/old/
+cp -R /var/lib/sphinxsearch/data/bests_${INDEX_DOMAIN}.* /var/lib/sphinxsearch/old/
+
+rm -rf /var/lib/sphinxsearch/data/movies_${INDEX_DOMAIN}.*
+rm -rf /var/lib/sphinxsearch/data/bests_${INDEX_DOMAIN}.*
+
 tar -xzf database.tar.gz -C /var/lib/sphinxsearch/data
+
+if [ -f "/var/lib/sphinxsearch/data/movies.spa" ]
+then
+    for file in `find /var/lib/sphinxsearch/data/movies.* -type f`
+    do
+        NEW_NAME=`echo ${file} | sed -r "s/movies/movies_${INDEX_DOMAIN}/g"`
+        mv ${file} ${NEW_NAME}
+    done
+fi
+
+if [ -f "/var/lib/sphinxsearch/data/bests.spa" ]
+then
+    for file in `find /var/lib/sphinxsearch/data/bests.* -type f`
+    do
+        NEW_NAME=`echo ${file} | sed -r "s/bests/bests_${INDEX_DOMAIN}/g"`
+        mv ${file} ${NEW_NAME}
+    done
+fi
+
 touch /var/lib/sphinxsearch/data/${NOW}.txt
-rm -rf /var/lib/sphinxsearch/data/*.spl
-rm -rf /var/lib/sphinxsearch/data/binlog.*
-cp /dev/null /home/${DOMAIN}/config/movies.xml
-service sphinxsearch start
+searchd --config "/home/${DOMAIN}/config/sphinx.conf"
+
 echo '------------------------------------------------------------------'
 echo '------------------------------------------------------------------'
 echo '-----                                                        -----'
@@ -69,12 +95,18 @@ echo '-----                  принята сервером.                   
 echo '-----                                                        -----'
 echo '------------------------------------------------------------------'
 echo '------------------------------------------------------------------'
+
 echo 'Всё работает? (ДА/нет)'
+
 read WORK
+
 WORK=${WORK:='ДА'}
+
 if [ ${WORK} = "yes" ] || [ ${WORK} = "y" ] || [ ${WORK} = "Y" ] || [ ${WORK} = "да" ] || [ ${WORK} = "Да" ] || [ ${WORK} = "ДА" ]
 then
+
 AGAIN=no
+
 echo '------------------------------------------------------------------'
 echo '------------------------------------------------------------------'
 echo '-----                                                        -----'
@@ -86,11 +118,19 @@ echo '-----             skype: cinemapress                         -----'
 echo '-----                                                        -----'
 echo '------------------------------------------------------------------'
 echo '------------------------------------------------------------------'
+
 else
-service sphinxsearch stop
-rm -rf /var/lib/sphinxsearch/data/*
-cp -R /var/lib/sphinxsearch/old/* /var/lib/sphinxsearch/data/
-service sphinxsearch start
+
+searchd --stop
+
+rm -rf /var/lib/sphinxsearch/data/movies_${INDEX_DOMAIN}.*
+rm -rf /var/lib/sphinxsearch/data/bests_${INDEX_DOMAIN}.*
+
+cp -R /var/lib/sphinxsearch/old/movies_${INDEX_DOMAIN}.* /var/lib/sphinxsearch/data/
+cp -R /var/lib/sphinxsearch/old/bests_${INDEX_DOMAIN}.* /var/lib/sphinxsearch/data/
+
+searchd --config "/home/${DOMAIN}/config/sphinx.conf"
+
 echo '------------------------------------------------------------------'
 echo '------------------------------------------------------------------'
 echo '-----                                                        -----'
@@ -102,4 +142,5 @@ echo '-----             skype: cinemapress                         -----'
 echo '-----                                                        -----'
 echo '------------------------------------------------------------------'
 echo '------------------------------------------------------------------'
+
 fi

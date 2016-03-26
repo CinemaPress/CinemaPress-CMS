@@ -9,42 +9,42 @@ echo '----------------------- URL ДОМЕНА -------------------------------'
 AGAIN=yes
 while [ "$AGAIN" = "yes" ]
 do
-if [ $1 ]; then
-DOMAIN=${1}
-echo ${DOMAIN}
-else
-read DOMAIN
-fi
-if [ ${DOMAIN} ]; then
-AGAIN=no
-else
-echo 'WARNING: URL домена не может быть пустым.'
-fi
+    if [ $1 ]; then
+        DOMAIN=${1}
+        echo ${DOMAIN}
+    else
+        read DOMAIN
+    fi
+    if [ ${DOMAIN} ]; then
+        AGAIN=no
+    else
+        echo 'WARNING: URL домена не может быть пустым.'
+    fi
 done
 echo '--------------------- НАЗВАНИЕ ТЕМЫ ------------------------------'
 if [ $2 ]; then
-THEME=${2}
-echo ${THEME}
+    THEME=${2}
+    echo ${THEME}
 else
-read THEME
-THEME=${THEME:='skeleton'}
+    read THEME
+    THEME=${THEME:='skeleton'}
 fi
 echo '-------------- ПАРОЛЬ ОТ АДМИН-ПАНЕЛИ И FTP ----------------------'
 AGAIN=yes
 while [ "$AGAIN" = "yes" ]
 do
-if [ $3 ]; then
-PASSWD=${3}
-echo ${PASSWD}
-else
-read PASSWD
-fi
-if [ ${PASSWD} ]
-then
-AGAIN=no
-else
-echo 'WARNING: Пароль от админ-панели и FTP не может быть пустым.'
-fi
+    if [ $3 ]; then
+        PASSWD=${3}
+        echo ${PASSWD}
+    else
+        read PASSWD
+    fi
+    if [ ${PASSWD} ]
+    then
+        AGAIN=no
+    else
+        echo 'WARNING: Пароль от админ-панели и FTP не может быть пустым.'
+    fi
 done
 echo '------------------------------------------------------------------'
 echo ''
@@ -125,7 +125,6 @@ echo '-------sphinx--------'
 echo '---------------------'
 wget --no-check-certificate http://sphinxsearch.com/files/sphinxsearch_2.2.10-release-1~${VER}_amd64.deb && dpkg -i sphinxsearch* && rm -rf sphinxsearch_2.2.10-release-1~${VER}_amd64.deb
 rm -rf /etc/sphinxsearch/sphinx.conf
-ln -s /home/${DOMAIN}/config/sphinx.conf /etc/sphinxsearch/sphinx.conf
 INDEX_DOMAIN=`echo ${DOMAIN} | sed -r "s/[^A-Za-z0-9]/_/g"`
 sed -i "s/example\.com/${DOMAIN}/g" /home/${DOMAIN}/config/sphinx.conf
 sed -i "s/example_com/${INDEX_DOMAIN}/g" /home/${DOMAIN}/config/sphinx.conf
@@ -187,6 +186,7 @@ echo '---------------------'
 echo "@reboot root cd /home/${DOMAIN}/ && PORT=${DEFAULT_PORT} forever start --minUptime 1000ms --spinSleepTime 1000ms --append --uid \"${DOMAIN}-default\" --killSignal=SIGTERM -c \"nodemon --delay 2 --exitcrash\" app.js >> /home/${DOMAIN}/config/autostart.log 2>&1" >> /etc/crontab
 echo "@reboot root cd /home/${DOMAIN}/ && PORT=${BACKUP_PORT} forever start --minUptime 1000ms --spinSleepTime 1000ms --append --uid \"${DOMAIN}-backup\" app.js >> /home/${DOMAIN}/config/autostart.log 2>&1" >> /etc/crontab
 echo "@hourly root forever restart ${DOMAIN}-backup >> /home/${DOMAIN}/config/autostart.log 2>&1" >> /etc/crontab
+echo "@reboot root searchd --config /home/${DOMAIN}/config/sphinx.conf >> /home/${DOMAIN}/config/autostart.log 2>&1" >> /etc/crontab
 echo 'OK'
 echo '---------------------'
 echo '-------sysctl--------'
@@ -208,7 +208,7 @@ cd /home/${DOMAIN}/
 npm install --loglevel=silent --parseable
 npm install --loglevel=silent --parseable forever -g
 npm install --loglevel=silent --parseable nodemon -g
-indexer --all || indexer --all --rotate
+indexer --all --config "/etc/sphinxsearch/${DOMAIN}.conf" || indexer --all --rotate --config "/etc/sphinxsearch/${DOMAIN}.conf"
 echo 'OK'
 echo '-----------------------------------------------------------------'
 echo '-----------------------------------------------------------------'
