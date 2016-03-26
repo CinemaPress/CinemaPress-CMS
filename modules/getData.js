@@ -6,8 +6,8 @@ var requiredData  = require('./requiredData');
 var pool          = require('./sphinx');
 var async         = require('async');
 
-var bests_db = 'bests_' + config.domain.replace(/[\.-]/g,'_');
-var movies_db = 'movies_' + config.domain.replace(/[\.-]/g,'_');
+var bests_db = 'bests_' + config.domain.replace(/[^A-Za-z0-9]/g,'_');
+var movies_db = 'movies_' + config.domain.replace(/[^A-Za-z0-9]/g,'_');
 
 function getCategories(category, callback) {
 
