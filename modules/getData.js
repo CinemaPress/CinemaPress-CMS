@@ -6,11 +6,14 @@ var requiredData  = require('./requiredData');
 var pool          = require('./sphinx');
 var async         = require('async');
 
+var bests_db = 'bests_' + config.domain;
+var movies_db = 'movies_' + config.domain;
+
 function getCategories(category, callback) {
 
     var queryString = '' +
         'SELECT ' + category + ' AS category ' +
-        'FROM best_movies ' +
+        'FROM ' + bests_db + ' ' +
         'WHERE MATCH(\'@all_movies _all_ @' + category + ' !_empty\') ' +
         'ORDER BY kp_vote DESC ' +
         'LIMIT 10000 ' +
@@ -40,7 +43,7 @@ function getMovies(query, sort, page, type, callback) {
 
     var queryString = '' +
         'SELECT * ' +
-        'FROM movies ' +
+        'FROM ' + movies_db + ' ' +
         'WHERE ' + createQuery(query, sort) + ' ' +
         'ORDER BY ' + orderBy(sort) + ' ' +
         'LIMIT ' + start + ', ' + limit + ' ' +
@@ -66,7 +69,7 @@ function getMovie(id, callback) {
 
     id = parseInt(id) - parseInt(config.urls.unique_id);
 
-    var queryString = 'SELECT * FROM movies WHERE kp_id = ' + id + ' LIMIT 1';
+    var queryString = 'SELECT * FROM ' + movies_db + ' WHERE kp_id = ' + id + ' LIMIT 1';
 
     pool.getConnection(function(err, connection) {
 

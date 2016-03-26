@@ -24,7 +24,8 @@ module.exports = {
     },
     "code": {
         "head": "",
-        "footer": ""
+        "footer": "",
+        "robots": "User-agent: *\nAllow: /"
     },
     "text": {
         "ids": [],

@@ -1324,6 +1324,17 @@ body
                     td
                         textarea(id='code.footer').textarea
                             != code.footer.replace(/&nbsp;/gi,'\n').replace(/\\*?"/g,'"')
+                tr
+                    td
+                        label(for='code.robots')
+                            | Файл robots.txt:
+                    td
+                        textarea(id='code.robots', style='margin: 10px 10px 0px; border-radius: 3px 3px 0px 0px;').textarea
+                            != code.robots.replace(/\\*?"/g, '"')
+                        div(style='font-size: 14px; background: #273039; width: 100%; margin: 0px 10px; padding: 10px; font-family: monospace, sans-serif; border-radius: 0px 0px 3px 3px;')
+                            div= 'Host: ' + domain
+                            br
+                            div= 'Sitemap: http://' + domain + '/' + urls.sitemap
     script.
         var showMenu = document.querySelectorAll('.name, #write');
         for (var j = 0; j < showMenu.length; j++) {
@@ -1557,7 +1568,8 @@ body
                 },
                 "code": {
                     "head": document.getElementById('code.head').value,
-                    "footer": document.getElementById('code.footer').value
+                    "footer": document.getElementById('code.footer').value,
+                    "robots": document.getElementById('code.robots').value
                 },
                 "description": {
                     "id": document.getElementById('description.id').value,

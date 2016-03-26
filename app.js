@@ -7,6 +7,7 @@ var express      = require('express');
 var path         = require('path');
 var app          = express();
 
+var robots       = require(__dirname + '/routes/robots');
 var sitemap      = require(__dirname + '/routes/sitemap');
 var categories   = require(__dirname + '/routes/categories');
 var movie        = require(__dirname + '/routes/movie');
@@ -33,6 +34,7 @@ app.use('/' + config.urls.search, categories);
 app.use('/' + config.urls.movie, movie);
 app.use('/' + config.urls.sitemap, sitemap);
 app.use('/' + config.urls.admin, admin);
+app.use('/robots.txt', robots);
 app.use('/', index);
 
 app.use(function(req, res){

@@ -1,16 +1,27 @@
 doctype xml
-if movies
-    urlset(xmlns='http://www.sitemaps.org/schemas/sitemap/0.9')
-        if movies.length
+if data
+    if category == 'index'
+        sitemapindex(xmlns="http://www.sitemaps.org/schemas/sitemap/0.9")
+            - categories = ['year','genre','country','actor','director']
+            each cat in categories
+                sitemap
+                    loc
+                        = 'http://' + domain + '/' + encodeURIComponent(urls.sitemap) + '/' + encodeURIComponent(urls[cat])
+            each num, key in data
+                if key != 'max'
+                    sitemap
+                        loc
+                            = 'http://' + domain + '/' + encodeURIComponent(urls.sitemap) + '/' + encodeURIComponent(urls.year) + '/' + encodeURIComponent(key)
+    else if category == 'movies'
+        urlset(xmlns='http://www.sitemaps.org/schemas/sitemap/0.9')
             - year = new Date().getFullYear() - 1
-            each movie in movies
+            each movie in data
                 url
                     loc= 'http://' + domain + '' + decodeURIComponent(movie.url)
                     lastmod= movie.premiere.replace(/(?!2016)[0-9]{4}/g, year)
-else
-    sitemapindex
-        - n = new Date().getFullYear()
-        while n > 1887
-            sitemap
-                loc
-                    = 'http://' + domain + '/' + urls.sitemap + '/' + n--
+    else
+        urlset(xmlns='http://www.sitemaps.org/schemas/sitemap/0.9')
+            each num, key in data
+                if key != 'max'
+                    url
+                        loc= 'http://' + domain + '/' + encodeURIComponent(urls[category]) + '/' + encodeURIComponent(key)
