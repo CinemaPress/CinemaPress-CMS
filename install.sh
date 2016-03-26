@@ -113,7 +113,7 @@ rm -rf /etc/nginx/conf.d/${DOMAIN}.conf
 ln -s /home/${DOMAIN}/config/nginx.conf /etc/nginx/conf.d/${DOMAIN}.conf
 sed -i "s/DEFAULT_PORT/${DEFAULT_PORT}/g" /home/${DOMAIN}/config/nginx.conf
 sed -i "s/BACKUP_PORT/${BACKUP_PORT}/g" /home/${DOMAIN}/config/nginx.conf
-sed -i "s/example.com/${DOMAIN}/g" /home/${DOMAIN}/config/nginx.conf
+sed -i "s/example\.com/${DOMAIN}/g" /home/${DOMAIN}/config/nginx.conf
 sed -i "s/user  nginx;/user  www-data;/g" /etc/nginx/nginx.conf
 sed -i "s/server_names_hash_bucket_size 64;//g" /etc/nginx/nginx.conf
 sed -i "s/http {/http {\n    server_names_hash_bucket_size 64;/g" /etc/nginx/nginx.conf
@@ -127,7 +127,7 @@ wget --no-check-certificate http://sphinxsearch.com/files/sphinxsearch_2.2.10-re
 rm -rf /etc/sphinxsearch/sphinx.conf
 ln -s /home/${DOMAIN}/config/sphinx.conf /etc/sphinxsearch/sphinx.conf
 INDEX_DOMAIN=`echo ${DOMAIN} | sed -r "s/\./_/g"`
-sed -i "s/example.com/${DOMAIN}/g" /home/${DOMAIN}/config/sphinx.conf
+sed -i "s/example\.com/${DOMAIN}/g" /home/${DOMAIN}/config/sphinx.conf
 sed -i "s/example_com/${INDEX_DOMAIN}/g" /home/${DOMAIN}/config/sphinx.conf
 echo 'OK'
 echo '---------------------'
@@ -161,7 +161,7 @@ done
 if [ "$VER" = "jessie" ]
 then
 cp /lib/systemd/system/memcached.service /lib/systemd/system/memcached_${DOMAIN}.service
-sed -i "s/memcached.conf/memcached_${DOMAIN}.conf/g" /lib/systemd/system/memcached_${DOMAIN}.service
+sed -i "s/memcached\.conf/memcached_${DOMAIN}.conf/g" /lib/systemd/system/memcached_${DOMAIN}.service
 systemctl enable memcached_${DOMAIN}.service
 systemctl start memcached_${DOMAIN}.service
 fi
@@ -177,7 +177,7 @@ git clone https://github.com/CinemaPress/Theme-${THEME}.git /home/${DOMAIN}/them
 chown -R ${DOMAIN}:www-data /home/${DOMAIN}/themes
 sed -i "s/\"theme\":\s*\".*\"/\"theme\":\"${THEME}\"/" /home/${DOMAIN}/config/config.js
 fi
-sed -i "s/example.com/${DOMAIN}/g" /home/${DOMAIN}/config/config.js
+sed -i "s/example\.com/${DOMAIN}/g" /home/${DOMAIN}/config/config.js
 sed -i "s/11211/${MEMCACHED_PORT}/" /home/${DOMAIN}/config/config.js
 cp /home/${DOMAIN}/config/config.js /home/${DOMAIN}/config/config.old.js
 echo 'OK'
