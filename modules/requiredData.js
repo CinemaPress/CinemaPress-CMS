@@ -255,6 +255,8 @@ function addKeywords(text, keywords) {
 
 function movieSchemaData(movie, movies) {
 
+    if (!movie || !movies) return [];
+
     var result = [];
 
     for (var category in movies) {

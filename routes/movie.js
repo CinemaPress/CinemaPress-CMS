@@ -201,11 +201,16 @@ router.get('/:movie/:type?', function(req, res) {
 
 function renderData(res, type, render, url) {
 
-    if (config.theme == 'skeleton') {
-        res.json(render);
+    if (!render.movie || !render.movie.id) {
+        res.status(404).send('Not found');
     }
     else {
-        res.render(type, render);
+        if (config.theme == 'skeleton') {
+            res.json(render);
+        }
+        else {
+            res.render(type, render);
+        }
     }
 
     console.timeEnd(url);
