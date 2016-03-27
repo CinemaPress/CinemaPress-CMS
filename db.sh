@@ -100,9 +100,9 @@ echo 'Всё работает? (ДА/нет)'
 
 read WORK
 
-if [ ${WORK} = "" ]
+if [ "${WORK}" = "" ]
 then
-    WORK='ДА'
+    WORK=yes
 fi
 
 if [ ${WORK} = "yes" ] || [ ${WORK} = "y" ] || [ ${WORK} = "Y" ] || [ ${WORK} = "да" ] || [ ${WORK} = "Да" ] || [ ${WORK} = "ДА" ]
@@ -126,7 +126,7 @@ else
 
 searchd --stop --config "/home/${DOMAIN}/config/sphinx.conf"
 
-sleep 1
+sleep 5
 
 rm -rf /var/lib/sphinxsearch/data/movies_${INDEX_DOMAIN}.*
 rm -rf /var/lib/sphinxsearch/data/bests_${INDEX_DOMAIN}.*
@@ -134,7 +134,7 @@ rm -rf /var/lib/sphinxsearch/data/bests_${INDEX_DOMAIN}.*
 cp -R /var/lib/sphinxsearch/old/movies_${INDEX_DOMAIN}.* /var/lib/sphinxsearch/data/
 cp -R /var/lib/sphinxsearch/old/bests_${INDEX_DOMAIN}.* /var/lib/sphinxsearch/data/
 
-sleep 1
+sleep 5
 
 searchd --config "/home/${DOMAIN}/config/sphinx.conf"
 
