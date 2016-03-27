@@ -4,6 +4,10 @@
  :movie_camera: Система управления самообновляемым кино-сайтом.
 
 ## Установка:
+
+- <a href="https://cinemapress.org/pokuraem-domen.html" target="_blank">Как купить домен?</a>
+- <a href="https://cinemapress.org/pokupaem-VPS.html" target="_blank">Как купить и подключиться к серверу?</a>
+
 Работает на Debian 7 «Wheezy» (64-bit), Debian 8 «Jessie» (64-bit)
 ```
 ~# wget --no-check-certificate https://git.io/v2XAV -qO install.sh
