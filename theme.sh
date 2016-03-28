@@ -10,7 +10,7 @@ do
         THEME=${2}
         echo ${THEME}
     else
-        read -e -p ': ' THEME
+        read -p ': ' THEME
         if [[ "${THEME}" = "ted" || "${THEME}" = "barney" || "${THEME}" = "lily" || "${THEME}" = "marshall" ]]
         then
             AGAIN=no
@@ -33,7 +33,7 @@ else
     echo '-----                                                        -----'
     echo '------------------------------------------------------------------'
     echo ''
-    read -e -p 'Тема уже установлена, хотите обновить её? [ДА/нет] : ' YES
+    read -p 'Тема уже установлена, хотите обновить её? [ДА/нет] : ' YES
 
     if [[ "${YES}" = "ДА" || ${YES} = "Да" || ${YES} = "да" || ${YES} = "YES" || ${YES} = "Yes" || ${YES} = "yes" || ${YES} = "Y" || ${YES} = "y" || ${YES} = "" ]]
     then

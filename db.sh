@@ -23,7 +23,7 @@ do
         DOMAIN=${1}
         echo ${DOMAIN}
     else
-        read -e -p ': ' DOMAIN
+        read -p ': ' DOMAIN
     fi
     if [ ${DOMAIN} ]; then
         AGAIN=no
@@ -39,7 +39,7 @@ do
         KEY=${2}
         echo ${KEY}
     else
-        read -e -p ': ' KEY
+        read -p ': ' KEY
     fi
     if [ ${KEY} ]; then
         AGAIN=no
@@ -112,7 +112,7 @@ echo '------------------------------------------------------------------'
 echo '------------------------------------------------------------------'
 echo ''
 
-read -e -p 'Всё работает? [ДА/нет] : ' YES
+read -p 'Всё работает? [ДА/нет] : ' YES
 
 if [[ "${YES}" = "ДА" || ${YES} = "Да" || ${YES} = "да" || ${YES} = "YES" || ${YES} = "Yes" || ${YES} = "yes" || ${YES} = "Y" || ${YES} = "y" || ${YES} = "" ]]
 then

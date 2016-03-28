@@ -9,7 +9,7 @@ do
         DOMAIN=${1}
         echo ${DOMAIN}
     else
-        read -e -p ': ' DOMAIN
+        read -p ': ' DOMAIN
     fi
     if [ "${DOMAIN}" != "" ]
     then
@@ -27,7 +27,7 @@ do
         THEME=${2}
         echo ${THEME}
     else
-        read -e -p ': ' THEME
+        read -p ': ' THEME
         if [ "${THEME}" = "" ]
         then
             AGAIN=no
@@ -51,7 +51,7 @@ do
         PASSWD=${3}
         echo ${PASSWD}
     else
-        read -e -p ': ' PASSWD
+        read -p ': ' PASSWD
     fi
     if [ "${PASSWD}" != "" ]
     then
