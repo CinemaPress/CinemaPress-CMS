@@ -14,60 +14,63 @@
 ~# sh install.sh [domain] [theme] [password]
 ```
 
-##### Видео установки (готовый кино-сайт за 5 минут):
+##### Видео установки (готовый кино-сайт за 3 минуты 10 сек):
 
-<a href="https://asciinema.org/a/ecmqixsphnvy4q0oz8zghp20i" target="_blank"><img src="https://raw.githubusercontent.com/CinemaPress/CinemaPress.github.io/master/images/admin/asciinema.png" width="589" alt="Готовый кино-сайт за 5 минут (видео)"/></a>
+<a href="https://www.youtube.com/watch?v=kZDSYmGdNJE" target="_blank"><img src="https://raw.githubusercontent.com/CinemaPress/CinemaPress.github.io/master/images/admin/install_player.png" width="600" alt="Готовый кино-сайт за 5 минут (видео)"/></a>
 
 ## Обновление:
 
-Обновление CMS CinemaPress до последней версии в репозитории.
+Обновление **CinemaPress CMS** до последней версии в репозитории.
 ```
+~# wget https://git.io/vVTuY -qO update.sh
 ~# sh update.sh [domain]
 ```
+
+##### Видео обновления
+
+<a href="https://www.youtube.com/watch?v=fw0Nkz4n-bo" target="_blank"><img src="https://raw.githubusercontent.com/CinemaPress/CinemaPress.github.io/master/images/admin/update_player.png" width="600" alt="Обновление CinemaPress CMS"/></a>
 
 # CinemaPress DataBase
  :minidisc: База данных ~ **500 000 фильмов/сериалов** (все фильмы/сериалы планеты).
  
-## Установка:
-После успешного запуска CinemaPress CMS, можете [приобрести](http://cinemapress.org/) и импортировать полную базу данных.
+## Импорт:
+После успешного запуска **CinemaPress CMS**, можете [приобрести](http://cinemapress.org/) и импортировать полную базу данных.
 ```
+~# wget https://git.io/vVTEV -qO db.sh
 ~# sh db.sh [domain] [key]
 ```
 
-##### Пример:
-```
-~# sh db.sh mydomain.com MyDatabaseKey
+###### Видео импорта базы данных CinemaPress
 
------------------------ URL ДОМЕНА -------------------------------
-mydomain.com
----------------------- КЛЮЧ ДОСТУПА ------------------------------
-MyDatabaseKey
-------------------------------------------------------------------
-```
+<a href="https://www.youtube.com/watch?v=XUhCchNiAQg" target="_blank"><img src="https://raw.githubusercontent.com/CinemaPress/CinemaPress.github.io/master/images/admin/db_player.png" width="600" alt="Импорт CinemaPress DataBase"/></a>
 
 # CinemaPress Themes
 
 - [Barney (kinogo.co)](https://github.com/CinemaPress/Theme-Barney)
 ```
-~# sh theme.sh barney
+~# wget https://git.io/vVTE5 -qO theme.sh
+~# sh theme.sh [domain] barney
 ```
 <a href="https://github.com/CinemaPress/Theme-Barney"><img src="https://raw.githubusercontent.com/CinemaPress/Theme-Barney/master/screenshot.jpg" width="400"></a>
 ---
 - [Ted (kinogb.net)](https://github.com/CinemaPress/Theme-Ted)
 ```
-~# sh theme.sh ted
+~# wget https://git.io/vVTE5 -qO theme.sh
+~# sh theme.sh [domain] ted
 ```
 <a href="https://github.com/CinemaPress/Theme-Ted"><img src="https://raw.githubusercontent.com/CinemaPress/Theme-Ted/master/screenshot.jpg" width="400"></a>
 ---
 - [Lily (kinokong.net)](https://github.com/CinemaPress/Theme-Lily)
 ```
-~# sh theme.sh lily
+~# wget https://git.io/vVTE5 -qO theme.sh
+~# sh theme.sh [domain] lily
 ```
 <a href="https://github.com/CinemaPress/Theme-Lily"><img src="https://raw.githubusercontent.com/CinemaPress/Theme-Lily/master/screenshot.jpg" width="400"></a>
 ---
 - [Marshall (zerx.cc)](https://github.com/CinemaPress/Theme-Marshall)
 ```
-~# sh theme.sh marshall
+~# wget https://git.io/vVTE5 -qO theme.sh
+~# sh theme.sh [domain] marshall
 ```
 <a href="https://github.com/CinemaPress/Theme-Marshall"><img src="https://raw.githubusercontent.com/CinemaPress/Theme-Marshall/master/screenshot.jpg" width="400"></a>
 
