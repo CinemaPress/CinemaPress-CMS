@@ -67,7 +67,7 @@ echo '------------------------------------------------------------------'
 echo '-----                       ОБНОВЛЕНИЕ                       -----'
 echo '------------------------------------------------------------------'
 echo ''
-apt-get -y -qq update && apt-get -y -qq install debian-keyring debian-archive-keyring wget curl nano htop sudo lsb-release ca-certificates git-core openssl netcat
+apt-get -y -qq update && apt-get -y -qq install debian-keyring debian-archive-keyring wget curl nano htop sudo lsb-release ca-certificates git-core openssl netcat debconf-utils
 VER=`lsb_release -cs`
 echo ''
 echo '------------------------------------------------------------------'
