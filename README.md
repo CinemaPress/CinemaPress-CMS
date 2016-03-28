@@ -16,7 +16,7 @@
 
 ##### Видео установки (готовый кино-сайт за 3 минуты 10 сек):
 
-<a href="https://www.youtube.com/watch?v=kZDSYmGdNJE" target="_blank"><img src="https://raw.githubusercontent.com/CinemaPress/CinemaPress.github.io/master/images/admin/install_player.png" width="600" alt="Готовый кино-сайт за 5 минут (видео)"/></a>
+<a href="https://www.youtube.com/watch?v=kZDSYmGdNJE" target="_blank"><img src="https://cinemapress.org/images/admin/install_player.png" width="600" alt="Готовый кино-сайт за 5 минут (видео)"/></a>
 
 ## Обновление:
 
@@ -28,13 +28,13 @@
 
 ##### Видео обновления
 
-<a href="https://www.youtube.com/watch?v=fw0Nkz4n-bo" target="_blank"><img src="https://raw.githubusercontent.com/CinemaPress/CinemaPress.github.io/master/images/admin/update_player.png" width="600" alt="Обновление CinemaPress CMS"/></a>
+<a href="https://www.youtube.com/watch?v=fw0Nkz4n-bo" target="_blank"><img src="https://cinemapress.org/images/admin/update_player.png" width="600" alt="Обновление CinemaPress CMS"/></a>
 
 # CinemaPress DataBase
  :minidisc: База данных ~ **500 000 фильмов/сериалов** (все фильмы/сериалы планеты).
  
 ## Импорт:
-После успешного запуска **CinemaPress CMS**, можете [приобрести](http://cinemapress.org/) и импортировать полную базу данных.
+После успешного запуска **CinemaPress CMS**, можете [приобрести](https://cinemapress.org/) и импортировать полную базу данных.
 ```
 ~# wget https://git.io/vVTEV -qO db.sh
 ~# sh db.sh [domain] [key]
@@ -42,7 +42,7 @@
 
 ###### Видео импорта базы данных CinemaPress
 
-<a href="https://www.youtube.com/watch?v=XUhCchNiAQg" target="_blank"><img src="https://raw.githubusercontent.com/CinemaPress/CinemaPress.github.io/master/images/admin/db_player.png" width="600" alt="Импорт CinemaPress DataBase"/></a>
+<a href="https://www.youtube.com/watch?v=XUhCchNiAQg" target="_blank"><img src="https://cinemapress.org/images/admin/db_player.png" width="600" alt="Импорт CinemaPress DataBase"/></a>
 
 # CinemaPress Themes
 
@@ -73,7 +73,7 @@
 ~# sh theme.sh [domain] marshall
 ```
 <a href="https://github.com/CinemaPress/Theme-Marshall"><img src="https://raw.githubusercontent.com/CinemaPress/Theme-Marshall/master/screenshot.jpg" width="400"></a>
-
+---
 # Что такое CinemaPress CMS?
 Это система управления самообновляемым кино-сайтом, которая строится на базе данных **CinemaPress** и работает на ``NodeJS (ExpressJS) + Sphinx``.
 
