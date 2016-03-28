@@ -21,7 +21,7 @@ while [ "${AGAIN}" = "yes" ]
 do
     if [ $1 ]; then
         DOMAIN=${1}
-        echo ${DOMAIN}
+        echo ": ${DOMAIN}"
     else
         read -p ': ' DOMAIN
     fi
@@ -38,7 +38,7 @@ while [ "${AGAIN}" = "yes" ]
 do
     if [ $2 ]; then
         KEY=${2}
-        echo ${KEY}
+        echo ": ${KEY}"
     else
         read -p ': ' KEY
     fi

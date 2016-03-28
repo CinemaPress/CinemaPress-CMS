@@ -7,7 +7,7 @@ while [ "${AGAIN}" = "yes" ]
 do
     if [ $1 ]; then
         DOMAIN=${1}
-        echo ${DOMAIN}
+        echo ": ${DOMAIN}"
     else
         read -p ': ' DOMAIN
     fi
@@ -25,7 +25,7 @@ do
     if [ $2 ]
     then
         THEME=${2}
-        echo ${THEME}
+        echo ": ${THEME}"
     else
         read -p ': ' THEME
         if [ "${THEME}" = "" ]
@@ -49,7 +49,7 @@ do
     if [ $3 ]
     then
         PASSWD=${3}
-        echo ${PASSWD}
+        echo ": ${PASSWD}"
     else
         read -p ': ' PASSWD
     fi

@@ -7,7 +7,7 @@ while [ "${AGAIN}" = "yes" ]
 do
     if [ $1 ]; then
         DOMAIN=${1}
-        echo ${DOMAIN}
+        echo ": ${DOMAIN}"
     else
         read -p ': ' DOMAIN
     fi
