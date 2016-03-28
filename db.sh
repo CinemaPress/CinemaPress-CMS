@@ -7,7 +7,8 @@ echo '-----                                                        -----'
 echo '!!!!!                         ВАЖНО!                         !!!!!'
 echo '!!!!!                                                        !!!!!'
 echo '!!!!!       Один ключ предназначен для одного домена         !!!!!'
-echo '!!!!!       и может быть использован только один раз!        !!!!!'
+echo '!!!!!         и может быть использован только 1 раз          !!!!!'
+echo '!!!!!     на тарифе Start и 4 раза на тарифе Expanded!       !!!!!'
 echo '!!!!!        Ключ обновления БД работает только для          !!!!!'
 echo '!!!!!         доменов, для которых уже приобретена           !!!!!'
 echo '!!!!!          база по тарифам Start или Expanded            !!!!!'
@@ -53,6 +54,26 @@ echo '------------------------------------------------------------------'
 echo ''
 
 sleep 3
+
+STATUS=`curl -s -o /dev/null -I -w "%{http_code}" http://database.cinemapress.org/${KEY}/${DOMAIN}?status=CHECK`
+
+if [ "${STATUS}" != "200" ]
+then
+    echo ''
+    echo '------------------------------------------------------------------'
+    echo '------------------------------------------------------------------'
+    echo '-----                                                        -----'
+    echo '-----        Сервер базы данных временно недоступен!         -----'
+    echo '-----            Попробуйте попытку немного позже.           -----'
+    echo '-----          Если есть вопросы, свяжитесь с Нами.          -----'
+    echo '-----             email: support@cinemapress.org             -----'
+    echo '-----             skype: cinemapress                         -----'
+    echo '-----                                                        -----'
+    echo '------------------------------------------------------------------'
+    echo '------------------------------------------------------------------'
+    echo ''
+    exit 0
+fi
 
 searchd --stop --config "/home/${DOMAIN}/config/sphinx.conf"
 
@@ -121,7 +142,7 @@ read -p 'Всё работает? [ДА/нет] : ' YES
 if [ "${YES}" = "ДА" ] || [ "${YES}" = "Да" ] || [ "${YES}" = "да" ] || [ "${YES}" = "YES" ] || [ "${YES}" = "Yes" ] || [ "${YES}" = "yes" ] || [ "${YES}" = "Y" ] || [ "${YES}" = "y" ] || [ "${YES}" = "" ]
 then
 
-    wget -qO- --no-check-certificate http://database.cinemapress.org/${KEY}/${DOMAIN}?fail=NOT &> /dev/null
+    curl -s -o /dev/null -I http://database.cinemapress.org/${KEY}/${DOMAIN}?status=SUCCESS
     echo ''
     echo '------------------------------------------------------------------'
     echo '------------------------------------------------------------------'
@@ -158,7 +179,7 @@ else
 
     searchd --config "/home/${DOMAIN}/config/sphinx.conf"
 
-    wget -qO- --no-check-certificate http://database.cinemapress.org/${KEY}/${DOMAIN}?fail=YES &> /dev/null
+    curl -s -o /dev/null -I http://database.cinemapress.org/${KEY}/${DOMAIN}?status=FAIL
     echo ''
     echo '------------------------------------------------------------------'
     echo '------------------------------------------------------------------'
