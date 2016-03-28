@@ -18,6 +18,13 @@
 
 <a href="https://asciinema.org/a/ecmqixsphnvy4q0oz8zghp20i" target="_blank"><img src="https://raw.githubusercontent.com/CinemaPress/CinemaPress.github.io/master/images/admin/asciinema.png" width="589" alt="Готовый кино-сайт за 5 минут (видео)"/></a>
 
+## Обновление:
+
+Обновление CMS CinemaPress до последней версии в репозитории.
+```
+~# sh update.sh [domain]
+```
+
 # CinemaPress DataBase
  :minidisc: База данных ~ **500 000 фильмов/сериалов** (все фильмы/сериалы планеты).
  

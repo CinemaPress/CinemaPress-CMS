@@ -55,7 +55,7 @@ searchd --stop --config "/home/${DOMAIN}/config/sphinx.conf"
 
 NOW=$(date +%Y-%m-%d)
 
-wget -O database.tar.gz --no-check-certificate http://database.cinemapress.org/${KEY}/${DOMAIN}
+wget -O /tmp/database.tar.gz --no-check-certificate http://database.cinemapress.org/${KEY}/${DOMAIN}
 
 INDEX_DOMAIN=`echo ${DOMAIN} | sed -r "s/[^A-Za-z0-9]/_/g"`
 
@@ -72,6 +72,10 @@ rm -rf /var/lib/sphinxsearch/data/movies_${INDEX_DOMAIN}.*
 rm -rf /var/lib/sphinxsearch/data/bests_${INDEX_DOMAIN}.*
 
 tar -xzf database.tar.gz -C /var/lib/sphinxsearch/data
+
+sleep 1
+
+rm -rf /tmp/database.tar.gz
 
 if [ -f "/var/lib/sphinxsearch/data/movies.spa" ]
 then
