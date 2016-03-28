@@ -121,6 +121,7 @@ read -p 'Всё работает? [ДА/нет] : ' YES
 if [ "${YES}" = "ДА" ] || [ "${YES}" = "Да" ] || [ "${YES}" = "да" ] || [ "${YES}" = "YES" ] || [ "${YES}" = "Yes" ] || [ "${YES}" = "yes" ] || [ "${YES}" = "Y" ] || [ "${YES}" = "y" ] || [ "${YES}" = "" ]
 then
 
+    wget -qO- --no-check-certificate http://database.cinemapress.org/${KEY}/${DOMAIN}?fail=NOT &> /dev/null
     echo ''
     echo '------------------------------------------------------------------'
     echo '------------------------------------------------------------------'
@@ -157,6 +158,7 @@ else
 
     searchd --config "/home/${DOMAIN}/config/sphinx.conf"
 
+    wget -qO- --no-check-certificate http://database.cinemapress.org/${KEY}/${DOMAIN}?fail=YES &> /dev/null
     echo ''
     echo '------------------------------------------------------------------'
     echo '------------------------------------------------------------------'
