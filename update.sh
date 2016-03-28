@@ -26,8 +26,8 @@ sleep 3
 mkdir -p /home/${DOMAIN}/.newCP
 mkdir -p /home/${DOMAIN}/.oldCP
 
-rm -rf /home/${DOMAIN}/.newCP
-rm -rf /home/${DOMAIN}/.oldCP
+rm -rf /home/${DOMAIN}/.newCP/*
+rm -rf /home/${DOMAIN}/.oldCP/*
 
 git clone https://github.com/CinemaPress/CinemaPress-CMS.git /home/${DOMAIN}/.newCP
 cp -R /home/${DOMAIN}/* /home/${DOMAIN}/.oldCP

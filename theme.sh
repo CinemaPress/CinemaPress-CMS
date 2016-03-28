@@ -5,18 +5,18 @@ echo '------------------------- НАЗВАНИЕ ТЕМЫ ----------------------
 AGAIN=yes
 while [ "${AGAIN}" = "yes" ]
 do
-    if [ $2 ]
+    if [ $1 ]
     then
-        THEME=${2}
+        THEME=${1}
         echo ": ${THEME}"
     else
         read -p ': ' THEME
-        if [ "${THEME}" = "ted" ] || [ "${THEME}" = "barney" ] || [ "${THEME}" = "lily" ] || [ "${THEME}" = "marshall" ]
-        then
-            AGAIN=no
-        else
-            echo 'WARNING: Нет такой темы.'
-        fi
+    fi
+    if [ "${THEME}" = "ted" ] || [ "${THEME}" = "barney" ] || [ "${THEME}" = "lily" ] || [ "${THEME}" = "marshall" ]
+    then
+        AGAIN=no
+    else
+        echo 'WARNING: Нет такой темы.'
     fi
 done
 echo '------------------------------------------------------------------'

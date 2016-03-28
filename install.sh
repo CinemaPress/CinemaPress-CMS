@@ -28,17 +28,17 @@ do
         echo ": ${THEME}"
     else
         read -p ': ' THEME
-        if [ "${THEME}" = "" ]
+    fi
+    if [ "${THEME}" = "" ]
+    then
+        AGAIN=no
+        THEME='skeleton'
+    else
+        if [ "${THEME}" = "ted" ] || [ "${THEME}" = "barney" ] || [ "${THEME}" = "lily" ] || [ "${THEME}" = "marshall" ]
         then
             AGAIN=no
-            THEME='skeleton'
         else
-            if [ "${THEME}" = "ted" ] || [ "${THEME}" = "barney" ] || [ "${THEME}" = "lily" ] || [ "${THEME}" = "marshall" ]
-            then
-                AGAIN=no
-            else
-                echo 'WARNING: Нет такой темы.'
-            fi
+            echo 'WARNING: Нет такой темы.'
         fi
     fi
 done
