@@ -42,7 +42,7 @@ do
     else
         read -p ': ' KEY
     fi
-    if [ ${KEY} != "" ]
+    if [ "${KEY}" != "" ]
     then
         AGAIN=no
     else
@@ -116,7 +116,7 @@ echo ''
 
 read -p 'Всё работает? [ДА/нет] : ' YES
 
-if [ "${YES}" = "ДА" ] || [ ${YES} = "Да" ] || [ ${YES} = "да" ] || [ ${YES} = "YES" ] || [ ${YES} = "Yes" ] || [ ${YES} = "yes" ] || [ ${YES} = "Y" ] || [ ${YES} = "y" ] || [ ${YES} = "" ]
+if [ "${YES}" = "ДА" ] || [ "${YES}" = "Да" ] || [ "${YES}" = "да" ] || [ "${YES}" = "YES" ] || [ "${YES}" = "Yes" ] || [ "${YES}" = "yes" ] || [ "${YES}" = "Y" ] || [ "${YES}" = "y" ] || [ "${YES}" = "" ]
 then
 
     echo ''
