@@ -69,6 +69,7 @@ echo '------------------------------------------------------------------'
 echo ''
 apt-get -y -qq update && apt-get -y -qq install debian-keyring debian-archive-keyring wget curl nano htop sudo lsb-release ca-certificates git-core openssl netcat debconf-utils
 VER=`lsb_release -cs`
+echo "proftpd-basic shared/proftpd/inetd_or_standalone select standalone" | debconf-set-selections
 echo ''
 echo '------------------------------------------------------------------'
 echo '-----                           OK                           -----'
