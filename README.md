@@ -14,7 +14,7 @@
 ~# sh install.sh [domain] [theme] [password]
 ```
 
-##### Видео установки (готовый кино-сайт за 3 минуты 10 сек):
+###### Видео установки (готовый кино-сайт за 3 минуты 10 сек):
 
 <a href="https://www.youtube.com/watch?v=kZDSYmGdNJE" target="_blank"><img src="https://cinemapress.org/images/admin/install_player.png" width="600" alt="Готовый кино-сайт за 5 минут (видео)"/></a>
 
@@ -26,7 +26,7 @@
 ~# sh update.sh [domain]
 ```
 
-##### Видео обновления
+###### Видео обновления
 
 <a href="https://www.youtube.com/watch?v=fw0Nkz4n-bo" target="_blank"><img src="https://cinemapress.org/images/admin/update_player.png" width="600" alt="Обновление CinemaPress CMS"/></a>
 
