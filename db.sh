@@ -58,7 +58,9 @@ searchd --stop --config "/home/${DOMAIN}/config/sphinx.conf"
 
 NOW=$(date +%Y-%m-%d)
 
-wget -O /tmp/database.tar.gz --no-check-certificate http://database.cinemapress.org/${KEY}/${DOMAIN}
+rm -rf /tmp/${KEY}.tar.gz
+
+wget -O /tmp/${KEY}.tar.gz --no-check-certificate http://database.cinemapress.org/${KEY}/${DOMAIN}
 
 INDEX_DOMAIN=`echo ${DOMAIN} | sed -r "s/[^A-Za-z0-9]/_/g"`
 
@@ -74,11 +76,11 @@ cp -R /var/lib/sphinxsearch/data/bests_${INDEX_DOMAIN}.* /var/lib/sphinxsearch/o
 rm -rf /var/lib/sphinxsearch/data/movies_${INDEX_DOMAIN}.*
 rm -rf /var/lib/sphinxsearch/data/bests_${INDEX_DOMAIN}.*
 
-tar -xzf database.tar.gz -C /var/lib/sphinxsearch/data
+tar -xzf /tmp/${KEY}.tar.gz -C /var/lib/sphinxsearch/data
 
 sleep 1
 
-rm -rf /tmp/database.tar.gz
+rm -rf /tmp/${KEY}.tar.gz
 
 if [ -f "/var/lib/sphinxsearch/data/movies.spa" ]
 then
@@ -136,6 +138,12 @@ then
 else
 
     searchd --stop --config "/home/${DOMAIN}/config/sphinx.conf"
+
+    echo ''
+    echo '------------------------------------------------------------------'
+    echo '-----                 Loading downgrade ...                  -----'
+    echo '------------------------------------------------------------------'
+    echo ''
 
     sleep 5
 
