@@ -17,7 +17,7 @@ echo '------------------------------------------------------------------'
 echo ''
 echo '--------------------------- URL ДОМЕНА ---------------------------'
 AGAIN=yes
-while [ "$AGAIN" = "yes" ]
+while [ "${AGAIN}" = "yes" ]
 do
     if [ $1 ]; then
         DOMAIN=${1}
@@ -25,7 +25,8 @@ do
     else
         read -p ': ' DOMAIN
     fi
-    if [ ${DOMAIN} ]; then
+    if [ "${DOMAIN}" != "" ]
+    then
         AGAIN=no
     else
         echo 'WARNING: URL домена не может быть пустым.'
@@ -33,7 +34,7 @@ do
 done
 echo '-------------------------- КЛЮЧ ДОСТУПА --------------------------'
 AGAIN=yes
-while [ "$AGAIN" = "yes" ]
+while [ "${AGAIN}" = "yes" ]
 do
     if [ $2 ]; then
         KEY=${2}
@@ -41,7 +42,8 @@ do
     else
         read -p ': ' KEY
     fi
-    if [ ${KEY} ]; then
+    if [ ${KEY} != "" ]
+    then
         AGAIN=no
     else
         echo 'WARNING: Ключ не может быть пустым.'
@@ -114,7 +116,7 @@ echo ''
 
 read -p 'Всё работает? [ДА/нет] : ' YES
 
-if [[ "${YES}" = "ДА" || ${YES} = "Да" || ${YES} = "да" || ${YES} = "YES" || ${YES} = "Yes" || ${YES} = "yes" || ${YES} = "Y" || ${YES} = "y" || ${YES} = "" ]]
+if [ "${YES}" = "ДА" ] || [ ${YES} = "Да" ] || [ ${YES} = "да" ] || [ ${YES} = "YES" ] || [ ${YES} = "Yes" ] || [ ${YES} = "yes" ] || [ ${YES} = "Y" ] || [ ${YES} = "y" ] || [ ${YES} = "" ]
 then
 
     echo ''

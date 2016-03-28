@@ -3,7 +3,7 @@
 echo ''
 echo '--------------------------- URL ДОМЕНА ---------------------------'
 AGAIN=yes
-while [ "$AGAIN" = "yes" ]
+while [ "${AGAIN}" = "yes" ]
 do
     if [ $1 ]; then
         DOMAIN=${1}
@@ -20,7 +20,7 @@ do
 done
 echo '------------------------- НАЗВАНИЕ ТЕМЫ --------------------------'
 AGAIN=yes
-while [ "$AGAIN" = "yes" ]
+while [ "${AGAIN}" = "yes" ]
 do
     if [ $2 ]
     then
@@ -33,7 +33,7 @@ do
             AGAIN=no
             THEME='skeleton'
         else
-            if [[ "${THEME}" = "ted" || "${THEME}" = "barney" || "${THEME}" = "lily" || "${THEME}" = "marshall" ]]
+            if [ "${THEME}" = "ted" ] || [ "${THEME}" = "barney" ] || [ "${THEME}" = "lily" ] || [ "${THEME}" = "marshall" ]
             then
                 AGAIN=no
             else
@@ -44,7 +44,7 @@ do
 done
 echo '------------ ПРИДУМАЙТЕ ПАРОЛЬ ОТ АДМИН-ПАНЕЛИ И FTP -------------'
 AGAIN=yes
-while [ "$AGAIN" = "yes" ]
+while [ "${AGAIN}" = "yes" ]
 do
     if [ $3 ]
     then
@@ -138,11 +138,11 @@ echo ''
 AGAIN=yes
 DEFAULT_PORT=3333
 BACKUP_PORT=3334
-while [ "$AGAIN" = "yes" ]
+while [ "${AGAIN}" = "yes" ]
 do
     DEFAULT_PORT_TEST=`netstat -tunlp | grep ${DEFAULT_PORT}`
     BACKUP_PORT_TEST=`netstat -tunlp | grep ${BACKUP_PORT}`
-    if [ "$DEFAULT_PORT_TEST" = "" ] && [ "$BACKUP_PORT_TEST" = "" ]
+    if [ "${DEFAULT_PORT_TEST}" = "" ] && [ "${BACKUP_PORT_TEST}" = "" ]
     then
         AGAIN=no
     else
@@ -201,17 +201,17 @@ echo '------------------------------------------------------------------'
 echo ''
 AGAIN=yes
 MEMCACHED_PORT=11212
-while [ "$AGAIN" = "yes" ]
+while [ "${AGAIN}" = "yes" ]
 do
     MEMCACHED_PORT_TEST=`netstat -tunlp | grep ${MEMCACHED_PORT}`
-    if [ "$MEMCACHED_PORT_TEST" = "" ]
+    if [ "${MEMCACHED_PORT_TEST}" = "" ]
     then
         AGAIN=no
     else
         MEMCACHED_PORT=$((MEMCACHED_PORT+1))
     fi
 done
-if [ "$VER" = "jessie" ]
+if [ "${VER}" = "jessie" ]
 then
     cp /lib/systemd/system/memcached.service /lib/systemd/system/memcached_${DOMAIN}.service
     sed -i "s/memcached\.conf/memcached_${DOMAIN}.conf/g" /lib/systemd/system/memcached_${DOMAIN}.service
@@ -230,7 +230,8 @@ echo '------------------------------------------------------------------'
 echo '-----                  НАСТРОЙКА CINEMAPRESS                 -----'
 echo '------------------------------------------------------------------'
 echo ''
-if [ "$THEME" != "skeleton" ]; then
+if [ "${THEME}" != "skeleton" ]
+then
     git clone https://github.com/CinemaPress/Theme-${THEME}.git /home/${DOMAIN}/themes/${THEME}
     chown -R ${DOMAIN}:www-data /home/${DOMAIN}/themes
     sed -i "s/\"theme\":\s*\".*\"/\"theme\":\"${THEME}\"/" /home/${DOMAIN}/config/config.js
