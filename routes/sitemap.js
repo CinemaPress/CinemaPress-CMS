@@ -1,14 +1,16 @@
 'use strict';
 
 var getData = require('../modules/getData');
+var decode  = require('../modules/decode');
 var config  = require('../config/config');
-var md5     = require('md5');
 var express = require('express');
+var md5     = require('md5');
+
 var router  = express.Router();
 
 router.get('/?', function(req, res) {
 
-    var url = decodeURIComponent(config.domain + req.originalUrl);
+    var url = decode(config.domain + req.originalUrl);
     var urlHash = md5(url.toLowerCase());
     console.time(url);
 
@@ -87,7 +89,7 @@ router.get('/?', function(req, res) {
 
 router.get('/:type/:year?', function(req, res) {
 
-    var url = decodeURIComponent(config.domain + req.originalUrl);
+    var url = decode(config.domain + req.originalUrl);
     var urlHash = md5(url.toLowerCase());
     console.time(url);
 

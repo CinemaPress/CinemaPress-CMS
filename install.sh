@@ -42,6 +42,8 @@ do
         fi
     fi
 done
+echo '---------------- ВАШ ЛОГИН ОТ АДМИН-ПАНЕЛИ И FTP -----------------'
+echo ": ${DOMAIN}"
 echo '------------ ПРИДУМАЙТЕ ПАРОЛЬ ОТ АДМИН-ПАНЕЛИ И FTP -------------'
 AGAIN=yes
 while [ "${AGAIN}" = "yes" ]
@@ -112,7 +114,7 @@ echo '-----                    УСТАНОВКА ПАКЕТОВ                
 echo '------------------------------------------------------------------'
 echo ''
 wget -qO- https://deb.nodesource.com/setup_5.x | bash -
-apt-get -y install nginx proftpd-basic openssl mysql-client nodejs memcached libltdl7 libodbc1 libpq5
+apt-get -y install nginx proftpd-basic openssl mysql-client nodejs memcached libltdl7 libodbc1 libpq5 fail2ban
 echo ''
 echo '------------------------------------------------------------------'
 echo '-----                           OK                           -----'
@@ -265,6 +267,17 @@ echo ''
 mv /etc/sysctl.conf /etc/sysctl.old.conf
 cp /home/${DOMAIN}/config/sysctl.conf /etc/sysctl.conf
 sysctl -p
+echo ''
+echo '------------------------------------------------------------------'
+echo '-----                           OK                           -----'
+echo '------------------------------------------------------------------'
+echo ''
+echo '------------------------------------------------------------------'
+echo '-----                   НАСТРОЙКА FAIL2BAN                   -----'
+echo '------------------------------------------------------------------'
+echo ''
+rm -r /etc/fail2ban/jail.local
+ln -s /home/${DOMAIN}/config/jail.conf /etc/fail2ban/jail.local
 echo ''
 echo '------------------------------------------------------------------'
 echo '-----                           OK                           -----'

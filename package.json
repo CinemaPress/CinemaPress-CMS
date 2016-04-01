@@ -25,6 +25,7 @@
     "mysql": "latest",
     "async": "latest",
     "memcached": "latest",
+    "html-entities": "latest",
     "md5": "latest"
   }
 }

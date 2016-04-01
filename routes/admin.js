@@ -1,12 +1,13 @@
 'use strict';
 
-var config    = require('../config/config');
 var memcached = require('../modules/memcached');
 var getData   = require('../modules/getData');
+var config    = require('../config/config');
 var express   = require('express');
-var router    = express.Router();
 var path      = require('path');
 var fs        = require('fs');
+
+var router    = express.Router();
 
 router.get('/?', function(req, res) {
 

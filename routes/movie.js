@@ -1,18 +1,20 @@
 'use strict';
 
-var getData      = require('../modules/getData');
 var requiredData = require('../modules/requiredData');
 var mergeData    = require('../modules/mergeData');
 var memcached    = require('../modules/memcached');
+var getData      = require('../modules/getData');
+var decode       = require('../modules/decode');
 var config       = require('../config/config');
 var express      = require('express');
 var async        = require('async');
 var md5          = require('md5');
+
 var router       = express.Router();
 
 router.get('/:movie/:type?', function(req, res) {
 
-    var url = decodeURIComponent(config.domain + req.originalUrl);
+    var url = decode(config.domain + req.originalUrl);
     var urlHash = md5(url.toLowerCase());
     console.time(url);
 
@@ -20,8 +22,8 @@ router.get('/:movie/:type?', function(req, res) {
     req.params.type  = req.params.type || 'single';
 
     var prefix_id  = config.urls.prefix_id || '/';
-    var regexpId   = new RegExp(decodeURIComponent(prefix_id) + '([0-9]{1,7})', 'ig');
-    var id         = regexpId.exec(req.params.movie); id = (id) ? parseInt(id[1]) : '';
+    var regexpId   = new RegExp(decode(prefix_id) + '([0-9]{1,7})', 'ig');
+    var id         = regexpId.exec(decode(req.params.movie)); id = (id) ? parseInt(id[1]) : '';
     var regexpType = new RegExp('(single|online|trailer|download|picture)', 'ig');
     var type       = regexpType.exec(req.params.type); type = (type) ? type[1] : 'single';
 

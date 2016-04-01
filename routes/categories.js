@@ -1,18 +1,20 @@
 'use strict';
 
-var getData      = require('../modules/getData');
 var requiredData = require('../modules/requiredData');
 var mergeData    = require('../modules/mergeData');
-var config       = require('../config/config');
 var memcached    = require('../modules/memcached');
+var getData      = require('../modules/getData');
+var decode       = require('../modules/decode');
+var config       = require('../config/config');
 var express      = require('express');
 var async        = require('async');
 var md5          = require('md5');
+
 var router       = express.Router();
 
 router.get('/', function(req, res) {
 
-    var url = decodeURIComponent(config.domain + req.originalUrl);
+    var url = decode(config.domain + req.originalUrl);
     var urlHash = md5(url.toLowerCase());
     console.time(url);
     
@@ -133,7 +135,7 @@ router.get('/:query/:page?', function(req, res) {
 
     if (!query) return res.redirect('/');
 
-    var url = decodeURIComponent(config.domain + req.originalUrl);
+    var url = decode(config.domain + req.originalUrl);
     var urlHash = md5(url.toLowerCase());
     console.time(url);
 
