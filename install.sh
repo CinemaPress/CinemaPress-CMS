@@ -162,10 +162,18 @@ sed -i "s/DEFAULT_PORT/${DEFAULT_PORT}/g" /home/${DOMAIN}/config/nginx.conf
 sed -i "s/BACKUP_PORT/${BACKUP_PORT}/g" /home/${DOMAIN}/config/nginx.conf
 sed -i "s/example\.com/${DOMAIN}/g" /home/${DOMAIN}/config/nginx.conf
 sed -i "s/user  nginx;/user  www-data;/g" /etc/nginx/nginx.conf
-sed -i "s/server_names_hash_bucket_size 64;//g" /etc/nginx/nginx.conf
-sed -i "s/http {/http {\n    server_names_hash_bucket_size 64;/g" /etc/nginx/nginx.conf
 sed -i "s/#gzip/gzip/g" /etc/nginx/nginx.conf
 echo "${DOMAIN}:$OPENSSL" >> /etc/nginx/nginx_pass
+SNHBS=`grep "server_names_hash_bucket_size" /etc/nginx/nginx.conf`
+if [ "${SNHBS}" = "" ]
+then
+    sed -i "s/http {/http {\n\n    server_names_hash_bucket_size 64;\n/g" /etc/nginx/nginx.conf
+fi
+LRZ=`grep "zone=cinemapress" /etc/nginx/nginx.conf`
+if [ "${LRZ}" = "" ]
+then
+    sed -i "s/http {/http {\n\n    limit_req_zone \$binary_remote_addr zone=cinemapress:10m rate=5r\/s;\n/g" /etc/nginx/nginx.conf
+fi
 echo ''
 echo '------------------------------------------------------------------'
 echo '-----                           OK                           -----'
