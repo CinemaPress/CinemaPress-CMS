@@ -126,6 +126,7 @@ echo '------------------------------------------------------------------'
 echo ''
 useradd ${DOMAIN} -m -U -s /bin/false
 OPENSSL=`echo "${PASSWD}" | openssl passwd -1 -stdin -salt cinemapress`
+rm -rf /home/${DOMAIN}/
 rm -rf /home/${DOMAIN}/.??*
 git clone https://github.com/CinemaPress/CinemaPress-CMS.git /home/${DOMAIN}
 chown -R ${DOMAIN}:www-data /home/${DOMAIN}/
@@ -198,8 +199,8 @@ done
 INDEX_DOMAIN=`echo ${DOMAIN} | sed -r "s/[^A-Za-z0-9]/_/g"`
 sed -i "s/example\.com/${DOMAIN}/g" /home/${DOMAIN}/config/sphinx.conf
 sed -i "s/example_com/${INDEX_DOMAIN}/g" /home/${DOMAIN}/config/sphinx.conf
-sed -i "s/:9306/${MYSQL_PORT}/g" /home/${DOMAIN}/config/sphinx.conf
-sed -i "s/:9312/${SPHINX_PORT}/g" /home/${DOMAIN}/config/sphinx.conf
+sed -i "s/:9306/:${MYSQL_PORT}/g" /home/${DOMAIN}/config/sphinx.conf
+sed -i "s/:9312/:${SPHINX_PORT}/g" /home/${DOMAIN}/config/sphinx.conf
 echo ''
 echo '------------------------------------------------------------------'
 echo '-----                           OK                           -----'
@@ -209,7 +210,9 @@ echo '------------------------------------------------------------------'
 echo '-----                    НАСТРОЙКА PROFTPD                   -----'
 echo '------------------------------------------------------------------'
 echo ''
+sed -i "s/AuthUserFile    \/etc\/proftpd\/ftpd\.passwd//g" /etc/proftpd/proftpd.conf
 echo 'AuthUserFile    /etc/proftpd/ftpd.passwd' >> /etc/proftpd/proftpd.conf
+sed -i "s/\/bin\/false//g" /etc/shells
 echo '/bin/false' >> /etc/shells
 sed -i "s/# DefaultRoot/DefaultRoot/g" /etc/proftpd/proftpd.conf
 USERID=`id -u ${DOMAIN}`
@@ -244,7 +247,7 @@ then
 fi
 rm -rf /etc/memcached_${DOMAIN}.conf
 cp /etc/memcached.conf /etc/memcached_${DOMAIN}.conf
-sed -i "s/:11211/${MEMCACHED_PORT}/g" /etc/memcached_${DOMAIN}.conf
+sed -i "s/11211/${MEMCACHED_PORT}/g" /etc/memcached_${DOMAIN}.conf
 echo ''
 echo '------------------------------------------------------------------'
 echo '-----                           OK                           -----'
@@ -261,8 +264,8 @@ then
     sed -i "s/\"theme\":\s*\".*\"/\"theme\":\"${THEME}\"/" /home/${DOMAIN}/config/config.js
 fi
 sed -i "s/example\.com/${DOMAIN}/g" /home/${DOMAIN}/config/config.js
-sed -i "s/:11211/${MEMCACHED_PORT}/" /home/${DOMAIN}/config/config.js
-sed -i "s/:9306/${SPHINX_PORT}/" /home/${DOMAIN}/config/config.js
+sed -i "s/:11211/:${MEMCACHED_PORT}/" /home/${DOMAIN}/config/config.js
+sed -i "s/:9306/:${SPHINX_PORT}/" /home/${DOMAIN}/config/config.js
 cp /home/${DOMAIN}/config/config.js /home/${DOMAIN}/config/config.old.js
 echo ''
 echo '------------------------------------------------------------------'
@@ -273,10 +276,14 @@ echo '------------------------------------------------------------------'
 echo '-----                  НАСТРОЙКА АВТОЗАПУСКА                 -----'
 echo '------------------------------------------------------------------'
 echo ''
-echo "@reboot root sleep 20 && searchd --config /home/${DOMAIN}/config/sphinx.conf >> /home/${DOMAIN}/config/autostart.log 2>&1" >> /etc/crontab
-echo "@reboot root sleep 25 && cd /home/${DOMAIN}/ && PORT=${DEFAULT_PORT} forever start --minUptime 1000ms --spinSleepTime 1000ms --append --uid \"${DOMAIN}-default\" --killSignal=SIGTERM -c \"nodemon --delay 2 --exitcrash\" app.js >> /home/${DOMAIN}/config/autostart.log 2>&1" >> /etc/crontab
-echo "@reboot root sleep 30 && cd /home/${DOMAIN}/ && PORT=${BACKUP_PORT} forever start --minUptime 1000ms --spinSleepTime 1000ms --append --uid \"${DOMAIN}-backup\" app.js >> /home/${DOMAIN}/config/autostart.log 2>&1" >> /etc/crontab
-echo "@hourly root forever restart ${DOMAIN}-backup >> /home/${DOMAIN}/config/autostart.log 2>&1" >> /etc/crontab
+CRONTAB=`grep ${DOMAIN} /etc/crontab`
+if [ "${CRONTAB}" = "" ]
+then
+    echo "@reboot root sleep 20 && searchd --config /home/${DOMAIN}/config/sphinx.conf >> /home/${DOMAIN}/config/autostart.log 2>&1" >> /etc/crontab
+    echo "@reboot root sleep 25 && cd /home/${DOMAIN}/ && PORT=${DEFAULT_PORT} forever start --minUptime 1000ms --spinSleepTime 1000ms --append --uid \"${DOMAIN}-default\" --killSignal=SIGTERM -c \"nodemon --delay 2 --exitcrash\" app.js >> /home/${DOMAIN}/config/autostart.log 2>&1" >> /etc/crontab
+    echo "@reboot root sleep 30 && cd /home/${DOMAIN}/ && PORT=${BACKUP_PORT} forever start --minUptime 1000ms --spinSleepTime 1000ms --append --uid \"${DOMAIN}-backup\" app.js >> /home/${DOMAIN}/config/autostart.log 2>&1" >> /etc/crontab
+    echo "@hourly root forever restart ${DOMAIN}-backup >> /home/${DOMAIN}/config/autostart.log 2>&1" >> /etc/crontab
+fi
 echo ''
 echo '------------------------------------------------------------------'
 echo '-----                           OK                           -----'
@@ -299,7 +306,7 @@ echo '-----                   НАСТРОЙКА FAIL2BAN                   ----
 echo '------------------------------------------------------------------'
 echo ''
 rm -rf /etc/fail2ban/jail.local
-ln -s /home/${DOMAIN}/config/jail.conf /etc/fail2ban/jail.local
+cp /home/${DOMAIN}/config/jail.conf /etc/fail2ban/jail.local
 echo ''
 echo '------------------------------------------------------------------'
 echo '-----                           OK                           -----'
