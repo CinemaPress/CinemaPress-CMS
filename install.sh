@@ -265,7 +265,7 @@ then
 fi
 sed -i "s/example\.com/${DOMAIN}/g" /home/${DOMAIN}/config/config.js
 sed -i "s/:11211/:${MEMCACHED_PORT}/" /home/${DOMAIN}/config/config.js
-sed -i "s/:9306/:${SPHINX_PORT}/" /home/${DOMAIN}/config/config.js
+sed -i "s/:9306/:${MYSQL_PORT}/" /home/${DOMAIN}/config/config.js
 cp /home/${DOMAIN}/config/config.js /home/${DOMAIN}/config/config.old.js
 echo ''
 echo '------------------------------------------------------------------'
