@@ -139,8 +139,8 @@ echo '-----                     НАСТРОЙКА NGINX                    ----
 echo '------------------------------------------------------------------'
 echo ''
 AGAIN=yes
-DEFAULT_PORT=53333
-BACKUP_PORT=53334
+DEFAULT_PORT=33333
+BACKUP_PORT=43333
 while [ "${AGAIN}" = "yes" ]
 do
     DEFAULT_PORT_TEST=`netstat -tunlp | grep ${DEFAULT_PORT}`
@@ -181,21 +181,25 @@ then
     rm -rf /etc/sphinxsearch/sphinx.conf
 fi
 AGAIN=yes
-SPHINX_PORT=59306
+SPHINX_PORT=39312
+MYSQL_PORT=29306
 while [ "${AGAIN}" = "yes" ]
 do
     SPHINX_PORT_TEST=`netstat -tunlp | grep ${SPHINX_PORT}`
-    if [ "${SPHINX_PORT_TEST}" = "" ]
+    MYSQL_PORT_TEST=`netstat -tunlp | grep ${MYSQL_PORT}`
+    if [ "${SPHINX_PORT_TEST}" = "" ] && [ "${MYSQL_PORT_TEST}" = "" ]
     then
         AGAIN=no
     else
+        MYSQL_PORT=$((MYSQL_PORT+1))
         SPHINX_PORT=$((SPHINX_PORT+1))
     fi
 done
 INDEX_DOMAIN=`echo ${DOMAIN} | sed -r "s/[^A-Za-z0-9]/_/g"`
 sed -i "s/example\.com/${DOMAIN}/g" /home/${DOMAIN}/config/sphinx.conf
 sed -i "s/example_com/${INDEX_DOMAIN}/g" /home/${DOMAIN}/config/sphinx.conf
-sed -i "s/9306/${SPHINX_PORT}/g" /home/${DOMAIN}/config/sphinx.conf
+sed -i "s/:9306/${MYSQL_PORT}/g" /home/${DOMAIN}/config/sphinx.conf
+sed -i "s/:9312/${SPHINX_PORT}/g" /home/${DOMAIN}/config/sphinx.conf
 echo ''
 echo '------------------------------------------------------------------'
 echo '-----                           OK                           -----'
@@ -240,7 +244,7 @@ then
 fi
 rm -rf /etc/memcached_${DOMAIN}.conf
 cp /etc/memcached.conf /etc/memcached_${DOMAIN}.conf
-sed -i "s/11211/${MEMCACHED_PORT}/g" /etc/memcached_${DOMAIN}.conf
+sed -i "s/:11211/${MEMCACHED_PORT}/g" /etc/memcached_${DOMAIN}.conf
 echo ''
 echo '------------------------------------------------------------------'
 echo '-----                           OK                           -----'
