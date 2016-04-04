@@ -139,8 +139,8 @@ echo '-----                     НАСТРОЙКА NGINX                    ----
 echo '------------------------------------------------------------------'
 echo ''
 AGAIN=yes
-DEFAULT_PORT=3333
-BACKUP_PORT=3334
+DEFAULT_PORT=53333
+BACKUP_PORT=53334
 while [ "${AGAIN}" = "yes" ]
 do
     DEFAULT_PORT_TEST=`netstat -tunlp | grep ${DEFAULT_PORT}`
@@ -174,11 +174,28 @@ echo '------------------------------------------------------------------'
 echo '-----                    НАСТРОЙКА SPHINX                    -----'
 echo '------------------------------------------------------------------'
 echo ''
-wget --no-check-certificate http://sphinxsearch.com/files/sphinxsearch_2.2.10-release-1~${VER}_amd64.deb && dpkg -i sphinxsearch* && rm -rf sphinxsearch_2.2.10-release-1~${VER}_amd64.deb
-rm -rf /etc/sphinxsearch/sphinx.conf
+I=`dpkg -s sphinxsearch | grep "Status"`
+if ! [ -n "${I}" ]
+then
+    wget --no-check-certificate http://sphinxsearch.com/files/sphinxsearch_2.2.10-release-1~${VER}_amd64.deb && dpkg -i sphinxsearch* && rm -rf sphinxsearch_2.2.10-release-1~${VER}_amd64.deb
+    rm -rf /etc/sphinxsearch/sphinx.conf
+fi
+AGAIN=yes
+SPHINX_PORT=59306
+while [ "${AGAIN}" = "yes" ]
+do
+    SPHINX_PORT_TEST=`netstat -tunlp | grep ${SPHINX_PORT}`
+    if [ "${SPHINX_PORT_TEST}" = "" ]
+    then
+        AGAIN=no
+    else
+        SPHINX_PORT=$((SPHINX_PORT+1))
+    fi
+done
 INDEX_DOMAIN=`echo ${DOMAIN} | sed -r "s/[^A-Za-z0-9]/_/g"`
 sed -i "s/example\.com/${DOMAIN}/g" /home/${DOMAIN}/config/sphinx.conf
 sed -i "s/example_com/${INDEX_DOMAIN}/g" /home/${DOMAIN}/config/sphinx.conf
+sed -i "s/9306/${SPHINX_PORT}/g" /home/${DOMAIN}/config/sphinx.conf
 echo ''
 echo '------------------------------------------------------------------'
 echo '-----                           OK                           -----'
@@ -203,7 +220,7 @@ echo '-----                   НАСТРОЙКА MEMCACHED                  ----
 echo '------------------------------------------------------------------'
 echo ''
 AGAIN=yes
-MEMCACHED_PORT=11212
+MEMCACHED_PORT=51211
 while [ "${AGAIN}" = "yes" ]
 do
     MEMCACHED_PORT_TEST=`netstat -tunlp | grep ${MEMCACHED_PORT}`
@@ -240,7 +257,8 @@ then
     sed -i "s/\"theme\":\s*\".*\"/\"theme\":\"${THEME}\"/" /home/${DOMAIN}/config/config.js
 fi
 sed -i "s/example\.com/${DOMAIN}/g" /home/${DOMAIN}/config/config.js
-sed -i "s/11211/${MEMCACHED_PORT}/" /home/${DOMAIN}/config/config.js
+sed -i "s/:11211/${MEMCACHED_PORT}/" /home/${DOMAIN}/config/config.js
+sed -i "s/:9306/${SPHINX_PORT}/" /home/${DOMAIN}/config/config.js
 cp /home/${DOMAIN}/config/config.js /home/${DOMAIN}/config/config.old.js
 echo ''
 echo '------------------------------------------------------------------'
@@ -276,7 +294,7 @@ echo '------------------------------------------------------------------'
 echo '-----                   НАСТРОЙКА FAIL2BAN                   -----'
 echo '------------------------------------------------------------------'
 echo ''
-rm -r /etc/fail2ban/jail.local
+rm -rf /etc/fail2ban/jail.local
 ln -s /home/${DOMAIN}/config/jail.conf /etc/fail2ban/jail.local
 echo ''
 echo '------------------------------------------------------------------'

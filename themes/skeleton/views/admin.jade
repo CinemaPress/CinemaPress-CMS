@@ -462,6 +462,12 @@ body
                                         = time
                     td
                         input(type='text', id='cache.addr', value=cache.addr).input
+                tr
+                    td
+                        label(for='sphinx.addr')
+                            | Сфинкс:
+                    td(rowspan=2)
+                        input(type='text', id='sphinx.addr', value=sphinx.addr).input
             .name(data-id='count-menu')
                 | &#10507; Фильмов на странице
             #count-menu.config
@@ -1391,6 +1397,9 @@ body
                 "cache": {
                     "time": document.getElementById('cache.time').options[document.getElementById('cache.time').selectedIndex].value || "#{cache.time}",
                     "addr": document.getElementById('cache.addr').value || "#{cache.addr}"
+                },
+                "sphinx": {
+                    "addr": document.getElementById('sphinx.addr').value || "#{sphinx.addr}"
                 },
                 "counts": {
                     "index": document.getElementById('counts.index').value,
