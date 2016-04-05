@@ -187,7 +187,7 @@ I=`dpkg -s sphinxsearch | grep "Status"`
 if ! [ -n "${I}" ]
 then
     wget --no-check-certificate http://sphinxsearch.com/files/sphinxsearch_2.2.10-release-1~${VER}_amd64.deb -qO s.deb && dpkg -i s.deb && rm -rf s.deb
-    rm -rf /etc/sphinxsearch/sphinx.conf
+    cp /home/${DOMAIN}/config/dummy_sphinx.conf /etc/sphinxsearch/sphinx.conf
 fi
 AGAIN=yes
 SPHINX_PORT=39312
