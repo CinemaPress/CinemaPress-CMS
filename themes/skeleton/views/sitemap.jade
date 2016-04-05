@@ -6,22 +6,22 @@ if data
             each cat in categories
                 sitemap
                     loc
-                        = 'http://' + domain + '/' + encodeURIComponent(urls.sitemap) + '/' + encodeURIComponent(urls[cat])
+                        = protocol + domain + '/' + encodeURIComponent(urls.sitemap) + '/' + encodeURIComponent(urls[cat])
             each num, key in data
                 if key != 'max'
                     sitemap
                         loc
-                            = 'http://' + domain + '/' + encodeURIComponent(urls.sitemap) + '/' + encodeURIComponent(urls.year) + '/' + encodeURIComponent(key)
+                            = protocol + domain + '/' + encodeURIComponent(urls.sitemap) + '/' + encodeURIComponent(urls.year) + '/' + encodeURIComponent(key)
     else if category == 'movies'
         urlset(xmlns='http://www.sitemaps.org/schemas/sitemap/0.9')
             - year = new Date().getFullYear() - 1
             each movie in data
                 url
-                    loc= 'http://' + domain + '' + decodeURIComponent(movie.url)
+                    loc= 'http://' + domain + '' + movie.url
                     lastmod= movie.premiere.replace(/(?!2016)[0-9]{4}/g, year)
     else
         urlset(xmlns='http://www.sitemaps.org/schemas/sitemap/0.9')
             each num, key in data
                 if key != 'max'
                     url
-                        loc= 'http://' + domain + '/' + encodeURIComponent(urls[category]) + '/' + encodeURIComponent(key)
+                        loc= protocol + domain + '/' + encodeURIComponent(urls[category]) + '/' + encodeURIComponent(key)

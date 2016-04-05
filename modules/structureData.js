@@ -163,7 +163,7 @@ function createMovieUrl(id, data) {
 
     var separator = config.urls.separator;
     var prefix_id = config.urls.prefix_id + '' + id;
-    var url = '/' + config.urls.movie + '/' + config.urls.movie_url;
+    var url = 'http://' + config.domain + '/' + config.urls.movie + '/' + config.urls.movie_url;
 
     url = url.replace('[prefix_id]', prefix_id);
     url = url.replace(/\[separator\]/g, separator);
@@ -191,7 +191,7 @@ function createCategoryUrl(type, items) {
 
     itemsArr = itemsArr.map(function(item) {
 
-        return '<a href="/' + config.urls[type] + '/' + encodeURIComponent(item) +'">' + item +'</a>';
+        return '<a href="' + config.protocol + config.domain + '/' + config.urls[type] + '/' + encodeURIComponent(item) +'">' + item +'</a>';
 
     });
 

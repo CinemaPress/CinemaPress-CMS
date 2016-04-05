@@ -130,13 +130,13 @@ function categoriesRequiredData(key) {
 
 function urlData(attribute, query) {
 
-    return '/' + attribute + '/' + encodeURIComponent(query);
+    return config.protocol + config.domain + '/' + attribute + '/' + encodeURIComponent(query);
 
 }
 
 function categoryUrl(key) {
 
-    return '/' + config.urls[key];
+    return config.protocol + config.domain + '/' + config.urls[key];
 
 }
 
@@ -301,7 +301,7 @@ function movieSchemaData(movie, movies) {
         "item": {
             "@id": "/",
             "name": "Главная",
-            "url": "http://" + config.domain + "/"
+            "url":  config.protocol + config.domain
         }
     });
 
@@ -309,9 +309,9 @@ function movieSchemaData(movie, movies) {
         "@type": "ListItem",
         "position": 2,
         "item": {
-            "@id": "/" + config.urls.genre + "/" + movie.genre,
+            "@id": "/" + encodeURIComponent(config.urls.genre) + "/" + encodeURIComponent(movie.genre),
             "name": movie.genre,
-            "url": "http://" + config.domain + "/" + config.urls.genre + "/" + movie.genre
+            "url": config.protocol + config.domain + "/" + encodeURIComponent(config.urls.genre) + "/" + encodeURIComponent(movie.genre)
         }
     });
 
@@ -361,7 +361,7 @@ function schemaMovie(movie) {
             schemaMovie['actor'].push({
                 "@type": "Person",
                 "name": actor,
-                "sameAs": "http://" + config.domain + "/" + config.urls.actor + "/" + actor
+                "sameAs": config.protocol + config.domain + "/" + encodeURIComponent(config.urls.actor) + "/" + encodeURIComponent(actor)
             });
         });
     }
@@ -371,7 +371,7 @@ function schemaMovie(movie) {
             schemaMovie['director'].push({
                 "@type": "Person",
                 "name": director,
-                "sameAs": "http://" + config.domain + "/" + config.urls.director + "/" + director
+                "sameAs": config.protocol + config.domain + "/" + encodeURIComponent(config.urls.director) + "/" + encodeURIComponent(director)
             });
         });
     }
@@ -420,7 +420,7 @@ function categorySchemaData(data, movies) {
         "item": {
             "@id": "/",
             "name": "Главная",
-            "url": "http://" + config.domain + "/"
+            "url": config.protocol + config.domain
         }
     });
 
@@ -428,9 +428,9 @@ function categorySchemaData(data, movies) {
         "@type": "ListItem",
         "position": 2,
         "item": {
-            "@id": "/" + config.urls.genre + data.url,
+            "@id": data.url,
             "name": data.title,
-            "url": "http://" + config.domain + data.url
+            "url": config.protocol + config.domain + data.url
         }
     });
 
@@ -451,7 +451,7 @@ function generalSchemaData(data) {
     schemaWebSite['url'] = "http://" + config.domain;
     schemaWebSite['potentialAction'] = {
         "@type": "SearchAction",
-        "target": "http://" + config.domain + "/" + config.urls.search + "/title?&q={query}",
+        "target": config.protocol + config.domain + "/" + config.urls.search + "/title?&q={query}",
         "query-input": "required name=query"
     };
 

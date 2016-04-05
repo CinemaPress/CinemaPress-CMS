@@ -1,12 +1,13 @@
 'use strict';
 
-var getData = require('../modules/getData');
-var decode  = require('../modules/decode');
-var config  = require('../config/config');
-var express = require('express');
-var md5     = require('md5');
+var memcached = require('../modules/memcached');
+var getData   = require('../modules/getData');
+var decode    = require('../modules/decode');
+var config    = require('../config/config');
+var express   = require('express');
+var md5       = require('md5');
 
-var router  = express.Router();
+var router    = express.Router();
 
 router.get('/?', function(req, res) {
 
@@ -75,6 +76,7 @@ router.get('/?', function(req, res) {
 
         res.header('Content-Type', 'application/xml');
         res.render('sitemap', {
+            "protocol": config.protocol,
             "domain": config.domain,
             "urls": config.urls,
             "category": category,
@@ -261,6 +263,7 @@ router.get('/:type/:year?', function(req, res) {
 
         res.header('Content-Type', 'application/xml');
         res.render('sitemap', {
+            "protocol": config.protocol,
             "domain": config.domain,
             "urls": config.urls,
             "category": category,
