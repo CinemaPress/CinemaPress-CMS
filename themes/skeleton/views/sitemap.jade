@@ -17,7 +17,7 @@ if data
             - year = new Date().getFullYear() - 1
             each movie in data
                 url
-                    loc= 'http://' + domain + '' + movie.url
+                    loc= movie.url
                     lastmod= movie.premiere.replace(/(?!2016)[0-9]{4}/g, year)
     else
         urlset(xmlns='http://www.sitemaps.org/schemas/sitemap/0.9')
