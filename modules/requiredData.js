@@ -24,6 +24,7 @@ function indexRequiredData() {
     var data = {};
 
     data.disqus      = config.disqus;
+    data.protocol    = config.protocol;
     data.domain      = config.domain;
     data.urls        = config.urls;
     data.social      = config.social;
@@ -43,6 +44,7 @@ function movieRequiredData(key, keys, movies) {
     var data = {};
 
     data.disqus      = config.disqus;
+    data.protocol    = config.protocol;
     data.domain      = config.domain;
     data.urls        = config.urls;
     data.social      = config.social;
@@ -62,12 +64,13 @@ function categoryRequiredData(keys, sort, page, movies) {
 
     var data = {};
 
-    data.disqus = config.disqus;
-    data.domain = config.domain;
-    data.urls   = config.urls;
-    data.social = config.social;
-    data.code   = changeCode(config.code);
-    data.email  = config.email.replace('@', 'CinemaPress');
+    data.disqus   = config.disqus;
+    data.protocol = config.protocol;
+    data.domain   = config.domain;
+    data.urls     = config.urls;
+    data.social   = config.social;
+    data.code     = changeCode(config.code);
+    data.email    = config.email.replace('@', 'CinemaPress');
 
     for (var key in keys) {
         if (keys.hasOwnProperty(key)) {
@@ -112,6 +115,7 @@ function categoriesRequiredData(key) {
     };
 
     data.disqus      = config.disqus;
+    data.protocol    = config.protocol;
     data.domain      = config.domain;
     data.urls        = config.urls;
     data.social      = config.social;
@@ -321,7 +325,7 @@ function movieSchemaData(movie, movies) {
         "item": {
             "@id": movie.url,
             "name": movie.title,
-            "url": "http://" + config.domain + movie.url
+            "url": movie.url
         }
     });
 
@@ -342,8 +346,8 @@ function schemaMovie(movie) {
     schemaMovie['alternativeHeadline'] = movie.title_en;
     schemaMovie['description'] = movie.description;
     schemaMovie['image'] = movie.poster;
-    schemaMovie['sameAs'] = "http://" + config.domain + movie.url;
-    schemaMovie['url'] = "http://" + config.domain + movie.url;
+    schemaMovie['sameAs'] =  movie.url;
+    schemaMovie['url'] =  movie.url;
     schemaMovie['actor'] = [];
     schemaMovie['director'] = [];
     schemaMovie['genre'] = [];
@@ -430,7 +434,7 @@ function categorySchemaData(data, movies) {
         "item": {
             "@id": data.url,
             "name": data.title,
-            "url": config.protocol + config.domain + data.url
+            "url": data.url
         }
     });
 
@@ -448,7 +452,7 @@ function generalSchemaData(data) {
     schemaWebSite['@context'] = 'http://schema.org';
     schemaWebSite['@type'] = 'WebSite';
     schemaWebSite['name'] = data.title;
-    schemaWebSite['url'] = "http://" + config.domain;
+    schemaWebSite['url'] = config.protocol + config.domain;
     schemaWebSite['potentialAction'] = {
         "@type": "SearchAction",
         "target": config.protocol + config.domain + "/" + config.urls.search + "/title?&q={query}",

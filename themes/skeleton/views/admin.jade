@@ -209,7 +209,7 @@ body
             .center
                 label(for='domain')
                     | Домен:
-                select(id='protocol').select
+                select(id='protocol', style='margin: 0px 0px 0px 10px; padding: 9px 0px 9px 9px; -webkit-appearance: none; -moz-appearance: none; appearance: none; border-radius: 3px 0px 0px 3px;').select
                     if protocol == 'http://'
                         option(value='http://', selected='selected')
                             = 'http://'
@@ -220,7 +220,7 @@ body
                             = 'http://'
                         option(value='https://', selected='selected')
                             = 'https://'
-                input(type='text', id='domain', value=domain).input
+                input(type='text', id='domain', value=domain, style='margin: 0px 10px 0px 0px; border-radius: 0px 3px 3px 0px; padding-left: 0px;').input
                 label(for='email')
                     | Email:
                 input(type='text', id='email', value=email).input
