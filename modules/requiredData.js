@@ -382,7 +382,7 @@ function schemaMovie(movie) {
 
     if (movie.genres_arr) {
         movie.genres_arr.forEach(function (genre) {
-            schemaMovie['genre'].push(genre);
+            schemaMovie['genre'].push(encodeURIComponent(genre));
         });
     }
 

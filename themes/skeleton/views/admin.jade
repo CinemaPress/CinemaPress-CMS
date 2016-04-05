@@ -171,6 +171,7 @@ head
             border-radius: 5px;
             float: left;
             margin: 0 0 0 5px;
+            height: 24px;
         }
 
         .button:hover {
@@ -187,7 +188,7 @@ body
     div
         .top
             #submit.button
-                | Сохранить &#9635;
+                | Сохранить &#9919;
             #downgrade.button
                 | Откатиться &#128561;
             #flush.button
@@ -209,7 +210,7 @@ body
             .center
                 label(for='domain')
                     | Домен:
-                select(id='protocol', style='margin: 0px 0px 0px 10px; padding: 9px 0px 9px 9px; -webkit-appearance: none; -moz-appearance: none; appearance: none; border-radius: 3px 0px 0px 3px;').select
+                select(id='protocol', style='margin: 0px 0px 0px 10px; padding: 10px 0px 10px 10px; -webkit-appearance: none; -moz-appearance: none; appearance: none; border-radius: 3px 0px 0px 3px;').select
                     if protocol == 'http://'
                         option(value='http://', selected='selected')
                             = 'http://'
@@ -1351,7 +1352,7 @@ body
                         div(style='font-size: 14px; background: #273039; width: 100%; margin: 0px 10px; padding: 10px; font-family: monospace, sans-serif; border-radius: 0px 0px 3px 3px;')
                             div= 'Host: ' + domain
                             br
-                            div= 'Sitemap: https://' + domain + '/' + urls.sitemap
+                            div= 'Sitemap: ' + protocol + domain + '/' + urls.sitemap
     script.
         var showMenu = document.querySelectorAll('.name, #write');
         for (var j = 0; j < showMenu.length; j++) {
@@ -1618,7 +1619,7 @@ body
                     }, 3000);
 
                     setTimeout(function () {
-                        document.getElementById('submit').innerHTML = 'Сохранить &#9635;';
+                        document.getElementById('submit').innerHTML = 'Сохранить &#9919;';
                     }, 5000);
                 }
                 else if (xhr.status == 404) {

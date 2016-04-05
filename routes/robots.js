@@ -7,7 +7,7 @@ var router  = express.Router();
 router.get('/?', function(req, res) {
 
     res.type('text/plain');
-    res.send(config.code.robots + '\n\nHost: ' + config.domain + '\n\nSitemap: http://' + config.domain + '/' + config.urls.sitemap);
+    res.send(config.code.robots + '\n\nHost: ' + config.domain + '\n\nSitemap: ' + config.protocol + config.domain + '/' + config.urls.sitemap);
 
 });
 
