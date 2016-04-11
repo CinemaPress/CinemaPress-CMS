@@ -3,7 +3,7 @@
 var config        = require('../config/config');
 var structureData = require('./structureData');
 var requiredData  = require('./requiredData');
-var pool          = require('./sphinx');
+var sphinx        = require('./sphinx');
 var async         = require('async');
 
 var bests_db = 'bests_' + config.domain.replace(/[^A-Za-z0-9]/g,'_');
@@ -19,18 +19,18 @@ function getCategories(category, callback) {
         'LIMIT 10000 ' +
         'OPTION max_matches = 10000';
 
-    pool.getConnection(function(err, connection) {
+    sphinx(queryString, function (err, movies) {
 
-        connection.query(queryString, function (err, movies) {
+        if (err) console.log('[getCategories] Sphinx Get Error:', err);
 
-            if (err) throw err;
-            connection.release();
+        var categories = [];
 
-            var categories = structureData.categories(movies);
+        if (movies && movies.length) {
+            categories = structureData.categories(movies);
+        }
 
-            callback(categories);
+        callback(categories);
 
-        });
     });
 
 }
@@ -49,18 +49,19 @@ function getMovies(query, sort, page, type, callback) {
         'LIMIT ' + start + ', ' + limit + ' ' +
         'OPTION max_matches = ' + max;
 
-    pool.getConnection(function(err, connection) {
+    sphinx(queryString, function (err, movies) {
 
-        connection.query(queryString, function (err, movies) {
+        if (err) console.log('[getMovies] Sphinx Get Error:', err);
 
-            if (err) throw err;
-            connection.release();
-
+        if (movies && movies.length) {
             movies = structureData.movies(movies);
+        }
+        else {
+            movies = [];
+        }
 
-            callback(movies);
+        callback(movies);
 
-        });
     });
 
 }
@@ -71,18 +72,17 @@ function getMovie(id, callback) {
 
     var queryString = 'SELECT * FROM ' + movies_db + ' WHERE kp_id = ' + id + ' LIMIT 1';
 
-    pool.getConnection(function(err, connection) {
+    sphinx(queryString, function (err, movies) {
 
-        connection.query(queryString, function (err, movies) {
+        if (err) console.log('[getMovie] Sphinx Get Error:', err);
 
-            if (err) throw err;
-            connection.release();
+        var movie = [];
 
-            var movie = structureData.movies(movies)[0];
+        if (movies && movies.length) {
+            movie = structureData.movies(movies)[0];
+        }
 
-            callback(movie);
-
-        });
+        callback(movie);
 
     });
 
@@ -111,7 +111,7 @@ function getAdditionalMovies(attribute, categories, sort, type, callback) {
 
     }, function (err) {
 
-        if (err) console.error(err.message);
+        if (err) console.log('Additional Get Error:', err);
 
         callback(m);
 
@@ -129,7 +129,7 @@ function getTopMovies(callback) {
 
         getMovie(id, function(movie) {
 
-            if (movie) {
+            if (movie && movie.id) {
                 m.push(movie);
             }
 
@@ -139,7 +139,7 @@ function getTopMovies(callback) {
 
     }, function (err) {
 
-        if (err) console.error(err.message);
+        if (err) console.log('Top Get Error:', err);
 
         callback(m);
 

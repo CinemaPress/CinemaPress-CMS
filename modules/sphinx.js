@@ -1,11 +1,75 @@
 'use strict';
 
-var config = require('../config/config');
-var mysql  = require('mysql');
+var memcached = require('../modules/memcached');
+var config    = require('../config/config');
+var mysql     = require('mysql');
+var md5       = require('md5');
 
-var parse = config.sphinx.addr.split(':');
+function dbConnection(sphinxQuery, callback) {
 
-var host = parse[0] || '127.0.0.1';
-var port = parse[1] || '9306';
+    if (config.cache.time) {
 
-module.exports = mysql.createPool({localAddress: host, port: port});
+        var hash = md5(sphinxQuery);
+
+        memcached.get(hash, function (err, results) {
+
+            if (err) console.log('Memcached Get Error:', err);
+
+            if (results) {
+
+                callback(err, results);
+
+            }
+            else {
+
+                getSphinx();
+
+            }
+
+        });
+        
+    }
+    else {
+
+        getSphinx();
+        
+    }
+    
+    function getSphinx() {
+
+        var parse = config.sphinx.addr.split(':');
+
+        var sphinxConnection = {
+            host: parse[0] || '127.0.0.1',
+            port: parse[1] || '9306'
+        };
+
+        var connection = mysql.createConnection(sphinxConnection);
+
+        connection.connect(function(err) {
+
+            if (err !== null) {
+
+                console.log('[SPHINX] Error connection.');
+
+                callback(err);
+
+            }
+            else {
+
+                connection.query(sphinxQuery, function(err, results) {
+
+                    connection.end();
+
+                    callback(err, results);
+
+                });
+
+            }
+        });
+        
+    }
+
+}
+
+module.exports = dbConnection;

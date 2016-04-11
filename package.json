@@ -26,6 +26,7 @@
     "async": "latest",
     "memcached": "latest",
     "html-entities": "latest",
-    "md5": "latest"
+    "md5": "latest",
+    "speakingurl": "latest"
   }
 }

@@ -16,13 +16,18 @@ var index        = require(__dirname + '/routes/index');
 
 var port = process.env.PORT || 2034;
 
-app.set('views', [path.join(__dirname, 'themes', 'skeleton', 'views'), path.join(__dirname, 'themes', config.theme, 'views')]);
+app.set('views', [
+    path.join(__dirname, 'themes', 'skeleton', 'views'),
+    path.join(__dirname, 'themes', config.theme, 'views')
+]);
 app.set('view engine', 'jade');
 
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-app.use('/themes/' + config.theme + '/public', express.static(path.join(__dirname, 'themes', config.theme, 'public')));
+app.use('/themes/' + config.theme + '/public', express.static(
+    path.join(__dirname, 'themes', config.theme, 'public')
+));
 
 app.use('/' + config.urls.year, categories);
 app.use('/' + config.urls.genre, categories);
@@ -37,10 +42,8 @@ app.use('/' + config.urls.admin, admin);
 app.use('/robots.txt', robots);
 app.use('/', index);
 
-app.use(function(req, res){
-
-    res.status(404).send('Not found');
-
+app.use(function(err, req, res, next) {
+    res.status(err.status).send(err.message);
 });
 
 app.listen(port);

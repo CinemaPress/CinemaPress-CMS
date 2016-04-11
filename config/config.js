@@ -7,6 +7,7 @@ module.exports = {
     "top_category": "imdb-vote-up",
     "abuse": [299, 300, 301],
     "protocol": "https://",
+    "st": "st.kp.yandex.net",
     "social": {
         "vk": "",
         "facebook": "",

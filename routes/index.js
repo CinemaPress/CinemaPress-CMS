@@ -16,40 +16,58 @@ router.get('/', function(req, res) {
 
     var url = decode(config.domain + req.originalUrl);
     var urlHash = md5(url.toLowerCase());
+
     console.time(url);
 
-    if (config.cache.time) {
+    getRender(function (render) {
+
+        renderData(render);
+
+    });
+
+    function getRender(callback) {
+
+        if (config.cache.time) {
+
+            getCache(function (render) {
+                callback(render);
+            });
+
+        }
+        else {
+
+            getSphinx(function (render) {
+                callback(render);
+            });
+
+        }
+
+    }
+
+    function getCache(callback) {
 
         memcached.get(urlHash, function (err, render) {
 
-            if (err) throw err;
+            if (err) console.log('Memcached Get Error:', err);
 
             if (render) {
 
-                if (config.theme == 'skeleton') {
-                    res.json(render);
-                }
-                else {
-                    res.render('index', render);
-                }
+                callback(render);
 
             }
             else {
 
-                run();
+                getSphinx(function (render) {
+                    callback(render);
+                });
 
             }
 
         });
 
     }
-    else {
 
-        run();
-
-    }
-
-    function run() {
+    function getSphinx(callback) {
 
         async.series({
                 "top": function (callback) {
@@ -122,7 +140,7 @@ router.get('/', function(req, res) {
                         },
                         function(err, result) {
 
-                            if (err) console.error(err.message);
+                            if (err) console.log('Movies Get Error:', err);
 
                             callback(null, result);
 
@@ -131,34 +149,45 @@ router.get('/', function(req, res) {
             },
             function(err, result) {
 
-                if (err) console.error(err.message);
+                if (err) console.log('Index Movies Get Error:', err);
 
                 var required = requiredData.index();
                 var render = mergeData(result, required);
 
-                if (config.theme == 'skeleton') {
-                    res.json(render);
-                }
-                else {
-                    res.render('index', render);
-                }
-
-                if (render && config.cache.time) {
-                    memcached.set(
-                        urlHash,
-                        render,
-                        config.cache.time,
-                        function (err) {
-                            if (err) {
-                                console.log(err);
-                            }
-                        }
-                    );
-                }
-
-                console.timeEnd(url);
+                callback(render);
 
             });
+
+    }
+
+    function renderData(render) {
+
+        if (config.theme == 'skeleton') {
+            res.json(render);
+        }
+        else {
+            if (typeof render === 'object') {
+                res.render('index', render, function(err, html) {
+                    if (err) return console.log('Render Error:', err);
+                    res.send(html);
+                    if (config.cache.time && html) {
+                        memcached.set(
+                            urlHash,
+                            html,
+                            config.cache.time,
+                            function (err) {
+                                if (err) console.log('Memcached Set Error:', err);
+                            }
+                        );
+                    }
+                });
+            }
+            else {
+                res.send(render);
+            }
+        }
+
+        console.timeEnd(url);
 
     }
 

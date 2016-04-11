@@ -1,6 +1,7 @@
 'use strict';
 
-var config = require('../config/config');
+var config  = require('../config/config');
+var getSlug = require('speakingurl');
 
 function categoriesData(movies) {
 
@@ -33,25 +34,25 @@ function moviesData(movies) {
 
         var id = parseInt(movie.kp_id) + parseInt(config.urls.unique_id);
 
-        var poster      = 'https://st.kp.yandex.net/images/film_iphone/iphone360_' + movie.kp_id + '.jpg';
-        var poster_big  = 'https://st.kp.yandex.net/images/film_big/' + movie.kp_id + '.jpg';
-        var poster_min  = 'https://st.kp.yandex.net/images/sm_film/' + movie.kp_id + '.jpg';
-        var picture     = 'https://st.kp.yandex.net/images/film_iphone/iphone360_' + movie.kp_id + '.jpg';
-        var picture_big = 'https://st.kp.yandex.net/images/film_big/' + movie.kp_id + '.jpg';
-        var picture_min = 'https://st.kp.yandex.net/images/sm_film/' + movie.kp_id + '.jpg';
+        var poster      = config.protocol + config.st + '/images/film_iphone/iphone360_' + movie.kp_id + '.jpg';
+        var poster_big  = config.protocol + config.st + '/images/film_big/' + movie.kp_id + '.jpg';
+        var poster_min  = config.protocol + config.st + '/images/sm_film/' + movie.kp_id + '.jpg';
+        var picture     = config.protocol + config.st + '/images/film_iphone/iphone360_' + movie.kp_id + '.jpg';
+        var picture_big = config.protocol + config.st + '/images/film_big/' + movie.kp_id + '.jpg';
+        var picture_min = config.protocol + config.st + '/images/sm_film/' + movie.kp_id + '.jpg';
         var pictures    = [];
 
         if (movie.pictures) {
             var p = movie.pictures.split(',');
             var r = Math.floor(Math.random() * p.length);
             if (p[r] > 363866) {
-                picture     = 'https://st.kp.yandex.net/images/kadr/' + p[r] + '.jpg';
-                picture_big = 'https://st.kp.yandex.net/images/kadr/' + p[r] + '.jpg';
-                picture_min = 'https://st.kp.yandex.net/images/kadr/sm_' + p[r] + '.jpg';
+                picture     = config.protocol + config.st + '/images/kadr/' + p[r] + '.jpg';
+                picture_big = config.protocol + config.st + '/images/kadr/' + p[r] + '.jpg';
+                picture_min = config.protocol + config.st + '/images/kadr/sm_' + p[r] + '.jpg';
             }
             pictures    = p.map(function(id) {
                 if (id > 363866) {
-                    return 'https://st.kp.yandex.net/images/kadr/' + id + '.jpg';
+                    return config.protocol + config.st + '/images/kadr/' + id + '.jpg';
                 }
             });
         }
@@ -163,10 +164,10 @@ function createMovieUrl(id, data) {
 
     var separator = config.urls.separator;
     var prefix_id = config.urls.prefix_id + '' + id;
-    var url = 'http://' + config.domain + '/' + config.urls.movie + '/' + config.urls.movie_url;
+    var url = config.urls.movie_url;
 
-    url = url.replace('[prefix_id]', prefix_id);
-    url = url.replace(/\[separator\]/g, separator);
+    url = url.replace(/\[prefix_id]/g, prefix_id);
+    url = url.replace(/\[separator]/g, separator);
 
     for (var key in data) {
         if (data.hasOwnProperty(key)) {
@@ -176,12 +177,12 @@ function createMovieUrl(id, data) {
                 url = url.replace(separator + '[' + key + ']', '');
             }
             else {
-                url = url.replace('[' + key + ']', encodeURIComponent(data[key]));
+                url = url.replace('[' + key + ']', getSlug(data[key], separator));
             }
         }
     }
 
-    return url;
+    return 'http://' + config.domain + '/' + config.urls.movie + '/' + url;
 
 }
 

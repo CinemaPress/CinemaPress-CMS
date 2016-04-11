@@ -16,47 +16,39 @@ router.get('/', function(req, res) {
 
     var url = decode(config.domain + req.originalUrl);
     var urlHash = md5(url.toLowerCase());
+
     console.time(url);
-    
-    switch (req.baseUrl) {
-        case ('/' + config.urls.year):
-            getCategories('year', urlHash, function(render) {
-                renderData(res, 'categories', render, url);
+
+    getRender(function (render) {
+
+        renderData(render);
+
+    });
+
+    function getRender(callback) {
+
+        if (config.cache.time) {
+
+            getCache(function (render) {
+                callback(render);
             });
-            break;
-        case ('/' + config.urls.genre):
-            getCategories('genre', urlHash, function(render) {
-                renderData(res, 'categories', render, url);
+
+        }
+        else {
+
+            getSphinx(function (render) {
+                callback(render);
             });
-            break;
-        case ('/' + config.urls.country):
-            getCategories('country', urlHash, function(render) {
-                renderData(res, 'categories', render, url);
-            });
-            break;
-        case ('/' + config.urls.actor):
-            getCategories('actor', urlHash, function(render) {
-                renderData(res, 'categories', render, url);
-            });
-            break;
-        case ('/' + config.urls.director):
-            getCategories('director', urlHash, function(render) {
-                renderData(res, 'categories', render, url);
-            });
-            break;
-        default:
-            res.redirect('/');
+
+        }
+
     }
 
-});
-
-function getCategories(category, urlHash, callback) {
-
-    if (config.cache.time) {
+    function getCache(callback) {
 
         memcached.get(urlHash, function (err, render) {
 
-            if (err) throw err;
+            if (err) console.log('Memcached Get Error:', err);
 
             if (render) {
 
@@ -65,20 +57,51 @@ function getCategories(category, urlHash, callback) {
             }
             else {
 
-                run();
+                getSphinx(function (render) {
+                    callback(render);
+                });
 
             }
 
         });
 
     }
-    else {
 
-        run();
+    function getSphinx(callback) {
+
+        switch (req.baseUrl) {
+            case ('/' + config.urls.year):
+                getCategories('year', function(render) {
+                    callback(render);
+                });
+                break;
+            case ('/' + config.urls.genre):
+                getCategories('genre', function(render) {
+                    callback(render);
+                });
+                break;
+            case ('/' + config.urls.country):
+                getCategories('country', function(render) {
+                    callback(render);
+                });
+                break;
+            case ('/' + config.urls.actor):
+                getCategories('actor', function(render) {
+                    callback(render);
+                });
+                break;
+            case ('/' + config.urls.director):
+                getCategories('director', function(render) {
+                    callback(render);
+                });
+                break;
+            default:
+                res.redirect('/');
+        }
 
     }
 
-    function run() {
+    function getCategories(category, callback) {
 
         async.series({
                 "categories": function (callback) {
@@ -94,32 +117,49 @@ function getCategories(category, urlHash, callback) {
             },
             function(err, result) {
 
-                if (err) throw err;
+                if (err) console.log('Categories Get Error:', err);
 
                 var required = requiredData.categories(category);
-
                 var render = mergeData(result, required);
 
                 callback(render);
-
-                if (render && config.cache.time) {
-                    memcached.set(
-                        urlHash,
-                        render,
-                        config.cache.time,
-                        function (err) {
-                            if (err) {
-                                console.log(err);
-                            }
-                        }
-                    );
-                }
 
             });
 
     }
 
-}
+    function renderData(render) {
+
+        if (config.theme == 'skeleton') {
+            res.json(render);
+        }
+        else {
+            if (typeof render === 'object') {
+                res.render('categories', render, function(err, html) {
+                    if (err) return console.log('Render Error:', err);
+                    res.send(html);
+                    if (config.cache.time && html) {
+                        memcached.set(
+                            urlHash,
+                            html,
+                            config.cache.time,
+                            function (err) {
+                                if (err) console.log('Memcached Set Error:', err);
+                            }
+                        );
+                    }
+                });
+            }
+            else {
+                res.send(render);
+            }
+        }
+
+        console.timeEnd(url);
+
+    }
+
+});
 
 router.get('/:query/:page?', function(req, res) {
 
@@ -133,62 +173,43 @@ router.get('/:query/:page?', function(req, res) {
         ? parseInt(req.params.page)
         : 1;
 
-    if (!query) return res.redirect('/');
+    if (!query) return next({"status": 404, "message": "Not found"});
 
     var url = decode(config.domain + req.originalUrl);
     var urlHash = md5(url.toLowerCase());
+
     console.time(url);
 
-    switch (req.baseUrl) {
-        case ('/' + config.urls.year):
-            getMovies({"year": query}, sort, page, urlHash, function(render) {
-                renderData(res, 'category', render, url);
+    getRender(function (render) {
+
+        renderData(render);
+
+    });
+
+    function getRender(callback) {
+
+        if (config.cache.time) {
+
+            getCache(function (render) {
+                callback(render);
             });
-            break;
-        case ('/' + config.urls.genre):
-            getMovies({"genre": query}, sort, page, urlHash, function(render) {
-                renderData(res, 'category', render, url);
+
+        }
+        else {
+
+            getSphinx(function (render) {
+                callback(render);
             });
-            break;
-        case ('/' + config.urls.country):
-            getMovies({"country": query}, sort, page, urlHash, function(render) {
-                renderData(res, 'category', render, url);
-            });
-            break;
-        case ('/' + config.urls.actor):
-            getMovies({"actor": query}, sort, page, urlHash, function(render) {
-                renderData(res, 'category', render, url);
-            });
-            break;
-        case ('/' + config.urls.director):
-            getMovies({"director": query}, sort, page, urlHash, function(render) {
-                renderData(res, 'category', render, url);
-            });
-            break;
-        case ('/' + config.urls.type):
-            getMovies({"type": query}, sort, page, urlHash, function(render) {
-                renderData(res, 'category', render, url);
-            });
-            break;
-        case ('/' + config.urls.search):
-            getMovies({"search": query}, sort, page, urlHash, function(render) {
-                renderData(res, 'category', render, url);
-            });
-            break;
-        default:
-            res.redirect('/');
+
+        }
+
     }
 
-});
-
-function getMovies(query, sort, page, urlHash, callback) {
-
-
-    if (config.cache.time) {
+    function getCache(callback) {
 
         memcached.get(urlHash, function (err, render) {
 
-            if (err) throw err;
+            if (err) console.log('Memcached Get Error:', err);
 
             if (render) {
 
@@ -197,20 +218,61 @@ function getMovies(query, sort, page, urlHash, callback) {
             }
             else {
 
-                run();
+                getSphinx(function (render) {
+                    callback(render);
+                });
 
             }
 
         });
 
     }
-    else {
 
-        run();
+    function getSphinx(callback) {
+
+        switch (req.baseUrl) {
+            case ('/' + config.urls.year):
+                getMovies({"year": query}, function(render) {
+                    callback(render);
+                });
+                break;
+            case ('/' + config.urls.genre):
+                getMovies({"genre": query}, function(render) {
+                    callback(render);
+                });
+                break;
+            case ('/' + config.urls.country):
+                getMovies({"country": query}, function(render) {
+                    callback(render);
+                });
+                break;
+            case ('/' + config.urls.actor):
+                getMovies({"actor": query}, function(render) {
+                    callback(render);
+                });
+                break;
+            case ('/' + config.urls.director):
+                getMovies({"director": query}, function(render) {
+                    callback(render);
+                });
+                break;
+            case ('/' + config.urls.type):
+                getMovies({"type": query}, function(render) {
+                    callback(render);
+                });
+                break;
+            case ('/' + config.urls.search):
+                getMovies({"search": query}, function(render) {
+                    callback(render);
+                });
+                break;
+            default:
+                res.redirect('/');
+        }
 
     }
 
-    function run() {
+    function getMovies(query, callback) {
 
         async.series({
                 "movies": function (callback) {
@@ -240,43 +302,48 @@ function getMovies(query, sort, page, urlHash, callback) {
             },
             function(err, result) {
 
-                if (err) console.error(err.message);
+                if (err) console.log('Movies Get Error:', err);
 
                 var required = requiredData.category(query, sort, page, result.movies);
                 var render = mergeData(result, required);
 
                 callback(render);
 
-                if (render && config.cache.time) {
-                    memcached.set(
-                        urlHash,
-                        render,
-                        config.cache.time,
-                        function (err) {
-                            if (err) {
-                                console.log(err);
-                            }
-                        }
-                    );
-                }
-
             });
 
     }
 
-}
+    function renderData(render) {
 
-function renderData(res, type, render, url) {
+        if (config.theme == 'skeleton') {
+            res.json(render);
+        }
+        else {
+            if (typeof render === 'object') {
+                res.render('category', render, function(err, html) {
+                    if (err) return console.log('Render Error:', err);
+                    res.send(html);
+                    if (config.cache.time && html) {
+                        memcached.set(
+                            urlHash,
+                            html,
+                            config.cache.time,
+                            function (err) {
+                                if (err) console.log('Memcached Set Error:', err);
+                            }
+                        );
+                    }
+                });
+            }
+            else {
+                res.send(render);
+            }
+        }
 
-    if (config.theme == 'skeleton') {
-        res.json(render);
+        console.timeEnd(url);
+
     }
-    else {
-        res.render(type, render);
-    }
 
-    console.timeEnd(url);
-
-}
+});
 
 module.exports = router;

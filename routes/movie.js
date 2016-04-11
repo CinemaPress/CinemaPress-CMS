@@ -12,58 +12,79 @@ var md5          = require('md5');
 
 var router       = express.Router();
 
-router.get('/:movie/:type?', function(req, res) {
+router.get('/:movie/:type?', function(req, res, next) {
 
-    var url = decode(config.domain + req.originalUrl);
+    var url     = decode(config.domain + req.originalUrl);
     var urlHash = md5(url.toLowerCase());
+    var id      = getId();
+    var type    = getType();
+
+    if (!id) return next({"status": 404, "message": "Not found"});
+
     console.time(url);
 
-    req.params.movie = '/' + req.params.movie || '';
-    req.params.type  = req.params.type || 'single';
+    getRender(function (render) {
 
-    var prefix_id  = config.urls.prefix_id || '/';
-    var regexpId   = new RegExp(decode(prefix_id) + '([0-9]{1,7})', 'ig');
-    var id         = regexpId.exec(decode(req.params.movie)); id = (id) ? parseInt(id[1]) : '';
-    var regexpType = new RegExp('(single|online|trailer|download|picture)', 'ig');
-    var type       = regexpType.exec(req.params.type); type = (type) ? type[1] : 'single';
+        renderData(render);
 
-    if (!id) return res.status(404).send('Not found');
+    });
 
-    var related = {};
+    function getRender(callback) {
 
-    if (config.cache.time) {
+        if (config.cache.time) {
+
+            getCache(function (render) {
+                callback(render);
+            });
+
+        }
+        else {
+
+            getSphinx(function (render) {
+                callback(render);
+            });
+
+        }
+
+    }
+
+    function getCache(callback) {
 
         memcached.get(urlHash, function (err, render) {
 
-            if (err) throw err;
+            if (err) console.log('Memcached Get Error:', err);
 
             if (render) {
 
-                renderData(res, type, render, url);
+                callback(render);
 
             }
             else {
 
-                run();
+                getSphinx(function (render) {
+                    callback(render);
+                });
 
             }
 
         });
 
     }
-    else {
 
-        run();
+    function getSphinx(callback) {
 
-    }
-
-    function run() {
+        var related = {};
 
         async.series({
                 "movie": function (callback) {
                     getData.movie(id, function (movie) {
-                        related = movie;
-                        callback(null, movie);
+                        if (movie && movie.id) {
+                            related = movie;
+                            callback(null, movie);
+                        }
+                        else {
+                            callback('Not data!');
+                        }
                     });
                 },
                 "top": function (callback) {
@@ -166,7 +187,7 @@ router.get('/:movie/:type?', function(req, res) {
                         },
                         function(err, result) {
 
-                            if (err) console.error(err.message);
+                            if (err) console.log('Movies Get Error:', err);
 
                             callback(null, result);
 
@@ -175,49 +196,71 @@ router.get('/:movie/:type?', function(req, res) {
             },
             function(err, result) {
 
-                if (err) console.error(err.message);
+                if (err) return next({"status": 404, "message": err});
 
                 var required = requiredData.movie(type, result.movie, result.movies);
                 var render = mergeData(result, required);
 
-                renderData(res, type, render, url);
-
-                if (render && config.cache.time) {
-                    memcached.set(
-                        urlHash,
-                        render,
-                        config.cache.time,
-                        function (err) {
-                            if (err) {
-                                console.log(err);
-                            }
-                        }
-                    );
-                }
+                callback(render);
 
             });
 
     }
 
-});
+    function renderData(render) {
 
-function renderData(res, type, render, url) {
-
-    if (!render.movie || !render.movie.id) {
-        res.status(404).send('Not found');
-    }
-    else {
         if (config.theme == 'skeleton') {
             res.json(render);
         }
         else {
-            res.render(type, render);
+            if (typeof render === 'object') {
+                res.render(type, render, function(err, html) {
+                    if (err) return console.log('Render Error:', err);
+                    res.send(html);
+                    if (config.cache.time && html) {
+                        memcached.set(
+                            urlHash,
+                            html,
+                            config.cache.time,
+                            function (err) {
+                                if (err) console.log('Memcached Set Error:', err);
+                            }
+                        );
+                    }
+                });
+            }
+            else {
+                res.send(render);
+            }
         }
+
+        console.timeEnd(url);
+
     }
 
-    console.timeEnd(url);
+    function getId() {
 
-}
+        req.params.movie = '/' + req.params.movie || '';
 
+        var prefix_id  = config.urls.prefix_id || '/';
+        var regexpId   = new RegExp(decode(prefix_id) + '([0-9]{1,7})', 'ig');
+        var id         = regexpId.exec(decode(req.params.movie)); id = (id) ? parseInt(id[1]) : '';
+
+        return id;
+
+    }
+
+    function getType() {
+
+        req.params.type  = req.params.type || 'single';
+
+        var regexpType = new RegExp('(single|online|trailer|download|picture)', 'ig');
+        var type       = regexpType.exec(req.params.type); type = (type) ? type[1] : 'single';
+
+        return type;
+
+    }
+
+});
 
 module.exports = router;

@@ -91,7 +91,11 @@ router.post('/save', function(req, res) {
 
     delete req.body.description;
 
-    req.body.urls.unique_id      = (parseInt(req.body.urls.unique_id) > -298 && parseInt(req.body.urls.unique_id) < 297001) ? parseInt(req.body.urls.unique_id) : 0;
+    req.body.urls.unique_id      = (
+        parseInt(req.body.urls.unique_id) > -298 &&
+        parseInt(req.body.urls.unique_id) < 297001)
+            ? parseInt(req.body.urls.unique_id)
+            : 0;
     req.body.cache.time          = parseInt(req.body.cache.time);
     req.body.counts.index        = parseInt(req.body.counts.index);
     req.body.counts.category     = parseInt(req.body.counts.category);
