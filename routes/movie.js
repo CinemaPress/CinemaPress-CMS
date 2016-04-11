@@ -52,7 +52,7 @@ router.get('/:movie/:type?', function(req, res, next) {
 
         memcached.get(urlHash, function (err, render) {
 
-            if (err) console.log('Memcached Get Error:', err);
+            if (err) console.log('[getCache] Memcached Get Error.', err);
 
             if (render) {
 
@@ -187,7 +187,7 @@ router.get('/:movie/:type?', function(req, res, next) {
                         },
                         function(err, result) {
 
-                            if (err) console.log('Movies Get Error:', err);
+                            if (err) console.log('[getSphinx] Movies Get Error.', err);
 
                             callback(null, result);
 

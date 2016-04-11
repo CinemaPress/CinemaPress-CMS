@@ -48,7 +48,7 @@ router.get('/', function(req, res) {
 
         memcached.get(urlHash, function (err, render) {
 
-            if (err) console.log('Memcached Get Error:', err);
+            if (err) console.log('[getCache] Memcached Get Error.', err);
 
             if (render) {
 
@@ -140,7 +140,7 @@ router.get('/', function(req, res) {
                         },
                         function(err, result) {
 
-                            if (err) console.log('Movies Get Error:', err);
+                            if (err) console.log('[getSphinx] Movies Get Error.', err);
 
                             callback(null, result);
 
@@ -149,7 +149,7 @@ router.get('/', function(req, res) {
             },
             function(err, result) {
 
-                if (err) console.log('Index Movies Get Error:', err);
+                if (err) console.log('[getSphinx] Index Movies Get Error.', err);
 
                 var required = requiredData.index();
                 var render = mergeData(result, required);
@@ -168,7 +168,7 @@ router.get('/', function(req, res) {
         else {
             if (typeof render === 'object') {
                 res.render('index', render, function(err, html) {
-                    if (err) return console.log('Render Error:', err);
+                    if (err) return console.log('[renderData] Render Error.', err);
                     res.send(html);
                     if (config.cache.time && html) {
                         memcached.set(
@@ -176,7 +176,7 @@ router.get('/', function(req, res) {
                             html,
                             config.cache.time,
                             function (err) {
-                                if (err) console.log('Memcached Set Error:', err);
+                                if (err) console.log('[renderData] Memcached Set Error.', err);
                             }
                         );
                     }

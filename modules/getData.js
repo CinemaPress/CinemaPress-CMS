@@ -1,10 +1,12 @@
 'use strict';
 
+var memcached     = require('../modules/memcached');
 var config        = require('../config/config');
 var structureData = require('./structureData');
 var requiredData  = require('./requiredData');
 var sphinx        = require('./sphinx');
 var async         = require('async');
+var md5           = require('md5');
 
 var bests_db = 'bests_' + config.domain.replace(/[^A-Za-z0-9]/g,'_');
 var movies_db = 'movies_' + config.domain.replace(/[^A-Za-z0-9]/g,'_');
@@ -51,7 +53,7 @@ function getMovies(query, sort, page, type, callback) {
 
     sphinx(queryString, function (err, movies) {
 
-        if (err) console.log('[getMovies] Sphinx Get Error:', err);
+        if (err) console.log('[getMovies] Sphinx Get Error.', err);
 
         if (movies && movies.length) {
             movies = structureData.movies(movies);
@@ -74,7 +76,7 @@ function getMovie(id, callback) {
 
     sphinx(queryString, function (err, movies) {
 
-        if (err) console.log('[getMovie] Sphinx Get Error:', err);
+        if (err) console.log('[getMovie] Sphinx Get Error.', err);
 
         var movie = [];
 
@@ -111,7 +113,7 @@ function getAdditionalMovies(attribute, categories, sort, type, callback) {
 
     }, function (err) {
 
-        if (err) console.log('Additional Get Error:', err);
+        if (err) console.log('[getAdditionalMovies] Get Error.', err);
 
         callback(m);
 
@@ -121,29 +123,76 @@ function getAdditionalMovies(attribute, categories, sort, type, callback) {
 
 function getTopMovies(callback) {
 
-    var m = [];
+    var hash = md5(config.top.join(','));
 
-    async.forEachOfSeries(config.top, function (id, key, callback) {
+    if (config.cache.time) {
 
-        id = parseInt(id) + parseInt(config.urls.unique_id);
+        memcached.get(hash, function (err, render) {
 
-        getMovie(id, function(movie) {
+            if (err) console.log('[getTopMovies] Memcached Get Error:', err);
 
-            if (movie && movie.id) {
-                m.push(movie);
+            if (render) {
+
+                callback(render);
+
             }
+            else {
 
-            callback(null);
+                getSphinx(function (render) {
+                    callback(render);
+                });
+
+            }
 
         });
 
-    }, function (err) {
+    }
+    else {
 
-        if (err) console.log('Top Get Error:', err);
+        getSphinx(function (render) {
+            callback(render);
+        });
 
-        callback(m);
+    }
+    
+    function getSphinx(callback) {
 
-    });
+        var m = [];
+
+        async.forEachOfSeries(config.top, function (id, key, callback) {
+
+            id = parseInt(id) + parseInt(config.urls.unique_id);
+
+            getMovie(id, function(movie) {
+
+                if (movie && movie.id) {
+                    m.push(movie);
+                }
+
+                callback(null);
+
+            });
+
+        }, function (err) {
+
+            if (err) console.log('[getTopMovies] Sphinx Get Error.', err);
+
+            callback(m);
+
+            if (config.cache.time && m) {
+                memcached.set(
+                    hash,
+                    m,
+                    config.cache.time,
+                    function (err) {
+                        if (err) console.log('[getTopMovies] Memcached Set Error.', err);
+                    }
+                );
+            }
+
+        });
+        
+    }
 
 }
 

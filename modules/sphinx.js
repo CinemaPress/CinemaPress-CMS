@@ -7,13 +7,13 @@ var md5       = require('md5');
 
 function dbConnection(sphinxQuery, callback) {
 
-    if (config.cache.time) {
+    var hash = md5(sphinxQuery);
 
-        var hash = md5(sphinxQuery);
+    if (config.cache.time) {
 
         memcached.get(hash, function (err, results) {
 
-            if (err) console.log('Memcached Get Error:', err);
+            if (err) console.log('[dbConnection] Memcached Get Error.', err);
 
             if (results) {
 
@@ -22,7 +22,9 @@ function dbConnection(sphinxQuery, callback) {
             }
             else {
 
-                getSphinx();
+                getSphinx(function (err, results) {
+                    callback(err, results);
+                });
 
             }
 
@@ -31,11 +33,13 @@ function dbConnection(sphinxQuery, callback) {
     }
     else {
 
-        getSphinx();
+        getSphinx(function (err, results) {
+            callback(err, results);
+        });
         
     }
     
-    function getSphinx() {
+    function getSphinx(callback) {
 
         var parse = config.sphinx.addr.split(':');
 
@@ -50,7 +54,7 @@ function dbConnection(sphinxQuery, callback) {
 
             if (err !== null) {
 
-                console.log('[SPHINX] Error connection.');
+                console.log('[getSphinx] Error Connection.', err);
 
                 callback(err);
 
@@ -62,6 +66,17 @@ function dbConnection(sphinxQuery, callback) {
                     connection.end();
 
                     callback(err, results);
+
+                    if (config.cache.time && results) {
+                        memcached.set(
+                            hash,
+                            results,
+                            config.cache.time,
+                            function (err) {
+                                if (err) console.log('[getSphinx] Memcached Set Error.', err);
+                            }
+                        );
+                    }
 
                 });
 

@@ -45,7 +45,7 @@ router.get('/?', function(req, res) {
 
         memcached.get(urlHash, function (err, render) {
 
-            if (err) console.log('Memcached Get Error:', err);
+            if (err) console.log('[getCache] Memcached Get Error.', err);
 
             if (render) {
 
@@ -87,7 +87,7 @@ router.get('/?', function(req, res) {
         res.header('Content-Type', 'application/xml');
         if (typeof render === 'object') {
             res.render('sitemap', render, function(err, html) {
-                if (err) return console.log('Render Error:', err);
+                if (err) return console.log('[renderData] Render Error.', err);
                 res.send(html);
                 if (config.cache.time && html) {
                     memcached.set(
@@ -95,7 +95,7 @@ router.get('/?', function(req, res) {
                         html,
                         config.cache.time,
                         function (err) {
-                            if (err) console.log('Memcached Set Error:', err);
+                            if (err) console.log('[renderData] Memcached Set Error.', err);
                         }
                     );
                 }
@@ -149,7 +149,7 @@ router.get('/:type/:year?', function(req, res) {
 
         memcached.get(urlHash, function (err, render) {
 
-            if (err) console.log('Memcached Get Error:', err);
+            if (err) console.log('[getCache] Memcached Get Error.', err);
 
             if (render) {
 
@@ -261,7 +261,7 @@ router.get('/:type/:year?', function(req, res) {
         res.header('Content-Type', 'application/xml');
         if (typeof render === 'object') {
             res.render('sitemap', render, function(err, html) {
-                if (err) return console.log('Render Error:', err);
+                if (err) return console.log('[renderData] Render Error.', err);
                 res.send(html);
                 if (config.cache.time && html) {
                     memcached.set(
@@ -269,7 +269,7 @@ router.get('/:type/:year?', function(req, res) {
                         html,
                         config.cache.time,
                         function (err) {
-                            if (err) console.log('Memcached Set Error:', err);
+                            if (err) console.log('[renderData] Memcached Set Error.', err);
                         }
                     );
                 }
