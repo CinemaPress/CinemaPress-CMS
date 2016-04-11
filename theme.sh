@@ -59,9 +59,7 @@ else
     fi
 fi
 
-SITE=`basename \`pwd\``
-
-chown -R ${SITE}:www-data /home/${DOMAIN}/themes
+chown -R ${DOMAIN}:www-data /home/${DOMAIN}/themes
 
 echo ''
 echo '------------------------------------------------------------------'

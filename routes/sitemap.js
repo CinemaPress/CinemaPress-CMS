@@ -240,7 +240,7 @@ router.get('/:type/:year?', function(req, res) {
                     "domain"   : config.domain,
                     "urls"     : config.urls,
                     "category" : "movies",
-                    "data"     : categories
+                    "data"     : movies
                 };
 
                 callback(render);

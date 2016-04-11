@@ -42,6 +42,8 @@ rm -rf /home/${DOMAIN}/db.sh && cp -R /home/${DOMAIN}/.newCP/db.sh /home/${DOMAI
 rm -rf /home/${DOMAIN}/theme.sh && cp -R /home/${DOMAIN}/.newCP/theme.sh /home/${DOMAIN}/theme.sh
 rm -rf /home/${DOMAIN}/update.sh && cp -R /home/${DOMAIN}/.newCP/update.sh /home/${DOMAIN}/update.sh
 
+chown -R ${DOMAIN}:www-data /home/${DOMAIN}
+
 sleep 3
 
 echo ''
@@ -86,6 +88,8 @@ else
     rm -rf /home/${DOMAIN}/db.sh && cp -R /home/${DOMAIN}/.oldCP/db.sh /home/${DOMAIN}/db.sh
     rm -rf /home/${DOMAIN}/theme.sh && cp -R /home/${DOMAIN}/.oldCP/theme.sh /home/${DOMAIN}/theme.sh
     rm -rf /home/${DOMAIN}/update.sh && cp -R /home/${DOMAIN}/.oldCP/update.sh /home/${DOMAIN}/update.sh
+
+    chown -R ${DOMAIN}:www-data /home/${DOMAIN}
 
     sleep 3
 
