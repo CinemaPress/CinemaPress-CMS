@@ -156,6 +156,7 @@ mv /home/${DOMAIN}/config/rewrite.conf /etc/nginx/conf.d/rewrite.conf
 rm -rf /etc/nginx/conf.d/${DOMAIN}.conf
 ln -s /home/${DOMAIN}/config/nginx.conf /etc/nginx/conf.d/${DOMAIN}.conf
 sed -i "s/:52034/:${APP_PORT}/g" /home/${DOMAIN}/config/nginx.conf
+sed -i "s/52034/${APP_PORT}/g" /home/${DOMAIN}/app.js
 sed -i "s/example\.com/${DOMAIN}/g" /home/${DOMAIN}/config/nginx.conf
 sed -i "s/user  nginx;/user  www-data;/g" /etc/nginx/nginx.conf
 sed -i "s/#gzip/gzip/g" /etc/nginx/nginx.conf
