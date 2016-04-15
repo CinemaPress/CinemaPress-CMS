@@ -114,7 +114,7 @@ echo '-----                    УСТАНОВКА ПАКЕТОВ                
 echo '------------------------------------------------------------------'
 echo ''
 wget -qO- https://deb.nodesource.com/setup_5.x | bash -
-apt-get -y install nginx proftpd-basic openssl mysql-client nodejs memcached libltdl7 libodbc1 libpq5 fail2ban
+apt-get -y install nginx proftpd-basic nodejs openssl libltdl7 libodbc1 libpq5 fail2ban
 echo ''
 echo '------------------------------------------------------------------'
 echo '-----                           OK                           -----'
@@ -176,41 +176,6 @@ echo '-----                           OK                           -----'
 echo '------------------------------------------------------------------'
 echo ''
 echo '------------------------------------------------------------------'
-echo '-----                    НАСТРОЙКА SPHINX                    -----'
-echo '------------------------------------------------------------------'
-echo ''
-I=`dpkg -s sphinxsearch | grep "Status"`
-if ! [ -n "${I}" ]
-then
-    wget --no-check-certificate http://sphinxsearch.com/files/sphinxsearch_2.2.10-release-1~${VER}_amd64.deb -qO s.deb && dpkg -i s.deb && rm -rf s.deb
-    cp /home/${DOMAIN}/config/dummy_sphinx.conf /etc/sphinxsearch/sphinx.conf
-fi
-AGAIN=yes
-SPHINX_PORT=39312
-MYSQL_PORT=29306
-while [ "${AGAIN}" = "yes" ]
-do
-    SPHINX_PORT_TEST=`netstat -tunlp | grep ${SPHINX_PORT}`
-    MYSQL_PORT_TEST=`netstat -tunlp | grep ${MYSQL_PORT}`
-    if [ "${SPHINX_PORT_TEST}" = "" ] && [ "${MYSQL_PORT_TEST}" = "" ]
-    then
-        AGAIN=no
-    else
-        MYSQL_PORT=$((MYSQL_PORT+1))
-        SPHINX_PORT=$((SPHINX_PORT+1))
-    fi
-done
-INDEX_DOMAIN=`echo ${DOMAIN} | sed -r "s/[^A-Za-z0-9]/_/g"`
-sed -i "s/example\.com/${DOMAIN}/g" /home/${DOMAIN}/config/sphinx.conf
-sed -i "s/example_com/${INDEX_DOMAIN}/g" /home/${DOMAIN}/config/sphinx.conf
-sed -i "s/:9306/:${MYSQL_PORT}/g" /home/${DOMAIN}/config/sphinx.conf
-sed -i "s/:9312/:${SPHINX_PORT}/g" /home/${DOMAIN}/config/sphinx.conf
-echo ''
-echo '------------------------------------------------------------------'
-echo '-----                           OK                           -----'
-echo '------------------------------------------------------------------'
-echo ''
-echo '------------------------------------------------------------------'
 echo '-----                    НАСТРОЙКА PROFTPD                   -----'
 echo '------------------------------------------------------------------'
 echo ''
@@ -227,37 +192,6 @@ echo '-----                           OK                           -----'
 echo '------------------------------------------------------------------'
 echo ''
 echo '------------------------------------------------------------------'
-echo '-----                   НАСТРОЙКА MEMCACHED                  -----'
-echo '------------------------------------------------------------------'
-echo ''
-AGAIN=yes
-MEMCACHED_PORT=51211
-while [ "${AGAIN}" = "yes" ]
-do
-    MEMCACHED_PORT_TEST=`netstat -tunlp | grep ${MEMCACHED_PORT}`
-    if [ "${MEMCACHED_PORT_TEST}" = "" ]
-    then
-        AGAIN=no
-    else
-        MEMCACHED_PORT=$((MEMCACHED_PORT+1))
-    fi
-done
-if [ "${VER}" = "jessie" ]
-then
-    cp /lib/systemd/system/memcached.service /lib/systemd/system/memcached_${DOMAIN}.service
-    sed -i "s/memcached\.conf/memcached_${DOMAIN}.conf/g" /lib/systemd/system/memcached_${DOMAIN}.service
-    systemctl enable memcached_${DOMAIN}.service
-    systemctl start memcached_${DOMAIN}.service
-fi
-rm -rf /etc/memcached_${DOMAIN}.conf
-cp /etc/memcached.conf /etc/memcached_${DOMAIN}.conf
-sed -i "s/11211/${MEMCACHED_PORT}/g" /etc/memcached_${DOMAIN}.conf
-echo ''
-echo '------------------------------------------------------------------'
-echo '-----                           OK                           -----'
-echo '------------------------------------------------------------------'
-echo ''
-echo '------------------------------------------------------------------'
 echo '-----                  НАСТРОЙКА CINEMAPRESS                 -----'
 echo '------------------------------------------------------------------'
 echo ''
@@ -268,21 +202,7 @@ then
     sed -i "s/\"theme\":\s*\".*\"/\"theme\":\"${THEME}\"/" /home/${DOMAIN}/config/config.js
 fi
 sed -i "s/example\.com/${DOMAIN}/g" /home/${DOMAIN}/config/config.js
-sed -i "s/:11211/:${MEMCACHED_PORT}/" /home/${DOMAIN}/config/config.js
-sed -i "s/:9306/:${MYSQL_PORT}/" /home/${DOMAIN}/config/config.js
 cp /home/${DOMAIN}/config/config.js /home/${DOMAIN}/config/config.old.js
-echo ''
-echo '------------------------------------------------------------------'
-echo '-----                           OK                           -----'
-echo '------------------------------------------------------------------'
-echo ''
-echo '------------------------------------------------------------------'
-echo '-----                    НАСТРОЙКА SYSCTL                    -----'
-echo '------------------------------------------------------------------'
-echo ''
-mv /etc/sysctl.conf /etc/sysctl.old.conf
-cp /home/${DOMAIN}/config/sysctl.conf /etc/sysctl.conf
-sysctl -p
 echo ''
 echo '------------------------------------------------------------------'
 echo '-----                           OK                           -----'
@@ -315,7 +235,6 @@ else
 fi;
 pm2 start app.js --watch --name="${DOMAIN}"
 pm2 save
-indexer --all --config "/home/${DOMAIN}/config/sphinx.conf" || indexer --all --rotate --config "/home/${DOMAIN}/config/sphinx.conf"
 echo ''
 echo '------------------------------------------------------------------'
 echo '-----                           OK                           -----'

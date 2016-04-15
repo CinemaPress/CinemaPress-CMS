@@ -72,7 +72,7 @@ function getMovie(id, callback) {
 
     id = parseInt(id) - parseInt(config.urls.unique_id);
 
-    var queryString = 'SELECT * FROM ' + movies_db + ' WHERE kp_id = ' + id + ' LIMIT 1';
+    var queryString = 'SELECT * FROM ' + movies_db + ' WHERE kp_id = ' + id + ' LIMIT 1 OPTION max_matches = 1';
 
     sphinx(queryString, function (err, movies) {
 
