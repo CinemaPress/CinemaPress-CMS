@@ -44,7 +44,7 @@
 ~# pm2 install pm2-server-monit
 ```
 
-<img src="https://cinemapress.org/images/admin/update_player.png?new=16.04.2016" width="600" alt="Обновление CinemaPress CMS"/>
+<img src="https://cinemapress.org/images/admin/pm2.png?new=16.04.2016" width="600" alt="Обновление CinemaPress CMS"/>
 
 # CinemaPress DataBase
  :minidisc: База данных ~ **500 000 фильмов/сериалов** (все фильмы/сериалы планеты).
