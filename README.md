@@ -14,9 +14,9 @@
 ~# sh install.sh [domain] [theme] [password]
 ```
 
-###### Видео установки (готовый кино-сайт за 3 минуты 10 сек):
+###### Видео установки (готовый кино-сайт за 2 минуты 35 сек):
 
-<a href="https://www.youtube.com/watch?v=kZDSYmGdNJE" target="_blank"><img src="https://cinemapress.org/images/admin/install_player.png" width="600" alt="Готовый кино-сайт за 5 минут (видео)"/></a>
+<a href="https://www.youtube.com/watch?v=s5SrxJYbhWI" target="_blank"><img src="https://cinemapress.org/images/admin/install_player.png" width="600" alt="Готовый кино-сайт за 5 минут (видео)"/></a>
 
 ## Обновление:
 
@@ -28,7 +28,7 @@
 
 ###### Видео обновления
 
-<a href="https://www.youtube.com/watch?v=fw0Nkz4n-bo" target="_blank"><img src="https://cinemapress.org/images/admin/update_player.png" width="600" alt="Обновление CinemaPress CMS"/></a>
+<a href="https://www.youtube.com/watch?v=ownMCz_vBgo" target="_blank"><img src="https://cinemapress.org/images/admin/update_player.png" width="600" alt="Обновление CinemaPress CMS"/></a>
 
 # CinemaPress DataBase
  :minidisc: База данных ~ **500 000 фильмов/сериалов** (все фильмы/сериалы планеты).
@@ -42,7 +42,7 @@
 
 ###### Видео импорта базы данных CinemaPress
 
-<a href="https://www.youtube.com/watch?v=XUhCchNiAQg" target="_blank"><img src="https://cinemapress.org/images/admin/db_player.png" width="600" alt="Импорт CinemaPress DataBase"/></a>
+<a href="https://www.youtube.com/watch?v=0zmGnJV_7mw" target="_blank"><img src="https://cinemapress.org/images/admin/db_player.png" width="600" alt="Импорт CinemaPress DataBase"/></a>
 
 # CinemaPress Themes
 
