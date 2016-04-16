@@ -9,6 +9,7 @@ module.exports = {
     "protocol": "http://",
     "st": "st.kp.yandex.net",
     "schema": 0,
+    "rocket": 0,
     "social": {
         "vk": "",
         "facebook": "",

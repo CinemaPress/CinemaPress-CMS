@@ -37,9 +37,9 @@ function moviesData(movies) {
         var poster      = config.protocol + config.st + '/images/film_iphone/iphone360_' + movie.kp_id + '.jpg';
         var poster_big  = config.protocol + config.st + '/images/film_big/' + movie.kp_id + '.jpg';
         var poster_min  = config.protocol + config.st + '/images/sm_film/' + movie.kp_id + '.jpg';
-        var picture     = config.protocol + config.st + '/images/film_iphone/iphone360_' + movie.kp_id + '.jpg';
-        var picture_big = config.protocol + config.st + '/images/film_big/' + movie.kp_id + '.jpg';
-        var picture_min = config.protocol + config.st + '/images/sm_film/' + movie.kp_id + '.jpg';
+        var picture     = poster;
+        var picture_big = poster_big;
+        var picture_min = poster_min;
         var pictures    = [];
 
         if (movie.pictures) {
@@ -61,7 +61,7 @@ function moviesData(movies) {
             "id"            : id,
             "kp_id"         : movie.kp_id,
             "title"         : movie.search,
-            "poster"        : poster,
+            "poster"        : (config.rocket) ? poster_min : poster,
             "poster_big"    : poster_big,
             "poster_min"    : poster_min,
             "picture"       : picture,

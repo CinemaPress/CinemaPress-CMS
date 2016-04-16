@@ -498,13 +498,25 @@ body
                     td
                         label(for='schema')
                             | Микроразметка:
-                    td(style='padding: 0px 20px 0px 0px;')
+                    td(colspan=2, style='padding: 0px 10px 0px 0px;')
                         select(id='schema', style='margin-left: 0;').select
                             if schema
                                 option(value=1, selected='selected') Включена
                                 option(value=0) Отключить
                             else
                                 option(value=0, selected='selected') Отключена
+                                option(value=1) Включить
+                tr
+                    td
+                        label(for='rocket')
+                            | Rocket режим:
+                    td(colspan=2, style='padding: 0px 10px 0px 0px;')
+                        select(id='rocket', style='margin-left: 0;').select
+                            if rocket
+                                option(value=1, selected='selected') Включен
+                                option(value=0) Отключить
+                            else
+                                option(value=0, selected='selected') Отключен
                                 option(value=1) Включить
 
             .name(data-id='count-menu')
@@ -1431,6 +1443,7 @@ body
                 "abuse": document.getElementById('abuse').value.split(','),
                 "st": document.getElementById('st').value || "#{st}",
                 "schema": document.getElementById('schema').options[document.getElementById('schema').selectedIndex].value || "#{schema}",
+                "rocket": document.getElementById('rocket').options[document.getElementById('rocket').selectedIndex].value || "#{rocket}",
                 "social": {
                     "vk": document.getElementById('social.vk').value,
                     "facebook": document.getElementById('social.facebook').value,
