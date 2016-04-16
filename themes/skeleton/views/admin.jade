@@ -464,6 +464,12 @@ body
             table
                 tr
                     td
+                        label(for='nginx.addr')
+                            | Nginx:
+                    td(colspan=2, style='padding: 0 30px 0 0;')
+                        input(type='text', id='nginx.addr', value=nginx.addr, style='margin: 0; opacity: .7;', disabled='disabled').input
+                tr
+                    td
                         label(for='cache.time')
                             | Кэширование:
                     td
@@ -1455,6 +1461,9 @@ body
                 },
                 "sphinx": {
                     "addr": document.getElementById('sphinx.addr').value || "#{sphinx.addr}"
+                },
+                "nginx": {
+                    "addr": document.getElementById('nginx.addr').value || "#{nginx.addr}"
                 },
                 "counts": {
                     "index": document.getElementById('counts.index').value,

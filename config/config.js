@@ -22,6 +22,9 @@ module.exports = {
     "sphinx": {
         "addr": "127.0.0.1:9306"
     },
+    "nginx": {
+        "addr": "127.0.0.1:3000"
+    },
     "counts": {
         "index": 20,
         "category": 30,

@@ -14,7 +14,7 @@ var movie        = require(__dirname + '/routes/movie');
 var admin        = require(__dirname + '/routes/admin');
 var index        = require(__dirname + '/routes/index');
 
-var port = process.env.PORT || 52034;
+var port = process.env.PORT || parseInt(config.nginx.addr.split(':')[1]) || 3000;
 
 app.set('views', [
     path.join(__dirname, 'themes', 'skeleton', 'views'),

@@ -147,23 +147,22 @@ echo '-----                     НАСТРОЙКА NGINX                    ----
 echo '------------------------------------------------------------------'
 echo ''
 AGAIN=yes
-APP_PORT=33333
+NGINX_PORT=33333
 while [ "${AGAIN}" = "yes" ]
 do
-    APP_PORT_TEST=`netstat -tunlp | grep ${APP_PORT}`
-    if [ "${APP_PORT_TEST}" = "" ]
+    NGINX_PORT_TEST=`netstat -tunlp | grep ${NGINX_PORT}`
+    if [ "${NGINX_PORT_TEST}" = "" ]
     then
         AGAIN=no
     else
-        APP_PORT=$((APP_PORT+1))
+        NGINX_PORT=$((NGINX_PORT+1))
     fi
 done
 rm -rf /etc/nginx/conf.d/rewrite.conf
 mv /home/${DOMAIN}/config/rewrite.conf /etc/nginx/conf.d/rewrite.conf
 rm -rf /etc/nginx/conf.d/${DOMAIN}.conf
 ln -s /home/${DOMAIN}/config/nginx.conf /etc/nginx/conf.d/${DOMAIN}.conf
-sed -i "s/:52034/:${APP_PORT}/g" /home/${DOMAIN}/config/nginx.conf
-sed -i "s/52034/${APP_PORT}/g" /home/${DOMAIN}/app.js
+sed -i "s/:3000/:${NGINX_PORT}/g" /home/${DOMAIN}/config/nginx.conf
 sed -i "s/example\.com/${DOMAIN}/g" /home/${DOMAIN}/config/nginx.conf
 sed -i "s/user  nginx;/user  www-data;/g" /etc/nginx/nginx.conf
 sed -i "s/#gzip/gzip/g" /etc/nginx/nginx.conf
@@ -288,6 +287,7 @@ fi
 sed -i "s/example\.com/${DOMAIN}/g" /home/${DOMAIN}/config/config.js
 sed -i "s/:11211/:${MEMCACHED_PORT}/" /home/${DOMAIN}/config/config.js
 sed -i "s/:9306/:${MYSQL_PORT}/" /home/${DOMAIN}/config/config.js
+sed -i "s/:3000/:${NGINX_PORT}/" /home/${DOMAIN}/config/config.js
 cp /home/${DOMAIN}/config/config.js /home/${DOMAIN}/config/config.old.js
 echo ''
 echo '------------------------------------------------------------------'
