@@ -471,8 +471,12 @@ body
                             - times = {"0": "Отключить", "3600": "1 час", "43200": "12 часов", "86400": "1 день", "604800": "1 неделя", "2592000": "1 месяц"}
                             each time, key in times
                                 if cache.time == key
-                                    option(value=key, selected='selected')
-                                        = time
+                                    if time == 'Отключить'
+                                        option(value=key, selected='selected')
+                                            = 'Отключено'
+                                    else
+                                        option(value=key, selected='selected')
+                                            = time
                                 else
                                     option(value=key)
                                         = time
@@ -490,6 +494,19 @@ body
                             | Статика:
                     td(colspan=2, style='padding: 0 30px 0 0;')
                         input(type='text', id='st', value=st, style='margin: 0;').input
+                tr
+                    td
+                        label(for='schema')
+                            | Микроразметка:
+                    td(style='padding: 0px 20px 0px 0px;')
+                        select(id='schema', style='margin-left: 0;').select
+                            if schema
+                                option(value=1, selected='selected') Включена
+                                option(value=0) Отключить
+                            else
+                                option(value=0, selected='selected') Отключена
+                                option(value=1) Включить
+
             .name(data-id='count-menu')
                 | &#10507; Фильмов на странице
             #count-menu.config
@@ -887,73 +904,73 @@ body
                     tr
                         td
                             label(for='titles.sort.kinopoisk-rating-up')
-                                | Рейтинг КиноПоиск (по убыванию):
+                                | Рейтинг КиноПоиск (по уб.):
                         td
                             input(type='text', id='titles.sort.kinopoisk-rating-up', value=titles.sort['kinopoisk-rating-up']).input
                     tr
                         td
                             label(for='titles.sort.kinopoisk-rating-down')
-                                | Рейтинг КиноПоиск (по возрастанию):
+                                | Рейтинг КиноПоиск (по возр.):
                         td
                             input(type='text', id='titles.sort.kinopoisk-rating-down', value=titles.sort['kinopoisk-rating-down']).input
                     tr
                         td
                             label(for='titles.sort.imdb-rating-up')
-                                | Рейтинг IMDb (по убыванию):
+                                | Рейтинг IMDb (по уб.):
                         td
                             input(type='text', id='titles.sort.imdb-rating-up', value=titles.sort['imdb-rating-up']).input
                     tr
                         td
                             label(for='titles.sort.imdb-rating-down')
-                                | Рейтинг IMDb (по возрастанию):
+                                | Рейтинг IMDb (по возр.):
                         td
                             input(type='text', id='titles.sort.imdb-rating-down', value=titles.sort['imdb-rating-down']).input
                     tr
                         td
                             label(for='titles.sort.kinopoisk-vote-up')
-                                | Число голосов КиноПоиск (по убыванию):
+                                | Число голосов КиноПоиск (по уб.):
                         td
                             input(type='text', id='titles.sort.kinopoisk-vote-up', value=titles.sort['kinopoisk-vote-up']).input
                     tr
                         td
                             label(for='titles.sort.kinopoisk-vote-down')
-                                | Число голосов КиноПоиск (по возрастанию):
+                                | Число голосов КиноПоиск (по возр.):
                         td
                             input(type='text', id='titles.sort.kinopoisk-vote-down', value=titles.sort['kinopoisk-vote-down']).input
                     tr
                         td
                             label(for='titles.sort.imdb-vote-up')
-                                | Число голосов IMDb (по убыванию):
+                                | Число голосов IMDb (по уб.):
                         td
                             input(type='text', id='titles.sort.imdb-vote-up', value=titles.sort['imdb-vote-up']).input
                     tr
                         td
                             label(for='titles.sort.imdb-vote-down')
-                                | Число голосов IMDb (по возрастанию):
+                                | Число голосов IMDb (по возр.):
                         td
                             input(type='text', id='titles.sort.imdb-vote-down', value=titles.sort['imdb-vote-down']).input
                     tr
                         td
                             label(for='titles.sort.year-up')
-                                | Год (по убыванию):
+                                | Год (по уб.):
                         td
                             input(type='text', id='titles.sort.year-up', value=titles.sort['year-up']).input
                     tr
                         td
                             label(for='titles.sort.year-down')
-                                | Год (по возрастанию):
+                                | Год (по возр.):
                         td
                             input(type='text', id='titles.sort.year-down', value=titles.sort['year-down']).input
                     tr
                         td
                             label(for='titles.sort.premiere-up')
-                                | Дата премьеры (по убыванию):
+                                | Дата премьеры (по уб.):
                         td
                             input(type='text', id='titles.sort.premiere-up', value=titles.sort['premiere-up']).input
                     tr
                         td
                             label(for='titles.sort.premiere-down')
-                                | Дата премьеры (по возрастанию):
+                                | Дата премьеры (по возр.):
                         td
                             input(type='text', id='titles.sort.premiere-down', value=titles.sort['premiere-down']).input
         .name(data-id='descriptions-menu')
@@ -1243,73 +1260,73 @@ body
                 tr
                     td
                         label(for='sorting.kinopoisk-rating-up')
-                            | Рейтинг КиноПоиск (по убыванию):
+                            | Рейтинг КиноПоиск (по уб.):
                     td
                         input(type='text', id='sorting.kinopoisk-rating-up', value=sorting['kinopoisk-rating-up']).input
                 tr
                     td
                         label(for='sorting.kinopoisk-rating-down')
-                            | Рейтинг КиноПоиск (по возрастанию):
+                            | Рейтинг КиноПоиск (по возр.):
                     td
                         input(type='text', id='sorting.kinopoisk-rating-down', value=sorting['kinopoisk-rating-down']).input
                 tr
                     td
                         label(for='sorting.imdb-rating-up')
-                            | Рейтинг IMDb (по убыванию):
+                            | Рейтинг IMDb (по уб.):
                     td
                         input(type='text', id='sorting.imdb-rating-up', value=sorting['imdb-rating-up']).input
                 tr
                     td
                         label(for='sorting.imdb-rating-down')
-                            | Рейтинг IMDb (по возрастанию):
+                            | Рейтинг IMDb (по возр.):
                     td
                         input(type='text', id='sorting.imdb-rating-down', value=sorting['imdb-rating-down']).input
                 tr
                     td
                         label(for='sorting.kinopoisk-vote-up')
-                            | Число голосов КиноПоиск (по убыванию):
+                            | Число голосов КиноПоиск (по уб.):
                     td
                         input(type='text', id='sorting.kinopoisk-vote-up', value=sorting['kinopoisk-vote-up']).input
                 tr
                     td
                         label(for='sorting.kinopoisk-vote-down')
-                            | Число голосов КиноПоиск (по возрастанию):
+                            | Число голосов КиноПоиск (по возр.):
                     td
                         input(type='text', id='sorting.kinopoisk-vote-down', value=sorting['kinopoisk-vote-down']).input
                 tr
                     td
                         label(for='sorting.imdb-vote-up')
-                            | Число голосов IMDb (по убыванию):
+                            | Число голосов IMDb (по уб.):
                     td
                         input(type='text', id='sorting.imdb-vote-up', value=sorting['imdb-vote-up']).input
                 tr
                     td
                         label(for='sorting.imdb-vote-down')
-                            | Число голосов IMDb (по возрастанию):
+                            | Число голосов IMDb (по возр.):
                     td
                         input(type='text', id='sorting.imdb-vote-down', value=sorting['imdb-vote-down']).input
                 tr
                     td
                         label(for='sorting.year-up')
-                            | Год (по убыванию):
+                            | Год (по уб.):
                     td
                         input(type='text', id='sorting.year-up', value=sorting['year-up']).input
                 tr
                     td
                         label(for='sorting.year-down')
-                            | Год (по возрастанию):
+                            | Год (по возр.):
                     td
                         input(type='text', id='sorting.year-down', value=sorting['year-down']).input
                 tr
                     td
                         label(for='sorting.premiere-up')
-                            | Дата премьеры (по убыванию):
+                            | Дата премьеры (по уб.):
                     td
                         input(type='text', id='sorting.premiere-up', value=sorting['premiere-up']).input
                 tr
                     td
                         label(for='sorting.premiere-down')
-                            | Дата премьеры (по возрастанию):
+                            | Дата премьеры (по возр.):
                     td
                         input(type='text', id='sorting.premiere-down', value=sorting['premiere-down']).input
         .name(data-id='social-menu')
@@ -1413,6 +1430,7 @@ body
                 "top_category": document.getElementById('top_category').options[document.getElementById('top_category').selectedIndex].value || "#{top_category}",
                 "abuse": document.getElementById('abuse').value.split(','),
                 "st": document.getElementById('st').value || "#{st}",
+                "schema": document.getElementById('schema').options[document.getElementById('schema').selectedIndex].value || "#{schema}",
                 "social": {
                     "vk": document.getElementById('social.vk').value,
                     "facebook": document.getElementById('social.facebook').value,

@@ -19,58 +19,102 @@ function additionalRequiredData(keys, movies, type) {
 
 }
 
+/* Required data on index page:
+ - protocol
+ - domain
+ - email
+ - urls
+ - social
+ - code
+ - title
+ - description
+ - keywords
+ - schema
+ */
+
 function indexRequiredData() {
 
     var data = {};
-
-    data.disqus      = config.disqus;
+    
     data.protocol    = config.protocol;
     data.domain      = config.domain;
+    data.email       = config.email;
     data.urls        = config.urls;
     data.social      = config.social;
     data.code        = changeCode(config.code);
-    data.email       = config.email.replace('@', 'CinemaPress');
+    
     data.title       = addKeywords(config.titles.index);
     data.description = addKeywords(config.descriptions.index);
     data.keywords    = addKeywords(config.keywords.index);
-    data.schema      = generalSchemaData(data);
+    data.schema      = (config.schema) ? generalSchemaData(data) : {};
 
     return data;
 
 }
+
+/* Required data on movie page:
+ - protocol
+ - domain
+ - email
+ - urls
+ - disqus
+ - social
+ - code
+ - abuse
+ - title
+ - description
+ - keywords
+ - schema
+ */
 
 function movieRequiredData(key, keys, movies) {
 
     var data = {};
-
-    data.disqus      = config.disqus;
+    
     data.protocol    = config.protocol;
     data.domain      = config.domain;
+    data.email       = config.email;
     data.urls        = config.urls;
+    data.disqus      = config.disqus;
     data.social      = config.social;
     data.abuse       = config.abuse;
     data.code        = changeCode(config.code);
-    data.email       = config.email.replace('@', 'CinemaPress');
-    data.schema      = movieSchemaData(keys, movies);
+    
     data.title       = addKeywords(config.titles.movie[key], keys);
     data.description = addKeywords(config.descriptions.movie[key], keys);
     data.keywords    = addKeywords(config.keywords.movie[key], keys);
+    data.schema      = (config.schema) ? movieSchemaData(keys, movies) : {};
 
     return data;
 
 }
 
+/* Required data on category page:
+ - protocol
+ - domain
+ - email
+ - urls
+ - social
+ - code
+ - url
+ - sort
+ - page
+ - title
+ - description
+ - keywords
+ - schema
+ */
+
 function categoryRequiredData(keys, sort, page, movies) {
 
     var data = {};
-
-    data.disqus   = config.disqus;
+    
     data.protocol = config.protocol;
     data.domain   = config.domain;
+    data.email    = config.email;
     data.urls     = config.urls;
     data.social   = config.social;
     data.code     = changeCode(config.code);
-    data.email    = config.email.replace('@', 'CinemaPress');
 
     for (var key in keys) {
         if (keys.hasOwnProperty(key)) {
@@ -96,11 +140,25 @@ function categoryRequiredData(keys, sort, page, movies) {
         }
     }
 
-    data.schema = categorySchemaData(data, movies);
+    data.schema = (config.schema) ? categorySchemaData(data, movies) : {};
 
     return data;
 
 }
+
+/* Required data on categories page:
+ - protocol
+ - domain
+ - email
+ - urls
+ - social
+ - code
+ - url
+ - title
+ - description
+ - keywords
+ - schema
+ */
 
 function categoriesRequiredData(key) {
 
@@ -113,20 +171,19 @@ function categoriesRequiredData(key) {
         "country"  : "countries",
         "director" : "directors"
     };
-
-    data.disqus      = config.disqus;
+    
     data.protocol    = config.protocol;
     data.domain      = config.domain;
+    data.email       = config.email;
     data.urls        = config.urls;
     data.social      = config.social;
     data.code        = changeCode(config.code);
-    data.email       = config.email.replace('@', 'CinemaPress');
+    data.url         = categoryUrl(key);
 
     data.title       = addKeywords(config.titles[type[key]]);
     data.description = addKeywords(config.descriptions[type[key]]);
     data.keywords    = addKeywords(config.keywords[type[key]]);
-    data.url         = categoryUrl(key);
-    data.schema      = generalSchemaData(data);
+    data.schema      = (config.schema) ? generalSchemaData(data) : {};
 
     return data;
 

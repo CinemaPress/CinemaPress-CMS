@@ -96,6 +96,7 @@ router.post('/save', function(req, res) {
         parseInt(req.body.urls.unique_id) < 297001)
             ? parseInt(req.body.urls.unique_id)
             : 0;
+    req.body.schema              = parseInt(req.body.schema);
     req.body.cache.time          = parseInt(req.body.cache.time);
     req.body.counts.index        = parseInt(req.body.counts.index);
     req.body.counts.category     = parseInt(req.body.counts.category);
