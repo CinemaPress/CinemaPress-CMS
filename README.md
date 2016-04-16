@@ -91,7 +91,7 @@
 <a href="https://github.com/CinemaPress/Theme-Marshall"><img src="https://raw.githubusercontent.com/CinemaPress/Theme-Marshall/master/screenshot.jpg" width="400"></a>
 ---
 # Что такое CinemaPress CMS?
-Это система управления самообновляемым кино-сайтом, которая строится на базе данных **CinemaPress** и работает на ``NodeJS (ExpressJS) + Sphinx``.
+Это система управления самообновляемым кино-сайтом, которая строится на данных **CinemaPress DataBase** и работает на ``NodeJS (ExpressJS) + Sphinx + Memcached``.
 
 ![Admin page CinemaPress CMS](https://raw.githubusercontent.com/CinemaPress/CinemaPress.github.io/master/images/admin/screen.png)
 
