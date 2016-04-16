@@ -30,7 +30,7 @@
 
 <a href="https://www.youtube.com/watch?v=ownMCz_vBgo" target="_blank"><img src="https://cinemapress.org/images/admin/update_player.png?new=16.04.2016" width="600" alt="Обновление CinemaPress CMS"/></a>
 
-###### Мониторинг работы сайта
+## Мониторинг работы сайта
 
 **CinemaPress CMS** использует менеджер процессов ``PM2``, поэтому чтобы отслеживать работоспособность сайта, Вы можете использовать <a href="https://app.keymetrics.io">keymetrics</a>.
 
