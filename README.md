@@ -30,6 +30,22 @@
 
 <a href="https://www.youtube.com/watch?v=ownMCz_vBgo" target="_blank"><img src="https://cinemapress.org/images/admin/update_player.png?new=16.04.2016" width="600" alt="Обновление CinemaPress CMS"/></a>
 
+###### Мониторинг работы сайта
+
+**CinemaPress CMS** использует менеджер процессов ``PM2``, поэтому чтобы отслеживать работоспособность сайта, Вы можете использовать <a href="https://app.keymetrics.io">keymetrics</a>.
+
+- регистрируетесь;
+- создаете ``New bucket``;
+- получаете ключи;
+- соединяетесь с сервером командами:
+
+```
+~# pm2 link [secret key] [public key] CinemaPress
+~# pm2 install pm2-server-monit
+```
+
+<img src="https://cinemapress.org/images/admin/update_player.png?new=16.04.2016" width="600" alt="Обновление CinemaPress CMS"/>
+
 # CinemaPress DataBase
  :minidisc: База данных ~ **500 000 фильмов/сериалов** (все фильмы/сериалы планеты).
  
