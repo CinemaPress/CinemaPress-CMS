@@ -241,7 +241,7 @@ then
 else
     pm2 startup ubuntu
 fi;
-pm2 start app.js --watch --name="${DOMAIN}"
+pm2 start app.js --watch --ignore-watch "node_modules .* *.sh *.log *.conf *.xml *.txt *.jpg *.png *.gif *.css config/config.old.js config/config.new.js" --name="${DOMAIN}" --no-vizion
 pm2 save
 echo ''
 echo '------------------------------------------------------------------'

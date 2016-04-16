@@ -119,13 +119,19 @@ router.post('/save', function(req, res) {
     fs.writeFile(path.join(path.dirname(__dirname), 'config', 'config.new.js'), 'module.exports = ' + data + ';', function(err) {
         if (err) {
             console.log(err);
-            res.status(404).send('Error');
+            res.status(404).send('Error create config.new.js');
         }
         else {
             fs.rename(path.join(path.dirname(__dirname), 'config', 'config.js'), path.join(path.dirname(__dirname), 'config', 'config.old.js'), function (err) {
-                if (err) throw err;
+                if (err) {
+                    console.log(err);
+                    res.status(404).send('Error rename config.old.js');
+                }
                 fs.rename(path.join(path.dirname(__dirname), 'config', 'config.new.js'), path.join(path.dirname(__dirname), 'config', 'config.js'), function (err) {
-                    if (err) throw err;
+                    if (err) {
+                        console.log(err);
+                        res.status(404).send('Error rename config.new.js');
+                    }
                     res.status(200).send('Save');
                 });
             });
