@@ -46,6 +46,31 @@
 
 <img src="https://raw.githubusercontent.com/CinemaPress/CinemaPress.github.io/master/images/admin/pm2.png?new=16.04.2016" width="600" alt="Обновление CinemaPress CMS"/>
 
+## Распределение нагрузки
+
+Если Ваш сайт стал достаточно посещаемым, то для распределения нагрузки, можно вынести некоторые пакеты на удаленные сервера.
+
+###### Установка CinemaPress CMS сервера:
+
+```
+~# wget https://git.io/vwtm5 -qO cp.sh
+~# sh cp.sh [domain] [theme] [password]
+```
+
+###### Установка уделённого Memcached сервера:
+
+```
+~# wget https://git.io/vwtYB -qO memcached.sh
+~# sh memcached.sh [domain] [ip]
+```
+
+###### Установка уделённого Sphinx сервера:
+
+```
+~# wget https://git.io/vwtYO -qO sphinx.sh
+~# sh sphinx.sh [domain] [ip]
+```
+
 # CinemaPress DataBase
  :minidisc: База данных ~ **500 000 фильмов/сериалов** (все фильмы/сериалы планеты).
  
