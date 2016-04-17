@@ -79,6 +79,8 @@ echo ''
 apt-get -y -qq update && apt-get -y -qq install debian-keyring debian-archive-keyring wget curl nano htop sudo lsb-release ca-certificates git-core openssl netcat debconf-utils
 VER=`lsb_release -cs`
 echo "proftpd-basic shared/proftpd/inetd_or_standalone select standalone" | debconf-set-selections
+echo "iptables-persistent iptables-persistent/autosave_v6 boolean true" | debconf-set-selections
+echo "iptables-persistent iptables-persistent/autosave_v4 boolean true" | debconf-set-selections
 echo ''
 echo '------------------------------------------------------------------'
 echo '-----                           OK                           -----'
@@ -121,7 +123,7 @@ echo '-----                    УСТАНОВКА ПАКЕТОВ                
 echo '------------------------------------------------------------------'
 echo ''
 wget -qO- https://deb.nodesource.com/setup_5.x | bash -
-apt-get -y install nginx proftpd-basic nodejs openssl libltdl7 libodbc1 libpq5 fail2ban
+apt-get -y install nginx proftpd-basic nodejs openssl libltdl7 libodbc1 libpq5 fail2ban iptables-persistent
 echo ''
 echo '------------------------------------------------------------------'
 echo '-----                           OK                           -----'
@@ -147,23 +149,22 @@ echo '-----                     НАСТРОЙКА NGINX                    ----
 echo '------------------------------------------------------------------'
 echo ''
 AGAIN=yes
-APP_PORT=33333
+NGINX_PORT=33333
 while [ "${AGAIN}" = "yes" ]
 do
-    APP_PORT_TEST=`netstat -tunlp | grep ${APP_PORT}`
-    if [ "${APP_PORT_TEST}" = "" ]
+    NGINX_PORT_TEST=`netstat -tunlp | grep ${NGINX_PORT}`
+    if [ "${NGINX_PORT_TEST}" = "" ]
     then
         AGAIN=no
     else
-        APP_PORT=$((APP_PORT+1))
+        NGINX_PORT=$((NGINX_PORT+1))
     fi
 done
 rm -rf /etc/nginx/conf.d/rewrite.conf
 mv /home/${DOMAIN}/config/rewrite.conf /etc/nginx/conf.d/rewrite.conf
 rm -rf /etc/nginx/conf.d/${DOMAIN}.conf
 ln -s /home/${DOMAIN}/config/nginx.conf /etc/nginx/conf.d/${DOMAIN}.conf
-sed -i "s/:52034/:${APP_PORT}/g" /home/${DOMAIN}/config/nginx.conf
-sed -i "s/52034/${APP_PORT}/g" /home/${DOMAIN}/app.js
+sed -i "s/:3000/:${NGINX_PORT}/g" /home/${DOMAIN}/config/nginx.conf
 sed -i "s/example\.com/${DOMAIN}/g" /home/${DOMAIN}/config/nginx.conf
 sed -i "s/user  nginx;/user  www-data;/g" /etc/nginx/nginx.conf
 sed -i "s/#gzip/gzip/g" /etc/nginx/nginx.conf
@@ -210,6 +211,7 @@ then
     sed -i "s/\"theme\":\s*\".*\"/\"theme\":\"${THEME}\"/" /home/${DOMAIN}/config/config.js
 fi
 sed -i "s/example\.com/${DOMAIN}/g" /home/${DOMAIN}/config/config.js
+sed -i "s/:3000/:${NGINX_PORT}/" /home/${DOMAIN}/config/config.js
 cp /home/${DOMAIN}/config/config.js /home/${DOMAIN}/config/config.old.js
 echo ''
 echo '------------------------------------------------------------------'
@@ -222,6 +224,19 @@ echo '------------------------------------------------------------------'
 echo ''
 rm -rf /etc/fail2ban/jail.local
 cp /home/${DOMAIN}/config/jail.conf /etc/fail2ban/jail.local
+echo ''
+echo '------------------------------------------------------------------'
+echo '-----                           OK                           -----'
+echo '------------------------------------------------------------------'
+echo ''
+echo '------------------------------------------------------------------'
+echo '-----                    НАСТРОЙКА IPTABLES                  -----'
+echo '------------------------------------------------------------------'
+echo ''
+iptables -A INPUT -p tcp -s 127.0.0.1 --dport ${NGINX_PORT} -j ACCEPT
+iptables -A INPUT -p tcp --dport ${NGINX_PORT} -j DROP
+iptables-save >/etc/iptables/rules.v4
+ip6tables-save >/etc/iptables/rules.v6
 echo ''
 echo '------------------------------------------------------------------'
 echo '-----                           OK                           -----'

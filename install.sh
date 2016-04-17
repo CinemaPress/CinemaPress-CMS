@@ -79,6 +79,8 @@ echo ''
 apt-get -y -qq update && apt-get -y -qq install debian-keyring debian-archive-keyring wget curl nano htop sudo lsb-release ca-certificates git-core openssl netcat debconf-utils
 VER=`lsb_release -cs`
 echo "proftpd-basic shared/proftpd/inetd_or_standalone select standalone" | debconf-set-selections
+echo "iptables-persistent iptables-persistent/autosave_v6 boolean true" | debconf-set-selections
+echo "iptables-persistent iptables-persistent/autosave_v4 boolean true" | debconf-set-selections
 echo ''
 echo '------------------------------------------------------------------'
 echo '-----                           OK                           -----'
@@ -121,7 +123,7 @@ echo '-----                    УСТАНОВКА ПАКЕТОВ                
 echo '------------------------------------------------------------------'
 echo ''
 wget -qO- https://deb.nodesource.com/setup_5.x | bash -
-apt-get -y install nginx proftpd-basic openssl mysql-client nodejs memcached libltdl7 libodbc1 libpq5 fail2ban
+apt-get -y install nginx proftpd-basic openssl mysql-client nodejs memcached libltdl7 libodbc1 libpq5 fail2ban iptables-persistent
 echo ''
 echo '------------------------------------------------------------------'
 echo '-----                           OK                           -----'
@@ -312,6 +314,25 @@ echo '------------------------------------------------------------------'
 echo ''
 rm -rf /etc/fail2ban/jail.local
 cp /home/${DOMAIN}/config/jail.conf /etc/fail2ban/jail.local
+echo ''
+echo '------------------------------------------------------------------'
+echo '-----                           OK                           -----'
+echo '------------------------------------------------------------------'
+echo ''
+echo '------------------------------------------------------------------'
+echo '-----                    НАСТРОЙКА IPTABLES                  -----'
+echo '------------------------------------------------------------------'
+echo ''
+iptables -A INPUT -p tcp -s 127.0.0.1 --dport ${MEMCACHED_PORT} -j ACCEPT
+iptables -A INPUT -p tcp --dport ${MEMCACHED_PORT} -j DROP
+iptables -A INPUT -p tcp -s 127.0.0.1 --dport ${MYSQL_PORT} -j ACCEPT
+iptables -A INPUT -p tcp --dport ${MYSQL_PORT} -j DROP
+iptables -A INPUT -p tcp -s 127.0.0.1 --dport ${SPHINX_PORT} -j ACCEPT
+iptables -A INPUT -p tcp --dport ${SPHINX_PORT} -j DROP
+iptables -A INPUT -p tcp -s 127.0.0.1 --dport ${NGINX_PORT} -j ACCEPT
+iptables -A INPUT -p tcp --dport ${NGINX_PORT} -j DROP
+iptables-save >/etc/iptables/rules.v4
+ip6tables-save >/etc/iptables/rules.v6
 echo ''
 echo '------------------------------------------------------------------'
 echo '-----                           OK                           -----'

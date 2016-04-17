@@ -126,7 +126,9 @@ echo '-----                    НАСТРОЙКА IPTABLES                  ----
 echo '------------------------------------------------------------------'
 echo ''
 iptables -A INPUT -p tcp -s ${IP} --dport ${MYSQL_PORT} -j ACCEPT
-iptables -A INPUT -p tcp --dport ${MYSQL_PORT} -j REJECT
+iptables -A INPUT -p tcp --dport ${MYSQL_PORT} -j DROP
+iptables -A INPUT -p tcp -s 127.0.0.1 --dport ${SPHINX_PORT} -j ACCEPT
+iptables -A INPUT -p tcp --dport ${SPHINX_PORT} -j DROP
 iptables-save >/etc/iptables/rules.v4
 ip6tables-save >/etc/iptables/rules.v6
 MYSQL_IP=`ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'`

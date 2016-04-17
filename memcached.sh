@@ -119,7 +119,7 @@ echo '-----                    НАСТРОЙКА IPTABLES                  ----
 echo '------------------------------------------------------------------'
 echo ''
 iptables -A INPUT -p tcp -s ${IP} --dport ${MEMCACHED_PORT} -j ACCEPT
-iptables -A INPUT -p tcp --dport ${MEMCACHED_PORT} -j REJECT
+iptables -A INPUT -p tcp --dport ${MEMCACHED_PORT} -j DROP
 iptables-save >/etc/iptables/rules.v4
 ip6tables-save >/etc/iptables/rules.v6
 MEMCACHED_IP=`ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'`
