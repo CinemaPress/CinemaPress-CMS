@@ -26,8 +26,8 @@ module.exports = {
         "addr": "127.0.0.1:3000"
     },
     "counts": {
-        "index": 20,
-        "category": 30,
+        "index": 10,
+        "category": 15,
         "top_category": 10,
         "related": 5,
         "sitemap": 10000
@@ -73,7 +73,7 @@ module.exports = {
             "sort": "kinopoisk-vote-up"
         }
     },
-    "relates": "countries,genres,directors,actors,year",
+    "relates": "year",
     "related": {
         "year": {
             "name": "Фильмы [year] года",

@@ -344,14 +344,18 @@ echo '------------------------------------------------------------------'
 echo ''
 cd /home/${DOMAIN}/
 npm install --loglevel=silent --parseable
-npm install --loglevel=silent --parseable pm2 -g
-sleep 2
-if [ "${VER}" = "jessie" ]
+I=`npm list -g --depth=0 | grep "pm2"`
+if ! [ -n "${I}" ]
 then
-    pm2 startup systemd
-else
-    pm2 startup ubuntu
-fi;
+    npm install --loglevel=silent --parseable pm2 -g
+    sleep 2
+    if [ "${VER}" = "jessie" ]
+    then
+        pm2 startup systemd
+    else
+        pm2 startup ubuntu
+    fi
+fi
 pm2 start app.js --watch --ignore-watch "node_modules .* *.sh *.log *.conf *.xml *.txt *.jpg *.png *.gif *.css config/config.old.js config/config.new.js" --name="${DOMAIN}" --no-vizion
 pm2 save
 indexer --all --config "/home/${DOMAIN}/config/sphinx.conf" || indexer --all --rotate --config "/home/${DOMAIN}/config/sphinx.conf"

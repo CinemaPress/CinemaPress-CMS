@@ -108,7 +108,7 @@
 ```
 <a href="https://github.com/CinemaPress/Theme-Lily"><img src="https://raw.githubusercontent.com/CinemaPress/Theme-Lily/master/screenshot.jpg" width="400"></a>
 ---
-- [Marshall (zerx.cc)](https://github.com/CinemaPress/Theme-Marshall)
+- [Marshall (zerx.co)](https://github.com/CinemaPress/Theme-Marshall)
 ```
 ~# wget https://git.io/vVTE5 -qO theme.sh
 ~# sh theme.sh [domain] marshall
