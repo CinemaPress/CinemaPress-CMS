@@ -526,13 +526,13 @@ body
                                 option(value=0, selected='selected') Отключен
                                 option(value=1) Включить
             .name(data-id='publish-menu')
-                | &#10507; Отложенная публикация
+                | &#10507; Публикация
             #publish-menu.config
                 table
                     tr
                         td
                             label
-                                | Опубликовать диапазон:
+                                | Опубликовать сразу диапазон:
                         td
                             label(for='publish.start')
                                 | от
@@ -543,16 +543,15 @@ body
                     tr
                     td
                         label
-                            | Публиковать:
+                            | Отложено публиковать:
                         td
                             label(for='publish.every.movies')
                                 | по
                                 input(type='text', id='publish.every.movies', style='margin:0 20px; width:50px; text-align: center;', value=publish.every.movies).input
-                                | фильмов
                             label(for='publish.every.hours')
-                                | каждые
+                                | фильмов каждый(е)
                                 input(type='text', id='publish.every.hours', style='margin:0 20px; width:50px; text-align: center;', value=publish.every.hours).input
-                                | часов
+                                | час(ов)
             .name(data-id='count-menu')
                 | &#10507; Фильмов на странице
             #count-menu.config

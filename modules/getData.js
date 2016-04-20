@@ -80,28 +80,22 @@ function getPublishMovies(callback) {
     var stop_limit = Math.floor((config.publish.every.movies/config.publish.every.hours)/2);
 
     var startQueryString = '' +
-        ' SELECT MIN(kp_id)' +
-        ' FROM (' +
-            ' SELECT kp_id' +
-            ' FROM ' + movies_db +
-            ' WHERE kp_id < ' + config.publish.start +
-            ' ORDER BY kp_id DESC' +
-            ' LIMIT ' + start_limit +
-            ' OPTION max_matches = ' + start_limit +
-        ' ) AS T1';
+        ' SELECT kp_id' +
+        ' FROM ' + movies_db +
+        ' WHERE kp_id < ' + config.publish.start +
+        ' ORDER BY kp_id DESC' +
+        ' LIMIT ' + start_limit +
+        ' OPTION max_matches = ' + start_limit;
 
     var stopQueryString = '' +
-        ' SELECT MAX(kp_id)' +
-        ' FROM (' +
-            ' SELECT kp_id' +
-            ' FROM ' + movies_db +
-            ' WHERE kp_id > ' + config.publish.stop +
-            ' ORDER BY kp_id ASC' +
-            ' LIMIT ' + stop_limit +
-            ' OPTION max_matches = ' + stop_limit +
-        ' ) AS T2';
+        ' SELECT kp_id' +
+        ' FROM ' + movies_db +
+        ' WHERE kp_id > ' + config.publish.stop +
+        ' ORDER BY kp_id ASC' +
+        ' LIMIT ' + stop_limit +
+        ' OPTION max_matches = ' + stop_limit;
 
-    var queryString = 'SELECT (' + startQueryString + ') AS start_id, + (' + stopQueryString + ') AS stop_id';
+    var queryString = startQueryString + '; ' + stopQueryString;
 
     sphinx(queryString, function (err, result) {
 
@@ -110,13 +104,22 @@ function getPublishMovies(callback) {
         if (result && result.length) {
 
             var ids = {};
+            var i;
 
-            ids.start_id = (parseInt(result[0].start_id))
-                ? parseInt(result[0].start_id)
-                : config.publish.start;
-            ids.stop_id = (parseInt(result[0].stop_id))
-                ? parseInt(result[0].stop_id)
-                : config.publish.stop;
+            ids.start_id = config.publish.start;
+            ids.stop_id = config.publish.stop;
+
+            for (i = 0; i < result[0].length; i++) {
+                ids.start_id = (result[0][i].kp_id < ids.start_id)
+                    ? result[0][i].kp_id
+                    : ids.start_id;
+            }
+
+            for (i = 0; i < result[1].length; i++) {
+                ids.stop_id = (result[1][i].kp_id > ids.stop_id)
+                    ? result[1][i].kp_id
+                    : ids.stop_id;
+            }
 
             callback(ids);
 

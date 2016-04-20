@@ -14,7 +14,13 @@ if (config.publish.every.hours && config.publish.every.movies) {
             config.publish.every.hours = 0;
             config.publish.every.movies = 0;
         }
+        else if (ids.start_id == config.publish.start && ids.stop_id == config.publish.stop) {
+            console.log('[publish] All movies published.');
+            config.publish.every.hours = 0;
+            config.publish.every.movies = 0;
+        }
         else {
+            console.log('[publish] New IDs: ' + ids.start_id + ' - ' + ids.stop_id);
             config.publish.start = ids.start_id;
             config.publish.stop = ids.stop_id;
         }

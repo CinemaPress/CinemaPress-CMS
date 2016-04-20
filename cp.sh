@@ -123,7 +123,7 @@ echo '-----                    УСТАНОВКА ПАКЕТОВ                
 echo '------------------------------------------------------------------'
 echo ''
 wget -qO- https://deb.nodesource.com/setup_5.x | bash -
-apt-get -y install nginx proftpd-basic nodejs openssl libltdl7 libodbc1 libpq5 fail2ban iptables-persistent
+apt-get -y install nginx proftpd-basic nodejs openssl mysql-client libltdl7 libodbc1 libpq5 fail2ban iptables-persistent
 echo ''
 echo '------------------------------------------------------------------'
 echo '-----                           OK                           -----'
