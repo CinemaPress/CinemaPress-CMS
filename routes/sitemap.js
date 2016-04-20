@@ -3,7 +3,7 @@
 var memcached = require('../modules/memcached');
 var getData   = require('../modules/getData');
 var decode    = require('../modules/decode');
-var config    = require('../config/default/config');
+var config    = require('../config/config');
 var express   = require('express');
 var md5       = require('md5');
 

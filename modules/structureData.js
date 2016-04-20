@@ -1,6 +1,6 @@
 'use strict';
 
-var config  = require('../config/default/config');
+var config  = require('../config/config');
 var getSlug = require('speakingurl');
 
 function categoriesData(movies) {
