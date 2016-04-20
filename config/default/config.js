@@ -214,6 +214,13 @@ module.exports = {
         "type": "type",
         "search" : "search",
         "sitemap" : "sitemap",
-        "admin": "admin"
+        "admin": "admin",
+        "types": {
+            "serial": "serials",
+            "movie": "movies",
+            "mult": "multfilms",
+            "tv": "tv",
+            "anime": "anime"
+        }
     }
 };

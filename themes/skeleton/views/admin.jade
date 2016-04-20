@@ -418,6 +418,40 @@ body
                             | URL админ панели:
                     td
                         input(type='text', id='urls.admin', value=urls.admin).input
+            .name(data-id='types-menu')
+                | &#10507; URL типов
+            #types-menu.config
+                table
+                    tr
+                        td(style='width:150px;')
+                            label(for='urls.types.movie')
+                                | URL фильмов:
+                        td
+                            input(type='text', id='urls.types.movie', value=urls.types.movie).input
+                    tr
+                        td(style='width:150px;')
+                            label(for='urls.types.serial')
+                                | URL сериалов:
+                        td
+                            input(type='text', id='urls.types.serial', value=urls.types.serial).input
+                    tr
+                        td(style='width:150px;')
+                            label(for='urls.types.mult')
+                                | URL мультфильмов:
+                        td
+                            input(type='text', id='urls.types.mult', value=urls.types.mult).input
+                    tr
+                        td(style='width:150px;')
+                            label(for='urls.types.tv')
+                                | URL тв-передач:
+                        td
+                            input(type='text', id='urls.types.tv', value=urls.types.tv).input
+                    tr
+                        td(style='width:150px;')
+                            label(for='urls.types.anime')
+                                | URL аниме:
+                        td
+                            input(type='text', id='urls.types.anime', value=urls.types.anime).input
         .name(data-id='top-menu')
             | &#10507; Топ фильмы
         #top-menu.config
@@ -1672,7 +1706,14 @@ body
                     "type": document.getElementById('urls.type').value || "#{urls.type}",
                     "search": document.getElementById('urls.search').value || "#{urls.search}",
                     "sitemap": document.getElementById('urls.sitemap').value || "#{urls.sitemap}",
-                    "admin": document.getElementById('urls.admin').value || "#{urls.admin}"
+                    "admin": document.getElementById('urls.admin').value || "#{urls.admin}",
+                    "types": {
+                        "serial": document.getElementById('urls.types.serial').value || "#{urls.types.serial}",
+                        "movie": document.getElementById('urls.types.movie').value || "#{urls.types.movie}",
+                        "mult": document.getElementById('urls.types.mult').value || "#{urls.types.mult}",
+                        "tv": document.getElementById('urls.types.tv').value || "#{urls.types.tv}",
+                        "anime": document.getElementById('urls.types.anime').value || "#{urls.types.anime}"
+                    }
                 },
                 "code": {
                     "head": document.getElementById('code.head').value,

@@ -297,21 +297,21 @@ function createQuery(query, sort) {
             search = search.replace(/(^\s*)|(\s*)$/g, '');
 
             if (attribute == 'type') {
-                if (search.indexOf("сериалы") + 1) {
+                if (search == config.urls.types.serial) {
                     where.push('`type` = 1');
                     match.push('@all_movies _all_ @genre !аниме !короткометражка');
                 }
-                else if (search.indexOf("мультфильмы") + 1) {
+                else if (search == config.urls.types.mult) {
                     where.push('`type` != 1');
                     match.push('@genre мультфильм | детский !аниме !короткометражка');
                 }
-                else if (search.indexOf("аниме") + 1) {
+                else if (search == config.urls.types.anime) {
                     match.push('@genre аниме');
                 }
-                else if (search.indexOf("тв-передачи") + 1) {
+                else if (search == config.urls.types.tv) {
                     match.push('@genre ток-шоу | новости | реальное | церемония | концерт');
                 }
-                else if (search.indexOf("фильмы") + 1) {
+                else if (search = config.urls.types.movie) {
                     where.push('`type` != 1');
                     match.push('@all_movies _all_ @genre !мультфильм');
                 }
