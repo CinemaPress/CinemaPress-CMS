@@ -243,6 +243,37 @@
 Например: http://example.com/admin-idiot
 ```
 
+#### URL типов
+- **URL фильмов** - Как будет выглядеть URL каталога фильмов;
+
+```
+Например: http://example.com/type/фильмы
+```
+
+- **URL сериалов** - Как будет выглядеть URL каталога сериалов;
+
+```
+Например: http://example.com/type/сериалы
+```
+
+- **URL мультфильмов** - Как будет выглядеть URL каталога мультфильмов;
+
+```
+Например: http://example.com/type/мультфильмы
+```
+
+- **URL тв-передач** - Как будет выглядеть URL каталога тв-передач;
+
+```
+Например: http://example.com/type/тв-передачи
+```
+
+- **URL аниме** - Как будет выглядеть URL каталога аниме;
+
+```
+Например: http://example.com/type/аниме
+```
+
 # Топ фильмы
 
 ![Top movies CinemaPress CMS](https://raw.githubusercontent.com/CinemaPress/CinemaPress.github.io/master/images/admin/top.png)

@@ -216,11 +216,11 @@ module.exports = {
         "sitemap" : "sitemap",
         "admin": "admin",
         "types": {
-            "serial": "serials",
-            "movie": "movies",
-            "mult": "multfilms",
-            "tv": "tv",
-            "anime": "anime"
+            "serial": "сериалы",
+            "movie": "фильмы",
+            "mult": "мультфильмы",
+            "tv": "тв-передачи",
+            "anime": "аниме"
         }
     }
 };
