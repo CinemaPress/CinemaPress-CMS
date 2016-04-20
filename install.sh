@@ -286,6 +286,16 @@ then
     chown -R ${DOMAIN}:www-data /home/${DOMAIN}/themes
     sed -i "s/\"theme\":\s*\".*\"/\"theme\":\"${THEME}\"/" /home/${DOMAIN}/config/config.js
 fi
+CRONTAB=`grep ${DOMAIN} /etc/crontab`
+if [ "${CRONTAB}" = "" ]
+then
+    echo "\n" >> /etc/crontab
+    echo "# -----" >> /etc/crontab
+    echo "# ----- ${DOMAIN} --------------------------------------------" >> /etc/crontab
+    echo "# -----" >> /etc/crontab
+    echo "@hourly root node /home/${DOMAIN}/modules/publish.js >> /home/${DOMAIN}/config/autostart.log 2>&1" >> /etc/crontab
+    echo "# ----- ${DOMAIN} --------------------------------------------" >> /etc/crontab
+fi
 sed -i "s/example\.com/${DOMAIN}/g" /home/${DOMAIN}/config/config.js
 sed -i "s/:11211/:${MEMCACHED_PORT}/" /home/${DOMAIN}/config/config.js
 sed -i "s/:9306/:${MYSQL_PORT}/" /home/${DOMAIN}/config/config.js

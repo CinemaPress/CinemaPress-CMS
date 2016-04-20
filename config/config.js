@@ -25,6 +25,14 @@ module.exports = {
     "nginx": {
         "addr": "127.0.0.1:3000"
     },
+    "publish": {
+        "start": 297,
+        "stop": 397,
+        "every" : {
+            "hours": 0,
+            "movies": 0
+        }
+    },
     "counts": {
         "index": 10,
         "category": 15,
@@ -49,12 +57,12 @@ module.exports = {
         },
         "year": {
             "name": "Фильмы [year] года",
-            "keys": "2006,2007",
+            "keys": "2006",
             "sort": "kinopoisk-vote-up"
         },
         "genre": {
             "name": "Фильмы в жанре [genre]",
-            "keys": "комедия,драма,ужасы",
+            "keys": "комедия,ужасы",
             "sort": "kinopoisk-vote-up"
         },
         "country": {

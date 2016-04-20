@@ -18,7 +18,6 @@ if data
             each movie in data
                 url
                     loc= movie.url
-                    lastmod= movie.premiere.replace(/(?!2016)[0-9]{4}/g, year)
     else
         urlset(xmlns='http://www.sitemaps.org/schemas/sitemap/0.9')
             each num, key in data

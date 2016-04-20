@@ -91,30 +91,34 @@ router.post('/save', function(req, res) {
 
     delete req.body.description;
 
-    req.body.urls.unique_id      = (
+    req.body.urls.unique_id       = (
         parseInt(req.body.urls.unique_id) > -298 &&
         parseInt(req.body.urls.unique_id) < 297001)
             ? parseInt(req.body.urls.unique_id)
             : 0;
-    req.body.schema              = parseInt(req.body.schema);
-    req.body.rocket              = parseInt(req.body.rocket);
-    req.body.cache.time          = parseInt(req.body.cache.time);
-    req.body.counts.index        = parseInt(req.body.counts.index);
-    req.body.counts.category     = parseInt(req.body.counts.category);
-    req.body.counts.top_category = parseInt(req.body.counts.top_category);
-    req.body.counts.related      = parseInt(req.body.counts.related);
-    req.body.counts.sitemap      = parseInt(req.body.counts.sitemap);
-    req.body.top                 = req.body.top.map(function(id) {return parseInt(id);});
-    req.body.abuse               = req.body.abuse.map(function(id) {return parseInt(id);});
-    req.body.titles              = nbsp(req.body.titles);
-    req.body.titles.movie        = nbsp(req.body.titles.movie);
-    req.body.descriptions        = nbsp(req.body.descriptions);
-    req.body.descriptions.movie  = nbsp(req.body.descriptions.movie);
-    req.body.keywords            = nbsp(req.body.keywords);
-    req.body.keywords.movie      = nbsp(req.body.keywords.movie);
-    req.body.titles.sort         = nbsp(req.body.titles.sort);
-    req.body.code.head           = req.body.code.head.replace(/(\n|\r)/g,'&nbsp;');
-    req.body.code.footer         = req.body.code.footer.replace(/(\n|\r)/g,'&nbsp;');
+
+    req.body.publish.start        = parseInt(req.body.publish.start);
+    req.body.publish.stop         = parseInt(req.body.publish.stop);
+    req.body.publish.every.hours  = parseInt(req.body.publish.every.hours);
+    req.body.publish.every.movies = parseInt(req.body.publish.every.movies);
+    req.body.rocket               = parseInt(req.body.rocket);
+    req.body.cache.time           = parseInt(req.body.cache.time);
+    req.body.counts.index         = parseInt(req.body.counts.index);
+    req.body.counts.category      = parseInt(req.body.counts.category);
+    req.body.counts.top_category  = parseInt(req.body.counts.top_category);
+    req.body.counts.related       = parseInt(req.body.counts.related);
+    req.body.counts.sitemap       = parseInt(req.body.counts.sitemap);
+    req.body.top                  = req.body.top.map(function(id) {return parseInt(id);});
+    req.body.abuse                = req.body.abuse.map(function(id) {return parseInt(id);});
+    req.body.titles               = nbsp(req.body.titles);
+    req.body.titles.movie         = nbsp(req.body.titles.movie);
+    req.body.descriptions         = nbsp(req.body.descriptions);
+    req.body.descriptions.movie   = nbsp(req.body.descriptions.movie);
+    req.body.keywords             = nbsp(req.body.keywords);
+    req.body.keywords.movie       = nbsp(req.body.keywords.movie);
+    req.body.titles.sort          = nbsp(req.body.titles.sort);
+    req.body.code.head            = req.body.code.head.replace(/(\n|\r)/g,'&nbsp;');
+    req.body.code.footer          = req.body.code.footer.replace(/(\n|\r)/g,'&nbsp;');
 
     var data = JSON.stringify(req.body);
 

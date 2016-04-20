@@ -210,6 +210,16 @@ then
     chown -R ${DOMAIN}:www-data /home/${DOMAIN}/themes
     sed -i "s/\"theme\":\s*\".*\"/\"theme\":\"${THEME}\"/" /home/${DOMAIN}/config/config.js
 fi
+CRONTAB=`grep ${DOMAIN} /etc/crontab`
+if [ "${CRONTAB}" = "" ]
+then
+    echo "\n" >> /etc/crontab
+    echo "# -----" >> /etc/crontab
+    echo "# ----- ${DOMAIN} --------------------------------------------" >> /etc/crontab
+    echo "# -----" >> /etc/crontab
+    echo "@hourly root node /home/${DOMAIN}/modules/publish.js >> /home/${DOMAIN}/config/autostart.log 2>&1" >> /etc/crontab
+    echo "# ----- ${DOMAIN} --------------------------------------------" >> /etc/crontab
+fi
 sed -i "s/example\.com/${DOMAIN}/g" /home/${DOMAIN}/config/config.js
 sed -i "s/:3000/:${NGINX_PORT}/" /home/${DOMAIN}/config/config.js
 cp /home/${DOMAIN}/config/config.js /home/${DOMAIN}/config/config.old.js

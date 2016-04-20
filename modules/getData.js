@@ -14,12 +14,15 @@ var movies_db = 'movies_' + config.domain.replace(/[^A-Za-z0-9]/g,'_');
 function getCategories(category, callback) {
 
     var queryString = '' +
-        'SELECT ' + category + ' AS category ' +
-        'FROM ' + bests_db + ' ' +
-        'WHERE MATCH(\'@all_movies _all_ @' + category + ' !_empty\') ' +
-        'ORDER BY kp_vote DESC ' +
-        'LIMIT 10000 ' +
-        'OPTION max_matches = 10000';
+        ' SELECT ' + category + ' AS category ' +
+        ' FROM ' + bests_db +
+        ' WHERE ' +
+            ' MATCH(\'@all_movies _all_ @' + category + ' !_empty\') AND ' +
+            ' kp_id >= ' + config.publish.start + ' AND ' +
+            ' kp_id <= ' + config.publish.stop +
+        ' ORDER BY kp_vote DESC ' +
+        ' LIMIT 10000 ' +
+        ' OPTION max_matches = 10000';
 
     sphinx(queryString, function (err, movies) {
 
@@ -44,12 +47,15 @@ function getMovies(query, sort, page, type, callback) {
     var max   = start + limit;
 
     var queryString = '' +
-        'SELECT * ' +
-        'FROM ' + movies_db + ' ' +
-        'WHERE ' + createQuery(query, sort) + ' ' +
-        'ORDER BY ' + orderBy(sort) + ' ' +
-        'LIMIT ' + start + ', ' + limit + ' ' +
-        'OPTION max_matches = ' + max;
+        ' SELECT * ' +
+        ' FROM ' + movies_db +
+        ' WHERE ' +
+            '' + createQuery(query, sort) + ' AND ' +
+            ' kp_id >= ' + config.publish.start + ' AND ' +
+            ' kp_id <= ' + config.publish.stop +
+        ' ORDER BY ' + orderBy(sort) +
+        ' LIMIT ' + start + ', ' + limit +
+        ' OPTION max_matches = ' + max;
 
     sphinx(queryString, function (err, movies) {
 
@@ -68,11 +74,76 @@ function getMovies(query, sort, page, type, callback) {
 
 }
 
+function getPublishMovies(callback) {
+
+    var start_limit = Math.ceil((config.publish.every.movies/config.publish.every.hours)/2);
+    var stop_limit = Math.floor((config.publish.every.movies/config.publish.every.hours)/2);
+
+    var startQueryString = '' +
+        ' SELECT MIN(kp_id)' +
+        ' FROM (' +
+            ' SELECT kp_id' +
+            ' FROM ' + movies_db +
+            ' WHERE kp_id < ' + config.publish.start +
+            ' ORDER BY kp_id DESC' +
+            ' LIMIT ' + start_limit +
+            ' OPTION max_matches = ' + start_limit +
+        ' ) AS T1';
+
+    var stopQueryString = '' +
+        ' SELECT MAX(kp_id)' +
+        ' FROM (' +
+            ' SELECT kp_id' +
+            ' FROM ' + movies_db +
+            ' WHERE kp_id > ' + config.publish.stop +
+            ' ORDER BY kp_id ASC' +
+            ' LIMIT ' + stop_limit +
+            ' OPTION max_matches = ' + stop_limit +
+        ' ) AS T2';
+
+    var queryString = 'SELECT (' + startQueryString + ') AS start_id, + (' + stopQueryString + ') AS stop_id';
+
+    sphinx(queryString, function (err, result) {
+
+        if (err) console.log('[getPublishMovies] Sphinx Get Error.', err);
+
+        if (result && result.length) {
+
+            var ids = {};
+
+            ids.start_id = (parseInt(result[0].start_id))
+                ? parseInt(result[0].start_id)
+                : config.publish.start;
+            ids.stop_id = (parseInt(result[0].stop_id))
+                ? parseInt(result[0].stop_id)
+                : config.publish.stop;
+
+            callback(ids);
+
+        }
+        else {
+
+            callback(null);
+
+        }
+
+    });
+
+}
+
 function getMovie(id, callback) {
 
     id = parseInt(id) - parseInt(config.urls.unique_id);
 
-    var queryString = 'SELECT * FROM ' + movies_db + ' WHERE kp_id = ' + id + ' LIMIT 1 OPTION max_matches = 1';
+    if (id < config.publish.start || id > config.publish.stop) return callback([]);
+
+    var queryString = '' +
+        ' SELECT * ' +
+        ' FROM ' + movies_db + ' ' +
+        ' WHERE ' +
+            ' kp_id = ' + id + ' ' +
+        ' LIMIT 1 ' +
+        ' OPTION max_matches = 1';
 
     sphinx(queryString, function (err, movies) {
 
@@ -317,5 +388,6 @@ module.exports = {
     "movies"     : getMovies,
     "movie"      : getMovie,
     "additional" : getAdditionalMovies,
-    "top"        : getTopMovies
+    "top"        : getTopMovies,
+    "publish"    : getPublishMovies
 };
