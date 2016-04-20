@@ -1,6 +1,6 @@
 'use strict';
 
-var config    = require('../config/config');
+var config    = require('../config/default/config');
 var Memcached = require('memcached');
 
 config.cache.addr = config.cache.addr || '127.0.0.1:11211';

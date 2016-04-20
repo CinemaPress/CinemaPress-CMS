@@ -3,9 +3,9 @@ module.exports = {
     "email": "support@example.com",
     "disqus": "films-online",
     "theme": "skeleton",
-    "top": [299, 300, 301, 302, 303, 304, 305, 306],
+    "top": [320, 321, 322, 323, 324, 325, 326, 327],
     "top_category": "imdb-vote-up",
-    "abuse": [299, 300, 301],
+    "abuse": [350, 351, 352],
     "protocol": "http://",
     "st": "st.kp.yandex.net",
     "schema": 0,
@@ -26,11 +26,11 @@ module.exports = {
         "addr": "127.0.0.1:3000"
     },
     "publish": {
-        "start": 297,
-        "stop": 397,
+        "start": 320,
+        "stop": 370,
         "every" : {
-            "hours": 0,
-            "movies": 0
+            "hours": 1,
+            "movies": 2
         }
     },
     "counts": {

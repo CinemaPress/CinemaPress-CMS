@@ -1,6 +1,6 @@
 'use strict';
 
-var config       = require('./config/config');
+var config       = require('./config/default/config');
 var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var express      = require('express');

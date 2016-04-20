@@ -87,14 +87,14 @@ echo '-----                    НАСТРОЙКА SPHINX                    ----
 echo '------------------------------------------------------------------'
 echo ''
 mkdir -p /home/${DOMAIN}/config/
-wget --no-check-certificate https://raw.githubusercontent.com/CinemaPress/CinemaPress-CMS/master/config/sphinx.conf -qO /home/${DOMAIN}/config/sphinx.conf
-wget --no-check-certificate https://raw.githubusercontent.com/CinemaPress/CinemaPress-CMS/master/config/movies.xml -qO /home/${DOMAIN}/config/movies.xml
+wget --no-check-certificate https://raw.githubusercontent.com/CinemaPress/CinemaPress-CMS/master/config/default/sphinx.conf -qO /home/${DOMAIN}/config/sphinx.conf
+wget --no-check-certificate https://raw.githubusercontent.com/CinemaPress/CinemaPress-CMS/master/config/default/movies.xml -qO /home/${DOMAIN}/config/movies.xml
 I=`dpkg -s sphinxsearch | grep "Status"`
 if ! [ -n "${I}" ]
 then
     wget --no-check-certificate http://sphinxsearch.com/files/sphinxsearch_2.2.10-release-1~${VER}_amd64.deb -qO s.deb && dpkg -i s.deb && rm -rf s.deb
     rm -rf /etc/sphinxsearch/sphinx.conf
-    wget --no-check-certificate https://raw.githubusercontent.com/CinemaPress/CinemaPress-CMS/master/config/dummy_sphinx.conf -qO /etc/sphinxsearch/sphinx.conf
+    wget --no-check-certificate https://raw.githubusercontent.com/CinemaPress/CinemaPress-CMS/master/config/default/dummy.conf -qO /etc/sphinxsearch/sphinx.conf
 fi
 AGAIN=yes
 SPHINX_PORT=39312

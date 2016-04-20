@@ -2,7 +2,7 @@
 
 var memcached = require('../modules/memcached');
 var getData   = require('../modules/getData');
-var config    = require('../config/config');
+var config    = require('../config/default/config');
 var express   = require('express');
 var path      = require('path');
 var fs        = require('fs');

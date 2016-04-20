@@ -138,6 +138,7 @@ OPENSSL=`echo "${PASSWD}" | openssl passwd -1 -stdin -salt cinemapress`
 rm -rf /home/${DOMAIN}/
 rm -rf /home/${DOMAIN}/.??*
 git clone https://github.com/CinemaPress/CinemaPress-CMS.git /home/${DOMAIN}
+cp -r /home/${DOMAIN}/config/default/* /home/${DOMAIN}/config/
 chown -R ${DOMAIN}:www-data /home/${DOMAIN}/
 echo ''
 echo '------------------------------------------------------------------'

@@ -1,6 +1,6 @@
 'use strict';
 
-var config  = require('../config/config');
+var config  = require('../config/default/config');
 var express = require('express');
 var router  = express.Router();
 

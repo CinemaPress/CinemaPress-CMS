@@ -45,10 +45,6 @@ rm -rf /home/${DOMAIN}/modules/* && cp -R /home/${DOMAIN}/.newCP/modules/* /home
 rm -rf /home/${DOMAIN}/routes/* && cp -R /home/${DOMAIN}/.newCP/routes/* /home/${DOMAIN}/routes/
 rm -rf /home/${DOMAIN}/themes/skeleton/* && cp -R /home/${DOMAIN}/.newCP/themes/skeleton/* /home/${DOMAIN}/themes/skeleton/
 
-rm -rf /home/${DOMAIN}/db.sh && cp -R /home/${DOMAIN}/.newCP/db.sh /home/${DOMAIN}/db.sh
-rm -rf /home/${DOMAIN}/theme.sh && cp -R /home/${DOMAIN}/.newCP/theme.sh /home/${DOMAIN}/theme.sh
-rm -rf /home/${DOMAIN}/update.sh && cp -R /home/${DOMAIN}/.newCP/update.sh /home/${DOMAIN}/update.sh
-
 chown -R ${DOMAIN}:www-data /home/${DOMAIN}
 
 sleep 3
@@ -98,10 +94,6 @@ else
     rm -rf /home/${DOMAIN}/modules/* && cp -R /home/${DOMAIN}/.oldCP/modules/* /home/${DOMAIN}/modules/
     rm -rf /home/${DOMAIN}/routes/* && cp -R /home/${DOMAIN}/.oldCP/routes/* /home/${DOMAIN}/routes/
     rm -rf /home/${DOMAIN}/themes/skeleton/* && cp -R /home/${DOMAIN}/.oldCP/themes/skeleton/* /home/${DOMAIN}/themes/skeleton/
-
-    rm -rf /home/${DOMAIN}/db.sh && cp -R /home/${DOMAIN}/.oldCP/db.sh /home/${DOMAIN}/db.sh
-    rm -rf /home/${DOMAIN}/theme.sh && cp -R /home/${DOMAIN}/.oldCP/theme.sh /home/${DOMAIN}/theme.sh
-    rm -rf /home/${DOMAIN}/update.sh && cp -R /home/${DOMAIN}/.oldCP/update.sh /home/${DOMAIN}/update.sh
 
     chown -R ${DOMAIN}:www-data /home/${DOMAIN}
 

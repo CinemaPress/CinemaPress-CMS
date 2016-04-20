@@ -1,7 +1,7 @@
 'use strict';
 
 var memcached     = require('../modules/memcached');
-var config        = require('../config/config');
+var config        = require('../config/default/config');
 var structureData = require('./structureData');
 var requiredData  = require('./requiredData');
 var sphinx        = require('./sphinx');
