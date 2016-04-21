@@ -69,6 +69,18 @@ do
         echo 'WARNING: Пароль от админ-панели и FTP не может быть пустым.'
     fi
 done
+echo '------------------- IP:PORT MEMCACHED СЕРВЕРА --------------------'
+read -p ': ' MEMCACHED
+if [ "${MEMCACHED}" = "" ]
+then
+    MEMCACHED="127.0.0.1:11211"
+fi
+echo '--------------------- IP:PORT SPHINX СЕРВЕРА ---------------------'
+read -p ': ' MYSQL
+if [ "${MYSQL}" = "" ]
+then
+    MEMCACHED="127.0.0.1:9306"
+fi
 echo '------------------------------------------------------------------'
 echo ''
 sleep 3
@@ -222,6 +234,8 @@ then
     echo "# ----- ${DOMAIN} --------------------------------------------" >> /etc/crontab
 fi
 sed -i "s/example\.com/${DOMAIN}/g" /home/${DOMAIN}/config/config.js
+sed -i "s/127\.0\.0\.1:11211/${MEMCACHED}/" /home/${DOMAIN}/config/config.js
+sed -i "s/127\.0\.0\.1:9306/${MYSQL}/" /home/${DOMAIN}/config/config.js
 sed -i "s/:3000/:${NGINX_PORT}/" /home/${DOMAIN}/config/config.js
 cp /home/${DOMAIN}/config/config.js /home/${DOMAIN}/config/config.old.js
 echo ''
