@@ -43,7 +43,19 @@ app.use('/robots.txt', robots);
 app.use('/', index);
 
 app.use(function(err, req, res, next) {
-    res.status(err.status).send(err.message);
+    err.status = (err.status) ? err.status : 404;
+    err.message = (err.message) ? err.message : 'Not Found';
+    res.status(err.status).render('error', {
+        "status": err.status,
+        "message": err.message
+    });
+});
+
+app.use(function(req, res) {
+    res.status(404).render('error', {
+        "status": 404,
+        "message": 'Not Found'
+    });
 });
 
 app.listen(port);
