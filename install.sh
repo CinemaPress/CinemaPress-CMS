@@ -272,6 +272,8 @@ fi
 rm -rf /etc/memcached_${DOMAIN}.conf
 cp /etc/memcached.conf /etc/memcached_${DOMAIN}.conf
 sed -i "s/-p 11211/-p ${MEMCACHED_PORT}/g" /etc/memcached_${DOMAIN}.conf
+sed -i "s/-M/# -M/g" /etc/memcached_${DOMAIN}.conf
+echo "\n-I 3m" >> /etc/memcached_${DOMAIN}.conf
 echo ''
 echo '------------------------------------------------------------------'
 echo '-----                           OK                           -----'
