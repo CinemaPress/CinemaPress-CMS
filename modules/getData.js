@@ -13,6 +13,10 @@ var movies_db = 'movies_' + config.domain.replace(/[^A-Za-z0-9]/g,'_');
 
 function getCategories(category, callback) {
 
+    var text = (config.publish.text && config.text.ids.length)
+        ? ' AND kp_id IN (' + config.text.ids.join(',') + ') '
+        : '';
+
     var queryString = '' +
         ' SELECT ' + category + ' AS category ' +
         ' FROM ' + bests_db +
@@ -20,6 +24,7 @@ function getCategories(category, callback) {
             ' MATCH(\'@all_movies _all_ @' + category + ' !_empty\') AND ' +
             ' kp_id >= ' + config.publish.start + ' AND ' +
             ' kp_id <= ' + config.publish.stop +
+            + text +
         ' ORDER BY kp_vote DESC ' +
         ' LIMIT 10000 ' +
         ' OPTION max_matches = 10000';
@@ -46,6 +51,10 @@ function getMovies(query, sort, page, type, callback) {
     var start = page * config.counts[type] - config.counts[type];
     var max   = start + limit;
 
+    var text = (config.publish.text && config.text.ids.length)
+        ? ' AND kp_id IN (' + config.text.ids.join(',') + ') '
+        : '';
+
     var queryString = '' +
         ' SELECT * ' +
         ' FROM ' + movies_db +
@@ -53,6 +62,7 @@ function getMovies(query, sort, page, type, callback) {
             '' + createQuery(query, sort) + ' AND ' +
             ' kp_id >= ' + config.publish.start + ' AND ' +
             ' kp_id <= ' + config.publish.stop +
+            + text +
         ' ORDER BY ' + orderBy(sort) +
         ' LIMIT ' + start + ', ' + limit +
         ' OPTION max_matches = ' + max;
@@ -138,7 +148,15 @@ function getMovie(id, callback) {
 
     id = parseInt(id) - parseInt(config.urls.unique_id);
 
-    if (id < config.publish.start || id > config.publish.stop) return callback([]);
+    var text = (config.publish.text && config.text.ids.indexOf(id)+1)
+        ? true
+        : false;
+
+    if (id < config.publish.start || id > config.publish.stop) {
+        if (!text) {
+            return callback([]);
+        }
+    }
 
     var queryString = '' +
         ' SELECT * ' +

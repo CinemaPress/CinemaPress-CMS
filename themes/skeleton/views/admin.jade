@@ -566,14 +566,26 @@ body
                     tr
                         td
                             label
-                                | Опубликовать сразу диапазон:
+                                | Опубликовать сразу:
                         td
                             label(for='publish.start')
-                                | от
+                                | диапазон от
                             input(type='text', id='publish.start', style='margin:0 20px; width:50px; text-align: center;' value=publish.start).input
                             label(for='publish.stop')
                                 | до
                             input(type='text', id='publish.stop', style='margin:0 20px; width:50px; text-align: center;', value=publish.stop).input
+                    tr
+                        td
+                        td
+                            label(for='publish.text')
+                                | фильмы с авторским описанием
+                            select(id='publish.text').select
+                                if publish.text
+                                    option(value=1, selected='selected') Да
+                                    option(value=0) Нет
+                                else
+                                    option(value=0, selected='selected') Нет
+                                    option(value=1) Да
                     tr
                         td
                             label
@@ -1532,7 +1544,8 @@ body
                     "every": {
                         "hours": document.getElementById('publish.every.hours').value || "#{publish.every.hours}",
                         "movies": document.getElementById('publish.every.movies').value || "#{publish.every.movies}"
-                    }
+                    },
+                    "text": document.getElementById('publish.text').options[document.getElementById('publish.text').selectedIndex].value || "#{publish.text}"
                 },
                 "counts": {
                     "index": document.getElementById('counts.index').value,

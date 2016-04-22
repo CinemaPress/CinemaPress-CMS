@@ -31,7 +31,8 @@ module.exports = {
         "every" : {
             "hours": 1,
             "movies": 2
-        }
+        },
+        "text": 1
     },
     "counts": {
         "index": 10,

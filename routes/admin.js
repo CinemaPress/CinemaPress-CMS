@@ -101,6 +101,7 @@ router.post('/save', function(req, res) {
     req.body.publish.stop         = parseInt(req.body.publish.stop);
     req.body.publish.every.hours  = parseInt(req.body.publish.every.hours);
     req.body.publish.every.movies = parseInt(req.body.publish.every.movies);
+    req.body.publish.text         = parseInt(req.body.publish.text);
     req.body.rocket               = parseInt(req.body.rocket);
     req.body.schema               = parseInt(req.body.schema);
     req.body.cache.time           = parseInt(req.body.cache.time);
