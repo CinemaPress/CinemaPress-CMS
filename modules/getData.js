@@ -14,17 +14,23 @@ var movies_db = 'movies_' + config.domain.replace(/[^A-Za-z0-9]/g,'_');
 function getCategories(category, callback) {
 
     var text = (config.publish.text && config.text.ids.length)
-        ? ' AND kp_id IN (' + config.text.ids.join(',') + ') '
-        : '';
+        ? ' OR kp_id = ' + config.text.ids.join(' OR kp_id = ') + ' '
+        : ' ';
 
     var queryString = '' +
-        ' SELECT ' + category + ' AS category ' +
+        ' SELECT ' +
+            category + ' AS category, ' +
+            '(' +
+                '(' +
+                    'kp_id >= ' + config.publish.start +
+                        ' AND ' +
+                    'kp_id <= ' + config.publish.stop +
+                ')' + text +
+            ') AS movie' +
         ' FROM ' + bests_db +
         ' WHERE ' +
-            ' MATCH(\'@all_movies _all_ @' + category + ' !_empty\') AND ' +
-            ' kp_id >= ' + config.publish.start + ' AND ' +
-            ' kp_id <= ' + config.publish.stop +
-            + text +
+            ' MATCH(\'@all_movies _all_ @' + category + ' !_empty\') ' +
+            ' AND movie > 0 ' +
         ' ORDER BY kp_vote DESC ' +
         ' LIMIT 10000 ' +
         ' OPTION max_matches = 10000';
@@ -52,17 +58,22 @@ function getMovies(query, sort, page, type, callback) {
     var max   = start + limit;
 
     var text = (config.publish.text && config.text.ids.length)
-        ? ' AND kp_id IN (' + config.text.ids.join(',') + ') '
-        : '';
+        ? ' OR kp_id = ' + config.text.ids.join(' OR kp_id = ') + ' '
+        : ' ';
 
     var queryString = '' +
-        ' SELECT * ' +
+        ' SELECT *, ' +
+            '(' +
+                '(' +
+                    'kp_id >= ' + config.publish.start +
+                        ' AND ' +
+                    'kp_id <= ' + config.publish.stop +
+                ')' + text +
+            ') AS movie' +
         ' FROM ' + movies_db +
         ' WHERE ' +
-            '' + createQuery(query, sort) + ' AND ' +
-            ' kp_id >= ' + config.publish.start + ' AND ' +
-            ' kp_id <= ' + config.publish.stop +
-            + text +
+            createQuery(query, sort) +
+            ' AND movie > 0 ' +
         ' ORDER BY ' + orderBy(sort) +
         ' LIMIT ' + start + ', ' + limit +
         ' OPTION max_matches = ' + max;
@@ -146,43 +157,39 @@ function getPublishMovies(callback) {
 
 function getMovie(id, callback) {
 
-    var admin = ('' + id).indexOf('admin')+1;
+    var admin_id = id;
 
     id = parseInt(id) - parseInt(config.urls.unique_id);
 
-    var text = (config.publish.text && config.text.ids.indexOf(id)+1)
-        ? true
-        : false;
+    var range = (id >= config.publish.start && id <= config.publish.stop);
+    var text = (config.publish.text && config.text.ids.indexOf(id)+1);
+    var admin = admin_id.indexOf('admin')+1;
 
-    if (id < config.publish.start || id > config.publish.stop) {
-        if (!text) {
-            if (!admin) {
-                return callback([]);
+    if (range || text || admin) {
+        var queryString = '' +
+            ' SELECT * ' +
+            ' FROM ' + movies_db +
+            ' WHERE kp_id = ' + id +
+            ' LIMIT 1 ' +
+            ' OPTION max_matches = 1';
+
+        sphinx(queryString, function (err, movies) {
+
+            if (err) console.log('[getMovie] Sphinx Get Error.', err);
+
+            var movie = [];
+
+            if (movies && movies.length) {
+                movie = structureData.movies(movies)[0];
             }
-        }
+
+            callback(movie);
+
+        });
     }
-
-    var queryString = '' +
-        ' SELECT * ' +
-        ' FROM ' + movies_db + ' ' +
-        ' WHERE ' +
-            ' kp_id = ' + id + ' ' +
-        ' LIMIT 1 ' +
-        ' OPTION max_matches = 1';
-
-    sphinx(queryString, function (err, movies) {
-
-        if (err) console.log('[getMovie] Sphinx Get Error.', err);
-
-        var movie = [];
-
-        if (movies && movies.length) {
-            movie = structureData.movies(movies)[0];
-        }
-
-        callback(movie);
-
-    });
+    else {
+        return callback([]);
+    }
 
 }
 
