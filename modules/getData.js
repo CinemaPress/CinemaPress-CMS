@@ -146,6 +146,8 @@ function getPublishMovies(callback) {
 
 function getMovie(id, callback) {
 
+    var admin = ('' + id).indexOf('admin')+1;
+
     id = parseInt(id) - parseInt(config.urls.unique_id);
 
     var text = (config.publish.text && config.text.ids.indexOf(id)+1)
@@ -154,7 +156,9 @@ function getMovie(id, callback) {
 
     if (id < config.publish.start || id > config.publish.stop) {
         if (!text) {
-            return callback([]);
+            if (!admin) {
+                return callback([]);
+            }
         }
     }
 

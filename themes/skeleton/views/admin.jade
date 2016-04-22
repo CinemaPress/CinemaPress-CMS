@@ -578,8 +578,8 @@ body
                         td
                         td
                             label(for='publish.text')
-                                | фильмы с авторским описанием
-                            select(id='publish.text').select
+                                | + фильмы с авторским описанием
+                            select(id='publish.text', style='width: auto;').select
                                 if publish.text
                                     option(value=1, selected='selected') Да
                                     option(value=0) Нет

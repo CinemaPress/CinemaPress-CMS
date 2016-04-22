@@ -19,7 +19,7 @@ router.post('/movie', function(req, res) {
 
     if (parseInt(req.body.id)) {
 
-        getData.movie(parseInt(req.body.id), function (movie) {
+        getData.movie(parseInt(req.body.id) + 'admin', function (movie) {
             if (movie && movie.title) {
                 res.json(movie);
             }
