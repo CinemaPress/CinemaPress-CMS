@@ -163,7 +163,7 @@ function getMovie(id, callback) {
 
     var range = (id >= config.publish.start && id <= config.publish.stop);
     var text = (config.publish.text && config.text.ids.indexOf(id)+1);
-    var admin = admin_id.indexOf('admin')+1;
+    var admin = ('' + admin_id).indexOf('admin')+1;
 
     if (range || text || admin) {
         var queryString = '' +
