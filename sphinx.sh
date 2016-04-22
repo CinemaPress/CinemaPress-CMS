@@ -116,6 +116,8 @@ sed -i "s/example\.com/${DOMAIN}/g" /home/${DOMAIN}/config/sphinx.conf
 sed -i "s/example_com/${INDEX_DOMAIN}/g" /home/${DOMAIN}/config/sphinx.conf
 sed -i "s/127\.0\.0\.1:9306/0\.0\.0\.0:${MYSQL_PORT}/g" /home/${DOMAIN}/config/sphinx.conf
 sed -i "s/:9312/:${SPHINX_PORT}/g" /home/${DOMAIN}/config/sphinx.conf
+sed -i "s/= pool/= 0/g" /home/${DOMAIN}/config/sphinx.conf
+sed -i "s/= 128M/= 512M/g" /home/${DOMAIN}/config/sphinx.conf
 echo ''
 echo '------------------------------------------------------------------'
 echo '-----                           OK                           -----'
