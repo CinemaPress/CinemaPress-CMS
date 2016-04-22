@@ -301,6 +301,8 @@
 - **Микроразметка** - включение или отключение микроразметки Schema.org на сайте;
 - **Rocket режим** - позволяет получить в <a href="https://developers.google.com/speed/pagespeed/insights/">Google PageSpeed Insights</a> показатели в ``90-100%`` за счет использования на сайте картинок минимального размера.
 
+![Rocket mode CinemaPress CMS](https://raw.githubusercontent.com/CinemaPress/CinemaPress.github.io/master/images/admin/pagespeed.png)
+
 #### Публикация
 - **Опубликовать сразу**
     - диапазон ID КиноПоиск которые нужно сразу опубликовать на сайте;
