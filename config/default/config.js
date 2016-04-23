@@ -7,7 +7,7 @@ module.exports = {
     "top_category": "imdb-vote-up",
     "abuse": [350, 351, 352],
     "protocol": "http://",
-    "st": "st.kp.yandex.net",
+    "st": "st.cinemapress.org",
     "schema": 0,
     "rocket": 0,
     "social": {

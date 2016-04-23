@@ -1762,7 +1762,7 @@ body
                         document.getElementById('submit').innerHTML = 'Сохранить &#9919;';
                     }, 5000);
                 }
-                else if (xhr.status == 404) {
+                else if (xhr.readyState == 4 && xhr.status != 200) {
                     document.getElementById('submit').innerHTML = '<span style="color:#ff916d;">Ошибка сохранения &#128027;</span>';
                     console.log(xhr.responseText);
                 }
@@ -1795,7 +1795,7 @@ body
                         document.getElementById('flush').innerHTML = 'Очистить кэш &#9730;';
                     }, 5000);
                 }
-                else if (xhr.status == 404) {
+                else if (xhr.readyState == 4 && xhr.status != 200) {
                     document.getElementById('flush').innerHTML = '<span style="color:#ff916d;">Ошибка очистки &#9773;</span>';
                     console.log(xhr.responseText);
                 }
@@ -1822,7 +1822,7 @@ body
                             location.reload(true);
                         }, 4000);
                     }
-                    else if (xhr.status == 404) {
+                    else if (xhr.readyState == 4 && xhr.status != 200) {
                         document.getElementById('downgrade').innerHTML = '<span style="color:#ff916d;">Ошибка отката &#128552;</span>';
                         console.log(xhr.responseText);
                     }
