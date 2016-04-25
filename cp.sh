@@ -147,7 +147,7 @@ echo '------------------------------------------------------------------'
 echo ''
 useradd ${DOMAIN} -m -U -s /bin/false
 OPENSSL=`echo "${PASSWD}" | openssl passwd -1 -stdin -salt cinemapress`
-rm -rf /home/${DOMAIN}/
+rm -rf /home/${DOMAIN}/*
 rm -rf /home/${DOMAIN}/.??*
 git clone https://github.com/CinemaPress/CinemaPress-CMS.git /home/${DOMAIN}
 cp -r /home/${DOMAIN}/config/default/* /home/${DOMAIN}/config/
