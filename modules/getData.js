@@ -17,6 +17,11 @@ function getCategories(category, callback) {
         ? ' OR kp_id = ' + config.text.ids.join(' OR kp_id = ') + ' '
         : ' ';
 
+    var where = (config.publish.required.split(',')).map(function(category) {
+        return '`' + category.trim() + '` != \'\'';
+    });
+    where = (where.length) ? ' AND ' + where.join(' AND ') : '';
+
     var queryString = '' +
         ' SELECT ' +
             category + ' AS category, ' +
@@ -31,6 +36,7 @@ function getCategories(category, callback) {
         ' WHERE ' +
             ' MATCH(\'@all_movies _all_ @' + category + ' !_empty\') ' +
             ' AND movie > 0 ' +
+            where +
         ' ORDER BY kp_vote DESC ' +
         ' LIMIT 10000 ' +
         ' OPTION max_matches = 10000';
@@ -61,6 +67,11 @@ function getMovies(query, sort, page, type, callback) {
         ? ' OR kp_id = ' + config.text.ids.join(' OR kp_id = ') + ' '
         : ' ';
 
+    var where = (config.publish.required.split(',')).map(function(category) {
+        return '`' + category.trim() + '` != \'\'';
+    });
+    where = (where.length) ? ' AND ' + where.join(' AND ') : '';
+
     var queryString = '' +
         ' SELECT *, ' +
             '(' +
@@ -74,6 +85,7 @@ function getMovies(query, sort, page, type, callback) {
         ' WHERE ' +
             createQuery(query, sort) +
             ' AND movie > 0 ' +
+            where +
         ' ORDER BY ' + orderBy(sort) +
         ' LIMIT ' + start + ', ' + limit +
         ' OPTION max_matches = ' + max;
@@ -165,11 +177,16 @@ function getMovie(id, callback) {
     var text = (config.publish.text && config.text.ids.indexOf(id)+1);
     var admin = ('' + admin_id).indexOf('admin')+1;
 
+    var where = (config.publish.required.split(',')).map(function(category) {
+        return '`' + category.trim() + '` != \'\'';
+    });
+    where = (where.length) ? ' AND ' + where.join(' AND ') : '';
+
     if (range || text || admin) {
         var queryString = '' +
             ' SELECT * ' +
             ' FROM ' + movies_db +
-            ' WHERE kp_id = ' + id +
+            ' WHERE kp_id = ' + id + where +
             ' LIMIT 1 ' +
             ' OPTION max_matches = 1';
 
@@ -314,7 +331,6 @@ function createQuery(query, sort) {
     }
     else if (sort.indexOf('year') + 1 || sort.indexOf('premiere') + 1) {
         where.push('`premiere` <= ' + toDays());
-        where.push('`title_ru` != \'\'');
     }
 
     for (var attribute in query) {

@@ -32,7 +32,8 @@ module.exports = {
             "hours": 1,
             "movies": 2
         },
-        "text": 1
+        "text": 1,
+        "required": ""
     },
     "counts": {
         "index": 10,

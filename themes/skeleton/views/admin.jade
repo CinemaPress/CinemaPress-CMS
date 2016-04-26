@@ -43,7 +43,7 @@ head
             background: #273039;
             color: #fff;
             padding: 10px;
-            margin: 0 10px;
+            margin: 1px 10px;
             border: 1px #273039 solid;
             border-radius: 3px;
         }
@@ -52,7 +52,7 @@ head
             background: #273039;
             color: #fff;
             padding: 10px;
-            margin: 0 10px;
+            margin: 1px 10px;
             border: 1px #273039 solid;
             border-radius: 3px;
         }
@@ -598,6 +598,140 @@ body
                                 | фильмов каждый(е)
                                 input(type='text', id='publish.every.hours', style='margin:0 20px; width:50px; text-align: center;', value=publish.every.hours).input
                                 | час(ов)
+                    tr
+                        td
+                            label
+                                | Наличие информации:
+                        td
+                            - reqs = publish.required.split(',');
+                            if reqs.indexOf('country') + 1
+                                label(for='publish.required.country')
+                                    | Страна:
+                                select(id='publish.required.country').select
+                                    option(value='country', selected='selected')
+                                        | обязательно
+                                    option(value='')
+                                        | не важно
+                            else
+                                label(for='publish.required.country')
+                                    | Страны:
+                                select(id='publish.required.country').select
+                                    option(value='country')
+                                        | обязательно
+                                    option(value='', selected='selected')
+                                        | не важно
+                            if reqs.indexOf('genre') + 1
+                                label(for='publish.required.genre')
+                                    | Жанр:
+                                select(id='publish.required.genre').select
+                                    option(value='genre', selected='selected')
+                                        | обязательно
+                                    option(value='')
+                                        | не важно
+                            else
+                                label(for='publish.required.genre')
+                                    | Жанр:
+                                select(id='publish.required.genre').select
+                                    option(value='genre')
+                                        | обязательно
+                                    option(value='', selected='selected')
+                                        | не важно
+                            if reqs.indexOf('actor') + 1
+                                label(for='publish.required.actor')
+                                    | Актеры:
+                                select(id='publish.required.actor').select
+                                    option(value='actor', selected='selected')
+                                        | обязательно
+                                    option(value='')
+                                        | не важно
+                            else
+                                label(for='publish.required.actor')
+                                    | Актеры:
+                                select(id='publish.required.actor').select
+                                    option(value='actor')
+                                        | обязательно
+                                    option(value='', selected='selected')
+                                        | не важно
+                            if reqs.indexOf('director') + 1
+                                label(for='publish.required.director')
+                                    | Режиссер:
+                                select(id='publish.required.director').select
+                                    option(value='director', selected='selected')
+                                        | обязательно
+                                    option(value='')
+                                        | не важно
+                            else
+                                label(for='publish.required.director')
+                                    | Режиссер:
+                                select(id='publish.required.director').select
+                                    option(value='director')
+                                        | обязательно
+                                    option(value='', selected='selected')
+                                        | не важно
+                            if reqs.indexOf('title_ru') + 1
+                                label(for='publish.required.title_ru')
+                                    | Рус. название:
+                                select(id='publish.required.title_ru').select
+                                    option(value='title_ru', selected='selected')
+                                        | обязательно
+                                    option(value='')
+                                        | не важно
+                            else
+                                label(for='publish.required.title_ru')
+                                    | Рус. название:
+                                select(id='publish.required.title_ru').select
+                                    option(value='title_ru')
+                                        | обязательно
+                                    option(value='', selected='selected')
+                                        | не важно
+                            if reqs.indexOf('title_en') + 1
+                                label(for='publish.required.title_en')
+                                    | Eng. название:
+                                select(id='publish.required.title_en').select
+                                    option(value='title_en', selected='selected')
+                                        | обязательно
+                                    option(value='')
+                                        | не важно
+                            else
+                                label(for='publish.required.title_en')
+                                    | Eng. название:
+                                select(id='publish.required.title_en').select
+                                    option(value='title_en')
+                                        | обязательно
+                                    option(value='', selected='selected')
+                                        | не важно
+                            if reqs.indexOf('description') + 1
+                                label(for='publish.required.description')
+                                    | Описание:
+                                select(id='publish.required.description').select
+                                    option(value='description', selected='selected')
+                                        | обязательно
+                                    option(value='')
+                                        | не важно
+                            else
+                                label(for='publish.required.description')
+                                    | Описание:
+                                select(id='publish.required.description').select
+                                    option(value='description')
+                                        | обязательно
+                                    option(value='', selected='selected')
+                                        | не важно
+                            if reqs.indexOf('pictures') + 1
+                                label(for='publish.required.pictures')
+                                    | Кадры:
+                                select(id='publish.required.pictures').select
+                                    option(value='pictures', selected='selected')
+                                        | обязательно
+                                    option(value='')
+                                        | не важно
+                            else
+                                label(for='publish.required.pictures')
+                                    | Кадры:
+                                select(id='publish.required.pictures').select
+                                    option(value='pictures')
+                                        | обязательно
+                                    option(value='', selected='selected')
+                                        | не важно
             .name(data-id='count-menu')
                 | &#10507; Фильмов на странице
             #count-menu.config
@@ -1511,6 +1645,33 @@ body
                 relts.push(document.getElementById('relates.year').options[document.getElementById('relates.year').selectedIndex].value);
             }
 
+            var requs = [];
+
+            if (document.getElementById('publish.required.country').options[document.getElementById('publish.required.country').selectedIndex].value) {
+                requs.push(document.getElementById('publish.required.country').options[document.getElementById('publish.required.country').selectedIndex].value);
+            }
+            if (document.getElementById('publish.required.genre').options[document.getElementById('publish.required.genre').selectedIndex].value) {
+                requs.push(document.getElementById('publish.required.genre').options[document.getElementById('publish.required.genre').selectedIndex].value);
+            }
+            if (document.getElementById('publish.required.actor').options[document.getElementById('publish.required.actor').selectedIndex].value) {
+                requs.push(document.getElementById('publish.required.actor').options[document.getElementById('publish.required.actor').selectedIndex].value);
+            }
+            if (document.getElementById('publish.required.director').options[document.getElementById('publish.required.director').selectedIndex].value) {
+                requs.push(document.getElementById('publish.required.director').options[document.getElementById('publish.required.director').selectedIndex].value);
+            }
+            if (document.getElementById('publish.required.title_ru').options[document.getElementById('publish.required.title_ru').selectedIndex].value) {
+                requs.push(document.getElementById('publish.required.title_ru').options[document.getElementById('publish.required.title_ru').selectedIndex].value);
+            }
+            if (document.getElementById('publish.required.title_en').options[document.getElementById('publish.required.title_en').selectedIndex].value) {
+                requs.push(document.getElementById('publish.required.title_en').options[document.getElementById('publish.required.title_en').selectedIndex].value);
+            }
+            if (document.getElementById('publish.required.description').options[document.getElementById('publish.required.description').selectedIndex].value) {
+                requs.push(document.getElementById('publish.required.description').options[document.getElementById('publish.required.description').selectedIndex].value);
+            }
+            if (document.getElementById('publish.required.pictures').options[document.getElementById('publish.required.pictures').selectedIndex].value) {
+                requs.push(document.getElementById('publish.required.pictures').options[document.getElementById('publish.required.pictures').selectedIndex].value);
+            }
+
             var data = {
                 "protocol": document.getElementById('protocol').options[document.getElementById('protocol').selectedIndex].value || "#{protocol}",
                 "domain": document.getElementById('domain').value || "#{domain}",
@@ -1545,7 +1706,8 @@ body
                         "hours": document.getElementById('publish.every.hours').value || "#{publish.every.hours}",
                         "movies": document.getElementById('publish.every.movies').value || "#{publish.every.movies}"
                     },
-                    "text": document.getElementById('publish.text').options[document.getElementById('publish.text').selectedIndex].value || "#{publish.text}"
+                    "text": document.getElementById('publish.text').options[document.getElementById('publish.text').selectedIndex].value || "#{publish.text}",
+                    "required": requs.join(',')
                 },
                 "counts": {
                     "index": document.getElementById('counts.index').value,
