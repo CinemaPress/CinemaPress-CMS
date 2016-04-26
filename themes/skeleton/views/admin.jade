@@ -601,137 +601,35 @@ body
                     tr
                         td
                             label
-                                | Наличие информации:
+                                | Обязательно наличие:
                         td
                             - reqs = publish.required.split(',');
-                            if reqs.indexOf('country') + 1
-                                label(for='publish.required.country')
-                                    | Страна:
-                                select(id='publish.required.country', style='width: auto;').select
-                                    option(value='country', selected='selected')
-                                        | обязательно
-                                    option(value='')
-                                        | не важно
-                            else
-                                label(for='publish.required.country')
-                                    | Страны:
-                                select(id='publish.required.country', style='width: auto;').select
-                                    option(value='country')
-                                        | обязательно
-                                    option(value='', selected='selected')
-                                        | не важно
-                            if reqs.indexOf('genre') + 1
-                                label(for='publish.required.genre')
-                                    | Жанр:
-                                select(id='publish.required.genre', style='width: auto;').select
-                                    option(value='genre', selected='selected')
-                                        | обязательно
-                                    option(value='')
-                                        | не важно
-                            else
-                                label(for='publish.required.genre')
-                                    | Жанр:
-                                select(id='publish.required.genre', style='width: auto;').select
-                                    option(value='genre')
-                                        | обязательно
-                                    option(value='', selected='selected')
-                                        | не важно
-                            if reqs.indexOf('actor') + 1
-                                label(for='publish.required.actor')
-                                    | Актеры:
-                                select(id='publish.required.actor', style='width: auto;').select
-                                    option(value='actor', selected='selected')
-                                        | обязательно
-                                    option(value='')
-                                        | не важно
-                            else
-                                label(for='publish.required.actor')
-                                    | Актеры:
-                                select(id='publish.required.actor', style='width: auto;').select
-                                    option(value='actor')
-                                        | обязательно
-                                    option(value='', selected='selected')
-                                        | не важно
-                            if reqs.indexOf('director') + 1
-                                label(for='publish.required.director')
-                                    | Режиссер:
-                                select(id='publish.required.director', style='width: auto;').select
-                                    option(value='director', selected='selected')
-                                        | обязательно
-                                    option(value='')
-                                        | не важно
-                            else
-                                label(for='publish.required.director')
-                                    | Режиссер:
-                                select(id='publish.required.director', style='width: auto;').select
-                                    option(value='director')
-                                        | обязательно
-                                    option(value='', selected='selected')
-                                        | не важно
-                            if reqs.indexOf('title_ru') + 1
-                                label(for='publish.required.title_ru')
-                                    | Рус. название:
-                                select(id='publish.required.title_ru', style='width: auto;').select
-                                    option(value='title_ru', selected='selected')
-                                        | обязательно
-                                    option(value='')
-                                        | не важно
-                            else
-                                label(for='publish.required.title_ru')
-                                    | Рус. название:
-                                select(id='publish.required.title_ru', style='width: auto;').select
-                                    option(value='title_ru')
-                                        | обязательно
-                                    option(value='', selected='selected')
-                                        | не важно
-                            if reqs.indexOf('title_en') + 1
-                                label(for='publish.required.title_en')
-                                    | Eng. название:
-                                select(id='publish.required.title_en', style='width: auto;').select
-                                    option(value='title_en', selected='selected')
-                                        | обязательно
-                                    option(value='')
-                                        | не важно
-                            else
-                                label(for='publish.required.title_en')
-                                    | Eng. название:
-                                select(id='publish.required.title_en', style='width: auto;').select
-                                    option(value='title_en')
-                                        | обязательно
-                                    option(value='', selected='selected')
-                                        | не важно
-                            if reqs.indexOf('description') + 1
-                                label(for='publish.required.description')
-                                    | Описание:
-                                select(id='publish.required.description', style='width: auto;').select
-                                    option(value='description', selected='selected')
-                                        | обязательно
-                                    option(value='')
-                                        | не важно
-                            else
-                                label(for='publish.required.description')
-                                    | Описание:
-                                select(id='publish.required.description', style='width: auto;').select
-                                    option(value='description')
-                                        | обязательно
-                                    option(value='', selected='selected')
-                                        | не важно
-                            if reqs.indexOf('pictures') + 1
-                                label(for='publish.required.pictures')
-                                    | Кадры:
-                                select(id='publish.required.pictures', style='width: auto;').select
-                                    option(value='pictures', selected='selected')
-                                        | обязательно
-                                    option(value='')
-                                        | не важно
-                            else
-                                label(for='publish.required.pictures')
-                                    | Кадры:
-                                select(id='publish.required.pictures', style='width: auto;').select
-                                    option(value='pictures')
-                                        | обязательно
-                                    option(value='', selected='selected')
-                                        | не важно
+                            - cats = ['country', 'genre', 'actor', 'director', 'title_ru', 'title_en', 'description', 'pictures']
+                            each category in cats
+                                - cat = ''
+                                if category == 'country'
+                                    - cat = 'страна'
+                                else if category == 'genre'
+                                    - cat = 'жанры'
+                                else if category == 'actor'
+                                    - cat = 'актеры'
+                                else if category == 'director'
+                                    - cat = 'режиссер'
+                                else if category == 'title_ru'
+                                    - cat = 'рус. название'
+                                else if category == 'title_en'
+                                    - cat = 'eng. название'
+                                else if category == 'description'
+                                    - cat = 'описание'
+                                else if category == 'pictures'
+                                    - cat = 'кадры'
+                                div
+                                    if reqs.indexOf(category) + 1
+                                        input(id='publish.required.#{category}', type='checkbox', checked='checked')
+                                    else
+                                        input(id='publish.required.#{category}', type='checkbox')
+                                    label(for='publish.required.#{category}')= cat
+
             .name(data-id='count-menu')
                 | &#10507; Фильмов на странице
             #count-menu.config
@@ -1647,29 +1545,29 @@ body
 
             var requs = [];
 
-            if (document.getElementById('publish.required.country').options[document.getElementById('publish.required.country').selectedIndex].value) {
-                requs.push(document.getElementById('publish.required.country').options[document.getElementById('publish.required.country').selectedIndex].value);
+            if (document.getElementById('publish.required.country').checked) {
+                requs.push('country');
             }
-            if (document.getElementById('publish.required.genre').options[document.getElementById('publish.required.genre').selectedIndex].value) {
-                requs.push(document.getElementById('publish.required.genre').options[document.getElementById('publish.required.genre').selectedIndex].value);
+            if (document.getElementById('publish.required.genre').checked) {
+                requs.push('genre');
             }
-            if (document.getElementById('publish.required.actor').options[document.getElementById('publish.required.actor').selectedIndex].value) {
-                requs.push(document.getElementById('publish.required.actor').options[document.getElementById('publish.required.actor').selectedIndex].value);
+            if (document.getElementById('publish.required.actor').checked) {
+                requs.push('actor');
             }
-            if (document.getElementById('publish.required.director').options[document.getElementById('publish.required.director').selectedIndex].value) {
-                requs.push(document.getElementById('publish.required.director').options[document.getElementById('publish.required.director').selectedIndex].value);
+            if (document.getElementById('publish.required.director').checked) {
+                requs.push('director');
             }
-            if (document.getElementById('publish.required.title_ru').options[document.getElementById('publish.required.title_ru').selectedIndex].value) {
-                requs.push(document.getElementById('publish.required.title_ru').options[document.getElementById('publish.required.title_ru').selectedIndex].value);
+            if (document.getElementById('publish.required.title_ru').checked) {
+                requs.push('title_ru');
             }
-            if (document.getElementById('publish.required.title_en').options[document.getElementById('publish.required.title_en').selectedIndex].value) {
-                requs.push(document.getElementById('publish.required.title_en').options[document.getElementById('publish.required.title_en').selectedIndex].value);
+            if (document.getElementById('publish.required.title_en').checked) {
+                requs.push('title_en');
             }
-            if (document.getElementById('publish.required.description').options[document.getElementById('publish.required.description').selectedIndex].value) {
-                requs.push(document.getElementById('publish.required.description').options[document.getElementById('publish.required.description').selectedIndex].value);
+            if (document.getElementById('publish.required.description').checked) {
+                requs.push('description');
             }
-            if (document.getElementById('publish.required.pictures').options[document.getElementById('publish.required.pictures').selectedIndex].value) {
-                requs.push(document.getElementById('publish.required.pictures').options[document.getElementById('publish.required.pictures').selectedIndex].value);
+            if (document.getElementById('publish.required.pictures').checked) {
+                requs.push('pictures');
             }
 
             var data = {
