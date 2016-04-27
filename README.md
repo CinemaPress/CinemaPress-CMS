@@ -115,6 +115,11 @@
 ```
 <a href="https://github.com/CinemaPress/Theme-Marshall"><img src="https://raw.githubusercontent.com/CinemaPress/Theme-Marshall/master/screenshot.jpg" width="400"></a>
 ---
+# Кейс по созданию онлайн кинотеатра
+Описания всех этапов создания кино-сайта на CinemaPress CMS.
+
+<a href="https://github.com/CinemaPress/CinemaPress-CMS/wiki/%D0%9A%D0%B5%D0%B9%D1%81-%D0%BF%D0%BE-%D1%81%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D1%8E-%D0%BE%D0%BD%D0%BB%D0%B0%D0%B9%D0%BD-%D0%BA%D0%B8%D0%BD%D0%BE%D1%82%D0%B5%D0%B0%D1%82%D1%80%D0%B0"><img src="https://raw.githubusercontent.com/CinemaPress/CinemaPress.github.io/master/images/admin/case.png"></a>
+
 # Что такое CinemaPress CMS?
 Это система управления самообновляемым кино-сайтом, которая строится на данных **CinemaPress DataBase** и работает на ``NodeJS (ExpressJS) + Sphinx + Memcached``.
 
