@@ -81,6 +81,8 @@ VER=`lsb_release -cs`
 echo "proftpd-basic shared/proftpd/inetd_or_standalone select standalone" | debconf-set-selections
 echo "iptables-persistent iptables-persistent/autosave_v6 boolean true" | debconf-set-selections
 echo "iptables-persistent iptables-persistent/autosave_v4 boolean true" | debconf-set-selections
+echo "check_certificate = off" > .wgetrc
+git config --global http.sslverify false
 echo ''
 echo '------------------------------------------------------------------'
 echo '-----                           OK                           -----'

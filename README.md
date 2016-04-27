@@ -10,7 +10,7 @@
 
 Работает на Debian 7 «Wheezy» (64-bit), Debian 8 «Jessie» (64-bit)
 ```
-~# wget --no-check-certificate https://git.io/v2XAV -qO install.sh
+~# wget --no-check-certificate git.io/v2XAV -qO install.sh && chmod +x install.sh
 ~# sh install.sh [domain] [theme] [password]
 ```
 
