@@ -10,25 +10,23 @@
 
 Работает на Debian 7 «Wheezy» (64-bit), Debian 8 «Jessie» (64-bit)
 ```
-~# wget --no-check-certificate git.io/v2XAV -qO install.sh && chmod +x install.sh
-~# sh install.sh [domain] [theme] [password]
+~# wget cinemapress.org/i -q && chmod +x i && ./i
 ```
 
-###### Видео установки (готовый кино-сайт за 2 минуты 35 сек):
+###### Видео установки (готовый кино-сайт за 4 минуты 43 сек):
 
-<a href="https://www.youtube.com/watch?v=s5SrxJYbhWI" target="_blank"><img src="https://raw.githubusercontent.com/CinemaPress/CinemaPress.github.io/master/images/admin/install_player.png?new=16.04.2016" width="600" alt="Готовый кино-сайт за 5 минут (видео)"/></a>
+<a href="https://www.youtube.com/watch?v=lnxw8F8nL-g" target="_blank"><img src="https://raw.githubusercontent.com/CinemaPress/CinemaPress.github.io/master/images/admin/install_player.png" width="600" alt="Готовый кино-сайт за 5 минут (видео)"/></a>
 
 ## Обновление:
 
 Обновление **CinemaPress CMS** до последней версии в репозитории.
 ```
-~# wget https://git.io/vVTuY -qO update.sh
-~# sh update.sh [domain]
+~# wget cinemapress.org/i -q && chmod +x i && ./i 2
 ```
 
 ###### Видео обновления
 
-<a href="https://www.youtube.com/watch?v=ownMCz_vBgo" target="_blank"><img src="https://raw.githubusercontent.com/CinemaPress/CinemaPress.github.io/master/images/admin/update_player.png?new=16.04.2016" width="600" alt="Обновление CinemaPress CMS"/></a>
+<a href="https://www.youtube.com/watch?v=KF9OkH3BqPM" target="_blank"><img src="https://raw.githubusercontent.com/CinemaPress/CinemaPress.github.io/master/images/admin/update_player.png" width="600" alt="Обновление CinemaPress CMS"/></a>
 
 ## Мониторинг работы сайта
 
@@ -44,7 +42,7 @@
 ~# pm2 install pm2-server-monit
 ```
 
-<img src="https://raw.githubusercontent.com/CinemaPress/CinemaPress.github.io/master/images/admin/pm2.png?new=16.04.2016" width="600" alt="Обновление CinemaPress CMS"/>
+<img src="https://raw.githubusercontent.com/CinemaPress/CinemaPress.github.io/master/images/admin/pm2.png" width="600" alt="Обновление CinemaPress CMS"/>
 
 ## Распределение нагрузки
 
@@ -53,22 +51,19 @@
 ###### Установка CinemaPress CMS сервера:
 
 ```
-~# wget https://git.io/vwtm5 -qO cp.sh
-~# sh cp.sh [domain] [theme] [password]
-```
-
-###### Установка Memcached сервера:
-
-```
-~# wget https://git.io/vwtYB -qO memcached.sh
-~# sh memcached.sh [domain] [ip]
+~# wget cinemapress.org/i -q && chmod +x i && ./i 5
 ```
 
 ###### Установка Sphinx сервера:
 
 ```
-~# wget https://git.io/vwtYO -qO sphinx.sh
-~# sh sphinx.sh [domain] [ip]
+~# wget cinemapress.org/i -q && chmod +x i && ./i 6
+```
+
+###### Установка Memcached сервера:
+
+```
+~# wget cinemapress.org/i -q && chmod +x i && ./i 7
 ```
 
 # CinemaPress DataBase
@@ -77,41 +72,36 @@
 ## Импорт:
 После успешного запуска **CinemaPress CMS**, можете [приобрести](https://cinemapress.org/) и импортировать полную базу данных.
 ```
-~# wget https://git.io/vVTEV -qO db.sh
-~# sh db.sh [domain] [key]
+~# wget cinemapress.org/i -q && chmod +x i && ./i 4
 ```
 
 ###### Видео импорта базы данных CinemaPress
 
-<a href="https://www.youtube.com/watch?v=0zmGnJV_7mw" target="_blank"><img src="https://raw.githubusercontent.com/CinemaPress/CinemaPress.github.io/master/images/admin/db_player.png?new=16.04.2016" width="600" alt="Импорт CinemaPress DataBase"/></a>
+<a href="https://www.youtube.com/watch?v=wJGJf86beDU" target="_blank"><img src="https://raw.githubusercontent.com/CinemaPress/CinemaPress.github.io/master/images/admin/db_player.png" width="600" alt="Импорт CinemaPress DataBase"/></a>
 
 # CinemaPress Themes
 
 - [Barney (kinogo.co)](https://github.com/CinemaPress/Theme-Barney)
 ```
-~# wget https://git.io/vVTE5 -qO theme.sh
-~# sh theme.sh [domain] barney
+~# wget cinemapress.org/i -q && chmod +x i && ./i 3
 ```
 <a href="https://github.com/CinemaPress/Theme-Barney"><img src="https://raw.githubusercontent.com/CinemaPress/Theme-Barney/master/screenshot.jpg" width="400"></a>
 ---
 - [Ted (kinogb.net)](https://github.com/CinemaPress/Theme-Ted)
 ```
-~# wget https://git.io/vVTE5 -qO theme.sh
-~# sh theme.sh [domain] ted
+~# wget cinemapress.org/i -q && chmod +x i && ./i 3
 ```
 <a href="https://github.com/CinemaPress/Theme-Ted"><img src="https://raw.githubusercontent.com/CinemaPress/Theme-Ted/master/screenshot.jpg" width="400"></a>
 ---
 - [Lily (kinokong.net)](https://github.com/CinemaPress/Theme-Lily)
 ```
-~# wget https://git.io/vVTE5 -qO theme.sh
-~# sh theme.sh [domain] lily
+~# wget cinemapress.org/i -q && chmod +x i && ./i 3
 ```
 <a href="https://github.com/CinemaPress/Theme-Lily"><img src="https://raw.githubusercontent.com/CinemaPress/Theme-Lily/master/screenshot.jpg" width="400"></a>
 ---
 - [Marshall (zerx.co)](https://github.com/CinemaPress/Theme-Marshall)
 ```
-~# wget https://git.io/vVTE5 -qO theme.sh
-~# sh theme.sh [domain] marshall
+~# wget cinemapress.org/i -q && chmod +x i && ./i 3
 ```
 <a href="https://github.com/CinemaPress/Theme-Marshall"><img src="https://raw.githubusercontent.com/CinemaPress/Theme-Marshall/master/screenshot.jpg" width="400"></a>
 ---
