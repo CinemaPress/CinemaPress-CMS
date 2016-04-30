@@ -17,8 +17,10 @@ function getCategories(category, callback) {
         ? ' OR kp_id = ' + config.text.ids.join(' OR kp_id = ') + ' '
         : ' ';
 
-    var where = (config.publish.required.split(',')).map(function(category) {
-        return '`' + category.trim() + '` != \'\'';
+    var where = (config.publish.required.split(',')).map(function(ctgry) {
+        if (ctgry) {
+            return '`' + ctgry.trim() + '` != \'\'';
+        }
     });
     where = (where.length) ? ' AND ' + where.join(' AND ') : '';
 
@@ -67,8 +69,10 @@ function getMovies(query, sort, page, type, callback) {
         ? ' OR kp_id = ' + config.text.ids.join(' OR kp_id = ') + ' '
         : ' ';
 
-    var where = (config.publish.required.split(',')).map(function(category) {
-        return '`' + category.trim() + '` != \'\'';
+    var where = (config.publish.required.split(',')).map(function(ctgry) {
+        if (ctgry) {
+            return '`' + ctgry.trim() + '` != \'\'';
+        }
     });
     where = (where.length) ? ' AND ' + where.join(' AND ') : '';
 
@@ -177,8 +181,10 @@ function getMovie(id, callback) {
     var text = (config.publish.text && config.text.ids.indexOf(id)+1);
     var admin = ('' + admin_id).indexOf('admin')+1;
 
-    var where = (config.publish.required.split(',')).map(function(category) {
-        return '`' + category.trim() + '` != \'\'';
+    var where = (config.publish.required.split(',')).map(function(ctgry) {
+        if (ctgry) {
+            return '`' + ctgry.trim() + '` != \'\'';
+        }
     });
     where = (where.length) ? ' AND ' + where.join(' AND ') : '';
 
