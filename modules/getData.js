@@ -17,12 +17,13 @@ function getCategories(category, callback) {
         ? ' OR kp_id = ' + config.text.ids.join(' OR kp_id = ') + ' '
         : ' ';
 
-    var where = (config.publish.required.split(',')).map(function(ctgry) {
-        if (ctgry) {
+    var where = '';
+    if (config.publish.required) {
+        where = (config.publish.required.split(',')).map(function(ctgry) {
             return '`' + ctgry.trim() + '` != \'\'';
-        }
-    });
-    where = (where.length) ? ' AND ' + where.join(' AND ') : '';
+        });
+        where = (where.length) ? ' AND ' + where.join(' AND ') : '';
+    }
 
     var queryString = '' +
         ' SELECT ' +
@@ -69,12 +70,13 @@ function getMovies(query, sort, page, type, callback) {
         ? ' OR kp_id = ' + config.text.ids.join(' OR kp_id = ') + ' '
         : ' ';
 
-    var where = (config.publish.required.split(',')).map(function(ctgry) {
-        if (ctgry) {
+    var where = '';
+    if (config.publish.required) {
+        where = (config.publish.required.split(',')).map(function(ctgry) {
             return '`' + ctgry.trim() + '` != \'\'';
-        }
-    });
-    where = (where.length) ? ' AND ' + where.join(' AND ') : '';
+        });
+        where = (where.length) ? ' AND ' + where.join(' AND ') : '';
+    }
 
     var queryString = '' +
         ' SELECT *, ' +
@@ -181,12 +183,13 @@ function getMovie(id, callback) {
     var text = (config.publish.text && config.text.ids.indexOf(id)+1);
     var admin = ('' + admin_id).indexOf('admin')+1;
 
-    var where = (config.publish.required.split(',')).map(function(ctgry) {
-        if (ctgry) {
+    var where = '';
+    if (config.publish.required) {
+        where = (config.publish.required.split(',')).map(function(ctgry) {
             return '`' + ctgry.trim() + '` != \'\'';
-        }
-    });
-    where = (where.length) ? ' AND ' + where.join(' AND ') : '';
+        });
+        where = (where.length) ? ' AND ' + where.join(' AND ') : '';
+    }
 
     if (range || text || admin) {
         var queryString = '' +
