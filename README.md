@@ -1,7 +1,7 @@
 [![Gitter](https://badges.gitter.im/CinemaPress/CinemaPress-CMS.svg)](https://gitter.im/CinemaPress/CinemaPress-CMS?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=body_badge) [![Slack](https://img.shields.io/badge/cinemapress.slack.com-%D1%87%D0%B0%D1%82-red.svg?style=flat)](https://cinemapress.slack.com/)
 
 # CinemaPress CMS
- :movie_camera: Система управления самообновляемым кино-сайтом.
+ :movie_camera: Система управления самообновляемым онлайн кинотеатром.
 
 ## Установка:
 
