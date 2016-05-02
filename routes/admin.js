@@ -39,52 +39,57 @@ router.post('/movie', function(req, res) {
 
 router.post('/downgrade', function(req, res) {
 
-    fs.createReadStream(
-        path.join(path.dirname(__dirname), 'config', 'config.prev.js')
-    ).pipe(
-        fs.createWriteStream(
-            path.join(path.dirname(__dirname), 'config', 'config.downgrade.js')
-        )
-    );
-
-    fs.rename(
+    fs.readFile(
         path.join(path.dirname(__dirname), 'config', 'config.prev.js'),
-        path.join(path.dirname(__dirname), 'config', 'config.js'),
-        function (err) {
+        function (err, prev) {
             if (err) return res.status(404).send(err);
-            fs.rename(
+            fs.writeFile(
                 path.join(path.dirname(__dirname), 'config', 'config.downgrade.js'),
-                path.join(path.dirname(__dirname), 'config', 'config.prev.js'),
-                function (err) {
-                    if (err) console.log(err);
-                    res.status(200).send('Downgrade');
-                    fs.stat(
-                        path.join(path.dirname(__dirname), 'config', 'config.restart'),
-                        function(err, stats) {
-                            if (!stats) {
-                                fs.writeFile(
-                                    path.join(path.dirname(__dirname), 'config', 'config.restart'),
-                                    new Date(),
-                                    function(err) {
-                                        if (err) console.log(err);
-                                    }
-                                );
-                            }
-                            else {
-                                fs.readFile(
-                                    path.join(path.dirname(__dirname), 'config', 'config.restart'),
-                                    function (err, data) {
-                                        if (err) return console.log(err);
-                                        fs.writeFile(
-                                            path.join(path.dirname(__dirname), 'config', 'config.restart'),
-                                            new Date() + '\n' + data,
-                                            function(err) {
-                                                if (err) console.log(err);
+                prev,
+                function(err) {
+                    if (err) return res.status(404).send(err);
+                    fs.rename(
+                        path.join(path.dirname(__dirname), 'config', 'config.prev.js'),
+                        path.join(path.dirname(__dirname), 'config', 'config.js'),
+                        function (err) {
+                            if (err) return res.status(404).send(err);
+                            fs.rename(
+                                path.join(path.dirname(__dirname), 'config', 'config.downgrade.js'),
+                                path.join(path.dirname(__dirname), 'config', 'config.prev.js'),
+                                function (err) {
+                                    if (err) console.log(err);
+                                    res.status(200).send('Downgrade');
+                                    fs.stat(
+                                        path.join(path.dirname(__dirname), 'config', 'config.restart'),
+                                        function(err, stats) {
+                                            if (!stats) {
+                                                fs.writeFile(
+                                                    path.join(path.dirname(__dirname), 'config', 'config.restart'),
+                                                    new Date() + ' - Downgrade',
+                                                    function(err) {
+                                                        if (err) console.log(err);
+                                                    }
+                                                );
                                             }
-                                        );
-                                    }
-                                );
-                            }
+                                            else {
+                                                fs.readFile(
+                                                    path.join(path.dirname(__dirname), 'config', 'config.restart'),
+                                                    function (err, restart) {
+                                                        if (err) return console.log(err);
+                                                        fs.writeFile(
+                                                            path.join(path.dirname(__dirname), 'config', 'config.restart'),
+                                                            new Date() + ' - Downgrade\n' + restart,
+                                                            function(err) {
+                                                                if (err) console.log(err);
+                                                            }
+                                                        );
+                                                    }
+                                                );
+                                            }
+                                        }
+                                    );
+                                }
+                            );
                         }
                     );
                 }
@@ -158,47 +163,52 @@ router.post('/save', function(req, res) {
 
     var data = JSON.stringify(req.body);
 
-    fs.createReadStream(
-        path.join(path.dirname(__dirname), 'config', 'config.js')
-    ).pipe(
-        fs.createWriteStream(
-            path.join(path.dirname(__dirname), 'config', 'config.prev.js')
-        )
-    );
-
-    fs.writeFile(
+    fs.readFile(
         path.join(path.dirname(__dirname), 'config', 'config.js'),
-        'module.exports = ' + data + ';', 
-        function(err) {
+        function (err, cnf) {
             if (err) return res.status(404).send(err);
-            res.status(200).send('Save');
-            fs.stat(
-                path.join(path.dirname(__dirname), 'config', 'config.restart'),
-                function(err, stats) {
-                    if (!stats) {
-                        fs.writeFile(
-                            path.join(path.dirname(__dirname), 'config', 'config.restart'),
-                            new Date(),
-                            function(err) {
-                                if (err) console.log(err);
-                            }
-                        );
-                    }
-                    else {
-                        fs.readFile(
-                            path.join(path.dirname(__dirname), 'config', 'config.restart'),
-                            function (err, data) {
-                                if (err) return console.log(err);
-                                fs.writeFile(
-                                    path.join(path.dirname(__dirname), 'config', 'config.restart'),
-                                    new Date() + '\n' + data,
-                                    function(err) {
-                                        if (err) console.log(err);
+            fs.writeFile(
+                path.join(path.dirname(__dirname), 'config', 'config.prev.js'),
+                cnf,
+                function (err) {
+                    if (err) return res.status(404).send(err);
+                    fs.writeFile(
+                        path.join(path.dirname(__dirname), 'config', 'config.js'),
+                        'module.exports = ' + data + ';',
+                        function (err) {
+                            if (err) return res.status(404).send(err);
+                            res.status(200).send('Save');
+                            fs.stat(
+                                path.join(path.dirname(__dirname), 'config', 'config.restart'),
+                                function (err, stats) {
+                                    if (!stats) {
+                                        fs.writeFile(
+                                            path.join(path.dirname(__dirname), 'config', 'config.restart'),
+                                            new Date() + ' - Save',
+                                            function (err) {
+                                                if (err) console.log(err);
+                                            }
+                                        );
                                     }
-                                );
-                            }
-                        );
-                    }
+                                    else {
+                                        fs.readFile(
+                                            path.join(path.dirname(__dirname), 'config', 'config.restart'),
+                                            function (err, restart) {
+                                                if (err) return console.log(err);
+                                                fs.writeFile(
+                                                    path.join(path.dirname(__dirname), 'config', 'config.restart'),
+                                                    new Date() + ' - Save\n' + data,
+                                                    function (err) {
+                                                        if (err) console.log(err);
+                                                    }
+                                                );
+                                            }
+                                        );
+                                    }
+                                }
+                            );
+                        }
+                    );
                 }
             );
         }
