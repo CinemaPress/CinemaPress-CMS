@@ -39,15 +39,28 @@ router.post('/movie', function(req, res) {
 
 router.post('/downgrade', function(req, res) {
 
-    fs.rename(path.join(path.dirname(__dirname), 'config', 'config.js'), path.join(path.dirname(__dirname), 'config', 'config.downgrade.js'), function (err) {
+    fs.createReadStream(
+        path.join(path.dirname(__dirname), 'config', 'config.js')
+    ).pipe(
+        fs.createWriteStream(
+            path.join(path.dirname(__dirname), 'config', 'config.txt')
+        )
+    );
+
+    fs.createReadStream(
+        path.join(path.dirname(__dirname), 'config', 'config.prew.txt')
+    ).pipe(
+        fs.createWriteStream(
+            path.join(path.dirname(__dirname), 'config', 'config.downgrade.txt')
+        )
+    );
+
+    fs.rename(path.join(path.dirname(__dirname), 'config', 'config.txt'), path.join(path.dirname(__dirname), 'config', 'config.prew.txt'), function (err) {
         if (err) {
             res.status(404).send(err);
         }
-        fs.rename(path.join(path.dirname(__dirname), 'config', 'config.old.js'), path.join(path.dirname(__dirname), 'config', 'config.js'), function (err) {
-            if (err) {
-                res.status(404).send(err);
-            }
-            fs.rename(path.join(path.dirname(__dirname), 'config', 'config.downgrade.js'), path.join(path.dirname(__dirname), 'config', 'config.old.js'), function (err) {
+        else {
+            fs.rename(path.join(path.dirname(__dirname), 'config', 'config.downgrade.txt'), path.join(path.dirname(__dirname), 'config', 'config.js'), function (err) {
                 if (err) {
                     res.status(404).send(err);
                 }
@@ -55,7 +68,7 @@ router.post('/downgrade', function(req, res) {
                     res.status(200).send('Downgrade');
                 }
             });
-        });
+        }
     });
 
 });
@@ -124,27 +137,26 @@ router.post('/save', function(req, res) {
 
     var data = JSON.stringify(req.body);
 
-    fs.writeFile(path.join(path.dirname(__dirname), 'config', 'config.new.js'), 'module.exports = ' + data + ';', function(err) {
-        if (err) {
-            console.log(err);
-            res.status(404).send('Error create config.new.js');
+    fs.createReadStream(
+        path.join(path.dirname(__dirname), 'config', 'config.js')
+    ).pipe(
+        fs.createWriteStream(
+            path.join(path.dirname(__dirname), 'config', 'config.prew.txt')
+        )
+    );
+
+    fs.writeFile(
+        path.join(path.dirname(__dirname), 'config', 'config.js'), 
+        'module.exports = ' + data + ';', 
+        function(err) {
+            if (err) {
+                res.status(404).send(err);
+            }
+            else {
+                res.status(200).send('Save');
+            }
         }
-        else {
-            fs.rename(path.join(path.dirname(__dirname), 'config', 'config.js'), path.join(path.dirname(__dirname), 'config', 'config.old.js'), function (err) {
-                if (err) {
-                    console.log(err);
-                    res.status(404).send('Error rename config.old.js');
-                }
-                fs.rename(path.join(path.dirname(__dirname), 'config', 'config.new.js'), path.join(path.dirname(__dirname), 'config', 'config.js'), function (err) {
-                    if (err) {
-                        console.log(err);
-                        res.status(404).send('Error rename config.new.js');
-                    }
-                    res.status(200).send('Save');
-                });
-            });
-        }
-    });
+    );
 
 });
 

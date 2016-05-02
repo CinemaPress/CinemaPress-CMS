@@ -5,11 +5,10 @@
     "cwd"    : "/home/example.com",
     "watch"  : true,
     "ignore_watch" : [
-      "config/config.old.js",
-      "config/config.new.js",
       "config/*.conf",
       "config/*.xml",
       "config/*.log",
+      "config/*.txt",
       "config/default",
       "node_modules",
       "themes/*/public",

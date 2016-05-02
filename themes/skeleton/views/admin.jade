@@ -1525,6 +1525,8 @@ body
 
         function submitData() {
 
+            submit.removeEventListener('click', submitData);
+
             var relts = [];
 
             if (document.getElementById('relates.country').options[document.getElementById('relates.country').selectedIndex].value) {
@@ -1820,10 +1822,18 @@ body
 
                     setTimeout(function () {
                         document.getElementById('submit').innerHTML = 'Сохранить &#9919;';
+                        submit.addEventListener('click', submitData);
                     }, 5000);
                 }
                 else if (xhr.readyState == 4 && xhr.status != 200) {
+
                     document.getElementById('submit').innerHTML = '<span style="color:#ff916d;">Ошибка сохранения &#128027;</span>';
+
+                    setTimeout(function () {
+                        document.getElementById('submit').innerHTML = 'Сохранить &#9919;';
+                        submit.addEventListener('click', submitData);
+                    }, 5000);
+
                     console.log(xhr.responseText);
                 }
             }
