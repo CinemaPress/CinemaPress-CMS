@@ -10,7 +10,7 @@
 
 Работает на Debian 7 «Wheezy» (64-bit), Debian 8 «Jessie» (64-bit)
 ```
-~# wget cinemapress.org/i -q && chmod +x i && ./i
+~# wget cinemapress.org/i -qO i && chmod +x i && ./i
 ```
 
 ###### Видео установки (готовый кино-сайт за 4 минуты 43 сек):
@@ -21,7 +21,7 @@
 
 Обновление **CinemaPress CMS** до последней версии в репозитории.
 ```
-~# wget cinemapress.org/i -q && chmod +x i && ./i 2
+~# wget cinemapress.org/i -qO i && chmod +x i && ./i 2
 ```
 
 ###### Видео обновления
@@ -51,19 +51,19 @@
 ###### Установка CinemaPress CMS сервера:
 
 ```
-~# wget cinemapress.org/i -q && chmod +x i && ./i 5
+~# wget cinemapress.org/i -qO i && chmod +x i && ./i 5
 ```
 
 ###### Установка Sphinx сервера:
 
 ```
-~# wget cinemapress.org/i -q && chmod +x i && ./i 6
+~# wget cinemapress.org/i -qO i && chmod +x i && ./i 6
 ```
 
 ###### Установка Memcached сервера:
 
 ```
-~# wget cinemapress.org/i -q && chmod +x i && ./i 7
+~# wget cinemapress.org/i -qO i && chmod +x i && ./i 7
 ```
 
 # CinemaPress DataBase
@@ -72,7 +72,7 @@
 ## Импорт:
 После успешного запуска **CinemaPress CMS**, можете [приобрести](https://cinemapress.org/) и импортировать полную базу данных.
 ```
-~# wget cinemapress.org/i -q && chmod +x i && ./i 4
+~# wget cinemapress.org/i -qO i && chmod +x i && ./i 4
 ```
 
 ###### Видео импорта базы данных CinemaPress
@@ -83,25 +83,25 @@
 
 - [Barney (kinogo.co)](https://github.com/CinemaPress/Theme-Barney)
 ```
-~# wget cinemapress.org/i -q && chmod +x i && ./i 3
+~# wget cinemapress.org/i -qO i && chmod +x i && ./i 3
 ```
 <a href="https://github.com/CinemaPress/Theme-Barney"><img src="https://raw.githubusercontent.com/CinemaPress/Theme-Barney/master/screenshot.jpg" width="400"></a>
 ---
 - [Ted (kinogb.net)](https://github.com/CinemaPress/Theme-Ted)
 ```
-~# wget cinemapress.org/i -q && chmod +x i && ./i 3
+~# wget cinemapress.org/i -qO i && chmod +x i && ./i 3
 ```
 <a href="https://github.com/CinemaPress/Theme-Ted"><img src="https://raw.githubusercontent.com/CinemaPress/Theme-Ted/master/screenshot.jpg" width="400"></a>
 ---
 - [Lily (kinokong.net)](https://github.com/CinemaPress/Theme-Lily)
 ```
-~# wget cinemapress.org/i -q && chmod +x i && ./i 3
+~# wget cinemapress.org/i -qO i && chmod +x i && ./i 3
 ```
 <a href="https://github.com/CinemaPress/Theme-Lily"><img src="https://raw.githubusercontent.com/CinemaPress/Theme-Lily/master/screenshot.jpg" width="400"></a>
 ---
 - [Marshall (zerx.co)](https://github.com/CinemaPress/Theme-Marshall)
 ```
-~# wget cinemapress.org/i -q && chmod +x i && ./i 3
+~# wget cinemapress.org/i -qO i && chmod +x i && ./i 3
 ```
 <a href="https://github.com/CinemaPress/Theme-Marshall"><img src="https://raw.githubusercontent.com/CinemaPress/Theme-Marshall/master/screenshot.jpg" width="400"></a>
 ---
