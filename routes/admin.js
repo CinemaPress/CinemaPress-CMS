@@ -55,21 +55,29 @@ router.post('/downgrade', function(req, res) {
         )
     );
 
-    fs.rename(path.join(path.dirname(__dirname), 'config', 'config.txt'), path.join(path.dirname(__dirname), 'config', 'config.prew.txt'), function (err) {
-        if (err) {
-            res.status(404).send(err);
+    fs.rename(
+        path.join(path.dirname(__dirname), 'config', 'config.txt'),
+        path.join(path.dirname(__dirname), 'config', 'config.prew.txt'),
+        function (err) {
+            if (err) {
+                res.status(404).send(err);
+            }
+            else {
+                fs.rename(
+                    path.join(path.dirname(__dirname), 'config', 'config.downgrade.txt'),
+                    path.join(path.dirname(__dirname), 'config', 'config.js'),
+                    function (err) {
+                        if (err) {
+                            res.status(404).send(err);
+                        }
+                        else {
+                            res.status(200).send('Downgrade');
+                        }
+                    }
+                );
+            }
         }
-        else {
-            fs.rename(path.join(path.dirname(__dirname), 'config', 'config.downgrade.txt'), path.join(path.dirname(__dirname), 'config', 'config.js'), function (err) {
-                if (err) {
-                    res.status(404).send(err);
-                }
-                else {
-                    res.status(200).send('Downgrade');
-                }
-            });
-        }
-    });
+    );
 
 });
 
