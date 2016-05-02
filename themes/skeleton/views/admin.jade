@@ -1851,6 +1851,8 @@ body
 
         function flushData() {
 
+            flush.removeEventListener('click', flushData);
+
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '#{urls.admin}/flush', true);
             xhr.onreadystatechange = function () {
@@ -1863,10 +1865,17 @@ body
 
                     setTimeout(function () {
                         document.getElementById('flush').innerHTML = 'Очистить кэш &#9730;';
+                        flush.addEventListener('click', flushData);
                     }, 5000);
                 }
                 else if (xhr.readyState == 4 && xhr.status != 200) {
+
                     document.getElementById('flush').innerHTML = '<span style="color:#ff916d;">Ошибка очистки &#9773;</span>';
+                    setTimeout(function () {
+                        document.getElementById('flush').innerHTML = 'Очистить кэш &#9730;';
+                        flush.addEventListener('click', flushData);
+                    }, 5000);
+
                     console.log(xhr.responseText);
                 }
             }
@@ -1879,6 +1888,8 @@ body
 
         function downgradeData() {
 
+            downgrade.removeEventListener('click', downgradeData);
+
             if (confirm('Хотите вернуть предыдущую версию конфигурации?')) {
 
                 var xhr = new XMLHttpRequest();
@@ -1890,10 +1901,16 @@ body
                         setTimeout(function () {
                             document.getElementById('downgrade').innerHTML = '<span style="color:#78ffa0;">Откатились &#128526;</span>';
                             location.reload(true);
-                        }, 4000);
+                        }, 5000);
                     }
                     else if (xhr.readyState == 4 && xhr.status != 200) {
+
                         document.getElementById('downgrade').innerHTML = '<span style="color:#ff916d;">Ошибка отката &#128552;</span>';
+                        setTimeout(function () {
+                            document.getElementById('downgrade').innerHTML = 'Откатиться &#128561;';
+                            downgrade.addEventListener('click', downgradeData);
+                        }, 5000);
+
                         console.log(xhr.responseText);
                     }
                 }

@@ -197,7 +197,7 @@ router.post('/save', function(req, res) {
                                                 if (err) return console.log(err);
                                                 fs.writeFile(
                                                     path.join(path.dirname(__dirname), 'config', 'config.restart'),
-                                                    new Date() + ' - Save\n' + data,
+                                                    new Date() + ' - Save\n' + restart,
                                                     function (err) {
                                                         if (err) console.log(err);
                                                     }
