@@ -66,6 +66,14 @@
 ~# wget cinemapress.org/i -qO i && chmod +x i && ./i 7
 ```
 
+###### Массовая установка/обновление/добавление
+Установка нескольких сайтов одной командой поможет сэкономить дорогие минуты простоя сайтов в случае переезда на другой сервер.
+```
+~# wget cinemapress.org/i -qO i && chmod +x i && ./i 8
+```
+
+<a href="https://github.com/CinemaPress/CinemaPress-CMS/wiki/%D0%9C%D0%B0%D1%81%D1%81%D0%BE%D0%B2%D0%B0%D1%8F-%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0-%D0%BE%D0%B1%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D0%B4%D0%BE%D0%B1%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5" target="_blank">Подробнее ...</a>
+
 # CinemaPress DataBase
  :minidisc: База данных ~ **500 000 фильмов/сериалов** (все фильмы/сериалы планеты).
  
