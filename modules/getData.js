@@ -118,10 +118,18 @@ function getPublishMovies(callback) {
     var start_limit = Math.ceil((config.publish.every.movies/config.publish.every.hours)/2);
     var stop_limit = Math.floor((config.publish.every.movies/config.publish.every.hours)/2);
 
+    var where = '';
+    if (config.publish.required) {
+        where = (config.publish.required.split(',')).map(function(ctgry) {
+            return '`' + ctgry.trim() + '` != \'\'';
+        });
+        where = (where.length) ? ' AND ' + where.join(' AND ') : '';
+    }
+
     var startQueryString = '' +
         ' SELECT kp_id' +
         ' FROM ' + movies_db +
-        ' WHERE kp_id < ' + config.publish.start +
+        ' WHERE kp_id < ' + config.publish.start + where +
         ' ORDER BY kp_id DESC' +
         ' LIMIT ' + start_limit +
         ' OPTION max_matches = ' + start_limit;
@@ -129,7 +137,7 @@ function getPublishMovies(callback) {
     var stopQueryString = '' +
         ' SELECT kp_id' +
         ' FROM ' + movies_db +
-        ' WHERE kp_id > ' + config.publish.stop +
+        ' WHERE kp_id > ' + config.publish.stop + where +
         ' ORDER BY kp_id ASC' +
         ' LIMIT ' + stop_limit +
         ' OPTION max_matches = ' + stop_limit;
