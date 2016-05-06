@@ -27,15 +27,55 @@ if (config.publish.every.hours && config.publish.every.movies) {
 
         var data = JSON.stringify(config);
 
-        fs.writeFile(path.join(path.dirname(__dirname), 'config', 'config.new.js'), 'module.exports = ' + data + ';', function(err) {
-            if (err) return console.log(err);
-            fs.rename(path.join(path.dirname(__dirname), 'config', 'config.js'), path.join(path.dirname(__dirname), 'config', 'config.old.js'), function (err) {
-                if (err) console.log(err);
-                fs.rename(path.join(path.dirname(__dirname), 'config', 'config.new.js'), path.join(path.dirname(__dirname), 'config', 'config.js'), function (err) {
-                    if (err) console.log(err);
-                });
-            });
-        });
+        fs.readFile(
+            path.join(path.dirname(__dirname), 'config', 'config.js'),
+            function (err, cnf) {
+                if (err) return console.log(err);
+                fs.writeFile(
+                    path.join(path.dirname(__dirname), 'config', 'config.prev.js'),
+                    cnf,
+                    function (err) {
+                        if (err) return console.log(err);
+                        fs.writeFile(
+                            path.join(path.dirname(__dirname), 'config', 'config.js'),
+                            'module.exports = ' + data + ';',
+                            function (err) {
+                                if (err) return console.log(err);
+                                fs.stat(
+                                    path.join(path.dirname(__dirname), 'config', 'config.restart'),
+                                    function (err, stats) {
+                                        if (!stats) {
+                                            fs.writeFile(
+                                                path.join(path.dirname(__dirname), 'config', 'config.restart'),
+                                                new Date() + ' - Autopublish',
+                                                function (err) {
+                                                    if (err) console.log(err);
+                                                }
+                                            );
+                                        }
+                                        else {
+                                            fs.readFile(
+                                                path.join(path.dirname(__dirname), 'config', 'config.restart'),
+                                                function (err, restart) {
+                                                    if (err) return console.log(err);
+                                                    fs.writeFile(
+                                                        path.join(path.dirname(__dirname), 'config', 'config.restart'),
+                                                        new Date() + ' - Autopublish\n' + restart,
+                                                        function (err) {
+                                                            if (err) console.log(err);
+                                                        }
+                                                    );
+                                                }
+                                            );
+                                        }
+                                    }
+                                );
+                            }
+                        );
+                    }
+                );
+            }
+        );
 
     });
 

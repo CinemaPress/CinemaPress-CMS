@@ -161,6 +161,12 @@ router.post('/save', function(req, res) {
     req.body.code.head            = req.body.code.head.replace(/(\n|\r)/g,'&nbsp;');
     req.body.code.footer          = req.body.code.footer.replace(/(\n|\r)/g,'&nbsp;');
 
+    var start = req.body.publish.start;
+    if (req.body.publish.start > req.body.publish.stop) {
+        req.body.publish.start = req.body.publish.stop;
+        req.body.publish.stop = start;
+    }
+
     var data = JSON.stringify(req.body);
 
     fs.readFile(
