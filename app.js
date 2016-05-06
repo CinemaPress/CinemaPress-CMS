@@ -25,9 +25,6 @@ app.set('view engine', 'jade');
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-app.use('/themes/' + config.theme + '/public', express.static(
-    path.join(__dirname, 'themes', config.theme, 'public')
-));
 
 app.use('/' + config.urls.year, categories);
 app.use('/' + config.urls.genre, categories);
