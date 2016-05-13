@@ -50,9 +50,9 @@ function moviesData(movies) {
                 picture_big = config.protocol + config.st + '/images/kadr/' + p[r] + '.jpg';
                 picture_min = config.protocol + config.st + '/images/kadr/sm_' + p[r] + '.jpg';
             }
-            pictures    = p.filter(function(id) {
+            p.forEach(function(id) {
                 if (id > 363866) {
-                    return config.protocol + config.st + '/images/kadr/' + id + '.jpg';
+                    pictures.push(config.protocol + config.st + '/images/kadr/' + id + '.jpg');
                 }
             });
         }
