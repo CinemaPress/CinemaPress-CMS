@@ -50,7 +50,7 @@ function moviesData(movies) {
                 picture_big = config.protocol + config.st + '/images/kadr/' + p[r] + '.jpg';
                 picture_min = config.protocol + config.st + '/images/kadr/sm_' + p[r] + '.jpg';
             }
-            pictures    = p.map(function(id) {
+            pictures    = p.filter(function(id) {
                 if (id > 363866) {
                     return config.protocol + config.st + '/images/kadr/' + id + '.jpg';
                 }
