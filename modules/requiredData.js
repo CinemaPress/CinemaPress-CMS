@@ -132,9 +132,10 @@ function categoryRequiredData(keys, sort, page, movies) {
             data.url         = urlData(config.urls[key], keys[key]);
             data.sort        = sortUrlData(data.url, sort);
             data.page        = {
-                "current" : page,
-                "prev"    : pageUrlData(data.url, sort, page, movies.length, 'prev'),
-                "next"    : pageUrlData(data.url, sort, page, movies.length, 'next')
+                "description" : (config.sorting.default == sort && page == 1) ? 1 : 0,
+                "current"     : page,
+                "prev"        : pageUrlData(data.url, sort, page, movies.length, 'prev'),
+                "next"        : pageUrlData(data.url, sort, page, movies.length, 'next')
             };
 
         }
