@@ -1,3 +1,14 @@
+# CinemaPress ACMS -  :point_right: <a href="https://github.com/CinemaPress/CinemaPress-ACMS" target="_blank">новый репозиторий</a>
+ :movie_camera: Автоматическая система управления сайтом.
+
+ ![Admin panel CinemaPress ACMS](https://raw.githubusercontent.com/CinemaPress/CinemaPress.github.io/master/images/cinemapress-acms/new_admin.png)
+ 
+ ---
+ 
+ >  :exclamation: Причина переезда: Изменения внесенные к коде, фактически полностью поменяли текущую CMS. Был подключен новый шаблонизатор, разработана админ-панель, добавлены дополнительные модули, комментарии в коде для разработчиков и многие другие изменения которые теперь будут доступны в <a href="https://github.com/CinemaPress/CinemaPress-ACMS" target="_blank">новом репозитории</a>.
+ 
+ ---
+
 [![Gitter](https://badges.gitter.im/CinemaPress/CinemaPress-CMS.svg)](https://gitter.im/CinemaPress/CinemaPress-CMS?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=body_badge) [![Slack](https://img.shields.io/badge/cinemapress.slack.com-%D1%87%D0%B0%D1%82-red.svg?style=flat)](https://cinemapress.slack.com/)
 
 # CinemaPress CMS
